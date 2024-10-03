@@ -1,3 +1,3 @@
 import {Routes} from '@angular/router';
-
-export const routes: Routes = [];
+import {AccesosComponent} from './accesos/accesos.component';
+export const routes: Routes = [{path: '', component: AccesosComponent, pathMatch: 'full'}];

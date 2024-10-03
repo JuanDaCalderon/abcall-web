@@ -3,11 +3,9 @@ import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-root',
+  template: '<router-outlet />',
+  styles: '',
   standalone: true,
-  imports: [RouterOutlet],
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  imports: [RouterOutlet]
 })
-export class AppComponent {
-  title = 'abcall-web';
-}
+export class AppComponent {}
