@@ -8,7 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test --no-watch",
     "test:cov": "ng test --no-watch --code-coverage",
-    "test:pipeline": "ng test --browsers=ChromeHeadless --watch=false --code-coverage",
+    "test:pipeline": "ng test --no-watch --browsers=ChromeHeadless",
     "lint": "ng lint",
     "lint:fix": "ng lint --fix",
     "lint:husky": "ng lint --fix && git add .",
