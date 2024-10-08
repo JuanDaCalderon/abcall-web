@@ -8,6 +8,7 @@ import {Component, OnInit} from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
   ngOnInit(): void {
+    console.log('navbar');
     throw new Error('Method not implemented.');
   }
 }
