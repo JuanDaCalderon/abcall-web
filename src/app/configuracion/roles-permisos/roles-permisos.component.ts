@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {NavbarComponent} from '../../components/navbar/navbar.component';
 
 @Component({
@@ -8,4 +8,8 @@ import {NavbarComponent} from '../../components/navbar/navbar.component';
   templateUrl: './roles-permisos.component.html',
   styleUrl: './roles-permisos.component.scss'
 })
-export class RolesPermisosComponent {}
+export class RolesPermisosComponent implements OnInit {
+  ngOnInit(): void {
+    throw new Error('Method not implemented.');
+  }
+}
