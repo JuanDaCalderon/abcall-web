@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 @Component({
   selector: 'app-navbar',
   standalone: true,
@@ -6,9 +6,4 @@ import {Component, OnInit} from '@angular/core';
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
-export class NavbarComponent implements OnInit {
-  ngOnInit(): void {
-    console.log('navbar');
-    throw new Error('Method not implemented.');
-  }
-}
+export class NavbarComponent {}

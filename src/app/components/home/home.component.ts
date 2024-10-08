@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {NavbarComponent} from '../navbar/navbar.component';
 
 @Component({
@@ -8,8 +8,4 @@ import {NavbarComponent} from '../navbar/navbar.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit {
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
-}
+export class HomeComponent {}
