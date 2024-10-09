@@ -1,12 +1,13 @@
 import {Component} from '@angular/core';
-import {RouterOutlet} from '@angular/router';
-import {NavbarComponent} from './components/navbar/navbar.component';
+import {Router, RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styles: '',
   standalone: true,
-  imports: [RouterOutlet, NavbarComponent]
+  imports: [RouterOutlet]
 })
-export class AppComponent {}
+export class AppComponent {
+  constructor(public router: Router) {}
+}
