@@ -1,3 +1,52 @@
-<p>
-  login works!
-</p>
+<div class="login-container">
+  <div class="login-form">
+    <div class="form-content">
+      <img src="logo.png" class="icon" alt="logo">
+
+      <form
+        [formGroup]="loginForm"
+        (ngSubmit)="!loginForm.invalid && validateCredentials()">
+
+        <!--Email-->
+        <div class="input-field">
+          <label for="email">Correo electrónico</label>
+          <input type="email" id="email" formControlName="email" placeholder="example@example.com">
+          
+          <div class="alert-text" *ngIf="loginForm.get('email')!.touched && loginForm.get('email')!.hasError('required')">
+            Correo electronico requerido
+          </div>
+          <div class="alert-text" *ngIf="loginForm.get('email')!.hasError('email')">
+            El correo debe tener formato de email
+          </div>
+        </div>
+             
+        <!--password-->
+        <div class="input-field">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" formControlName="password" placeholder="*******">
+
+          <div class="alert-text" *ngIf="loginForm.get('password')!.touched && loginForm.get('password')!.hasError('required')">
+            La contraseña es obligatoria
+          </div>
+          <div class="alert-text" *ngIf="loginForm.get('password')!.hasError('minlength')">
+            La contraseña debe tener al menos 8 caracteres
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button type="submit" [disabled]="!loginForm.valid">Entrar</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <div class="login-image">
+    <img src="login-image.png" alt="Call Center Agent" class="responsive-image">
+  </div>
+</div>
+
+
+
+
+
