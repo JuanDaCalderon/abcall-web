@@ -1,7 +1,7 @@
 export class Permiso {
   constructor(
-    public id: number,
-    public nombre: string,
-    public estado: boolean
+    public ID: number,
+    public NOMBRE: string,
+    public ESTADO: boolean
   ) {}
 }
