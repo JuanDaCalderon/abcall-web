@@ -243,7 +243,7 @@
     symbol-observable "4.0.0"
     yargs "17.7.2"
 
-"@angular/common@^18.0.0 || ^19.0.0", "@angular/common@^18.2.0", "@angular/common@18.2.7":
+"@angular/common@^18.0.0 || ^19.0.0", "@angular/common@^18.2.0", "@angular/common@>=16.0.0", "@angular/common@18.2.7":
   version "18.2.7"
   resolved "https://registry.npmjs.org/@angular/common/-/common-18.2.7.tgz"
   integrity sha512-5vDBmBR2JcIxHVEDunKXNU+T+OvTGiHZTSo35GFOHJxKFgX5g6+0tJBZunK04oBZGbJQUmp3pg2kMvuKKjZnkQ==
@@ -271,7 +271,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@^18.0.0 || ^19.0.0", "@angular/core@^18.2.0", "@angular/core@18.2.7":
+"@angular/core@^18.0.0 || ^19.0.0", "@angular/core@^18.2.0", "@angular/core@>=16.0.0", "@angular/core@18.2.7":
   version "18.2.7"
   resolved "https://registry.npmjs.org/@angular/core/-/core-18.2.7.tgz"
   integrity sha512-hLOxgxLiyWm9iVHBsUsJfx1hDsXWZnfJBlr+N7cev53f0CDoPfbshqq6KV+JFqXFDguzR9dKHm1ewT1jK3e6Tw==
@@ -1766,6 +1766,16 @@
   resolved "https://registry.npmjs.org/@ngtools/webpack/-/webpack-18.2.7.tgz"
   integrity sha512-BmnFxss6zGobGyq9Mi7736golbK8RLgF+zYCQZ+4/OfMMA1jKVoELnyJqNyAx+DQn3m1qKVBjtGEL7pTNpPzOw==
 
+"@ngx-translate/core@^15.0.0", "@ngx-translate/core@>=15.0.0":
+  version "15.0.0"
+  resolved "https://registry.npmjs.org/@ngx-translate/core/-/core-15.0.0.tgz"
+  integrity sha512-Am5uiuR0bOOxyoercDnAA3rJVizo4RRqJHo8N3RqJ+XfzVP/I845yEnMADykOHvM6HkVm4SZSnJBOiz0Anx5BA==
+
+"@ngx-translate/http-loader@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.npmjs.org/@ngx-translate/http-loader/-/http-loader-8.0.0.tgz"
+  integrity sha512-SFMsdUcmHF5OdZkL1CHEoSAwbP5EbAOPTLLboOCRRoOg21P4GJx+51jxGdJeGve6LSKLf4Pay7BkTwmE6vxYlg==
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz"
@@ -2485,6 +2495,8 @@ abbrev@^2.0.0:
     "@angular/platform-browser" "^18.2.0"
     "@angular/platform-browser-dynamic" "^18.2.0"
     "@angular/router" "^18.2.0"
+    "@ngx-translate/core" "^15.0.0"
+    "@ngx-translate/http-loader" "^8.0.0"
     "@popperjs/core" "^2.11.8"
     abcall-web "file:"
     bootstrap "^5.3.3"
@@ -6922,7 +6934,7 @@ run-parallel@^1.1.9:
   dependencies:
     queue-microtask "^1.2.2"
 
-"rxjs@^6.5.3 || ^7.4.0", rxjs@^7.5.1, rxjs@~7.8.0, rxjs@7.8.1:
+"rxjs@^6.5.3 || ^7.4.0", "rxjs@^6.5.5 || ^7.4.0", rxjs@^7.5.1, rxjs@~7.8.0, rxjs@7.8.1:
   version "7.8.1"
   resolved "https://registry.npmjs.org/rxjs/-/rxjs-7.8.1.tgz"
   integrity sha512-AA3TVj+0A2iuIoQkWEK/tqFjBq2j+6PO6Y0zJcvzLAFhEFIO3HL0vls9hWLncZbAAbK0mar7oZ4V079I/qPMxg==

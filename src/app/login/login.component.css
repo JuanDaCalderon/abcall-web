@@ -2,9 +2,17 @@
 .login-container {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: top;
   min-height: 100vh;
   background-color: White;
+}
+
+.flag {
+  display: flex;
+  justify-content: flex-start;
+  width: auto;
+  margin-top: 1%;
+  margin-left: 3%;
 }
 
 /* Estilos para el formulario */
@@ -19,6 +27,13 @@
   background-color: white;
 
   text-align: center;
+}
+
+.icon-flag {
+  width: auto;
+  align-content: top;
+  margin-bottom: auto;
+  padding-bottom: 60px;
 }
 
 .icon {

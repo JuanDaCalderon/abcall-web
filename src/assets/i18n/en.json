@@ -1,0 +1,13 @@
+{
+    "abc.footer.copy": "MISO - Final Project - Group 01",
+    "abc.header.login": "Login",
+    "abc.login.input.email": "Email",
+    "abc.login.input.error.required.email": "Email is required",
+    "abc.login.input.error.format.email": "The email must be in email format",
+    "abc.login.input.password": "Password",
+    "abc.login.input.error.required.password": "Password is required",
+    "abc.login.input.error.minlength.password": "Password must be at least 8 characters long",
+    "abc.btn.login": "Login",
+    "abc.toast.success.message": "You have successfully logged in",
+    "abc.toast.incorrect.message": "Incorrect user data"
+}
