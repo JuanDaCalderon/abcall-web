@@ -20,10 +20,6 @@ export class RolesPermisosComponent implements OnInit {
   ngOnInit(): void {
     this.getAllRoles();
   }
-
-  toggleDiv() {
-    this.isVisible = !this.isVisible;
-  }
   getAllRoles() {
     this.roleService.getAllRoles().subscribe(
       (data: Role[]) => {

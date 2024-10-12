@@ -4,6 +4,6 @@ export class Role {
   constructor(
     public ID: number,
     public NOMBRE: string,
-    public PERMISOS: [Permiso]
+    public PERMISOS: [Permiso] | []
   ) {}
 }

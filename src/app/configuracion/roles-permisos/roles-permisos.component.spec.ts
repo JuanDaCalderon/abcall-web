@@ -1,7 +1,7 @@
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {RolesPermisosComponent} from './roles-permisos.component';
-import {HttpClientModule} from '@angular/common/http';
+import {RoleService} from '../../services/role.service';
 
 describe('RolesPermisosComponent', () => {
   let component: RolesPermisosComponent;
@@ -9,7 +9,8 @@ describe('RolesPermisosComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RolesPermisosComponent, HttpClientModule]
+      imports: [RolesPermisosComponent, HttpClientTestingModule],
+      providers: [RoleService]
     }).compileComponents();
 
     fixture = TestBed.createComponent(RolesPermisosComponent);
