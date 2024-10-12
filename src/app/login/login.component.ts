@@ -1,17 +1,15 @@
 import {CommonModule} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
-import {TranslateModule} from '@ngx-translate/core';
 import {AuthService} from '../services/auth.service';
 import {catchError, take} from 'rxjs';
 import {HttpClientModule} from '@angular/common/http';
-//import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [ReactiveFormsModule, CommonModule, TranslateModule, HttpClientModule],
+  imports: [ReactiveFormsModule, CommonModule, HttpClientModule],
   providers: [AuthService],
   standalone: true
 })
@@ -29,18 +27,12 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  /*constructor(private formBuilder: FormBuilder, private translate: TranslateService) {
-      translate.addLangs(['en', 'es']);
-      translate.setDefaultLang('es');
-    }*/
-
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService
   ) {}
 
   public async submit() {
-    console.log('prueba');
     this.authService
       .login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
       .pipe(
