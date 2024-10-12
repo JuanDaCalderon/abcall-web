@@ -9,8 +9,7 @@
       <img src="logo.png" class="icon" alt="logo">
 
       <form
-        [formGroup]="loginForm"
-        (ngSubmit)="!loginForm.invalid && validateCredentials()">
+        [formGroup]="loginForm" (submit)="!loginForm.invalid && submit()">
 
         <!--Email-->
         <div class="input-field">
@@ -40,6 +39,12 @@
 
         <div class="button-group">
           <button type="submit" [disabled]="!loginForm.valid">entrar</button>
+        </div>
+        <div class="alert-text" *ngIf=authError>
+          Datos de usuario incorrectos
+        </div>
+        <div class="alert-text" *ngIf=authOk>
+          Autenticacion exitosa
         </div>
       </form>
 
