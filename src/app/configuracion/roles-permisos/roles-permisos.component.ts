@@ -2,12 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {NgFor, NgIf} from '@angular/common';
 import {Role} from '../../models/role';
 import {RoleService} from '../../services/role.service';
-import {HttpClientModule} from '@angular/common/http';
 
 @Component({
   selector: 'app-roles-permisos',
   standalone: true,
-  imports: [HttpClientModule, NgFor, NgIf],
+  imports: [NgFor, NgIf],
   providers: [RoleService],
   templateUrl: './roles-permisos.component.html',
   styleUrl: './roles-permisos.component.scss'

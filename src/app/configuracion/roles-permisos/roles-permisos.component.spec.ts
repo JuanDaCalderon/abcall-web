@@ -1,6 +1,7 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {RolesPermisosComponent} from './roles-permisos.component';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('RolesPermisosComponent', () => {
   let component: RolesPermisosComponent;
@@ -8,7 +9,7 @@ describe('RolesPermisosComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RolesPermisosComponent]
+      imports: [RolesPermisosComponent, HttpClientModule]
     }).compileComponents();
 
     fixture = TestBed.createComponent(RolesPermisosComponent);
