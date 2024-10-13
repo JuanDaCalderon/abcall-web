@@ -47,7 +47,6 @@ export class LoginComponent {
         catchError(async (error) => {
           console.log(error);
           this.authFlag = 'Datos de usuario incorrectos';
-        
         })
       )
       .subscribe(async (value) => {

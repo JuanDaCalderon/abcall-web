@@ -1,12 +1,12 @@
-import {ComponentFixture, TestBed, fakeAsync, flush, tick} from '@angular/core/testing';
+import {ComponentFixture, TestBed, fakeAsync} from '@angular/core/testing';
 
 import {LoginComponent} from './login.component';
 import {Router} from '@angular/router';
 import {AuthService} from '../services/auth.service';
 import {ReactiveFormsModule} from '@angular/forms';
 import {throwError} from 'rxjs';
-import { HttpClientTestingModule, HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideHttpClient } from '@angular/common/http';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
+import {provideHttpClient} from '@angular/common/http';
 
 /*class MockAuthService {
   login(email: string, password: string) {
@@ -109,9 +109,7 @@ describe('LoginComponent', () => {
       expect(mockAuthService.login).toHaveBeenCalled();
     });
   }));*/
-  
-  
-  
+
   it('should submit the form with no error message', fakeAsync(() => {
     const mockError = {};
     mockAuthService.login.and.returnValue(throwError(() => mockError));
