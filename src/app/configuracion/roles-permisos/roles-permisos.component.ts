@@ -15,6 +15,7 @@ export class RolesPermisosComponent implements OnInit {
   public roles: Role[] = [];
   public role: Role | undefined;
   public isVisible = false;
+  public permisos: any;
   constructor(public roleService: RoleService) {}
 
   ngOnInit(): void {
@@ -36,7 +37,8 @@ export class RolesPermisosComponent implements OnInit {
     this.roleService.getRole(roleId).subscribe(
       (data: Role) => {
         this.role = data;
-        console.log(this.roles);
+        console.log(this.role);
+        this.permisos = this.role.PERMISOS;
         this.isVisible = !this.isVisible;
       },
       (error) => {
