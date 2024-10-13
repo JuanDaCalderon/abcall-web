@@ -16,7 +16,7 @@ export class AuthService {
    * @param {string} password Password of the user
    * @returns {Observable<string>}
    */
-  public login(email: string, password: string): Observable<Response> {
-    return this.http.post<Response>(`${this.apiUrl}/usuario/login`, {email, password});
+  public login(email: string, password: string): Observable<unknown> {
+    return this.http.post<unknown>(`${this.apiUrl}/usuario/login`, {email, password});
   }
 }
