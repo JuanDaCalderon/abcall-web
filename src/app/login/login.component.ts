@@ -47,18 +47,7 @@ export class LoginComponent {
         catchError(async (error) => {
           console.log(error);
           this.authFlag = 'Datos de usuario incorrectos';
-          /*const errorMsg: string = "Datos de usuario incorrectos";
-          const toast = await this.toastController.create({
-            message: errorMsg,
-            duration: 5000,
-            cssClass: 'fs-normal',
-            color: 'danger',
-            icon: 'alert-circle-outline',
-            position: 'bottom',
-            swipeGesture: 'vertical'
-          });
-          toast.present();
-          this.isLoading = false*/
+        
         })
       )
       .subscribe(async (value) => {
