@@ -40,18 +40,15 @@
         <div class="button-group">
           <button type="submit" [disabled]="!loginForm.valid">entrar</button>
         </div>
-        <div class="alert-text" *ngIf=authError>
-          Datos de usuario incorrectos
-        </div>
-        <div class="alert-text" *ngIf=authOk>
-          Autenticacion exitosa
+        <div class="alert-text" id="authFlag" >
+          {{authFlag}}
         </div>
       </form>
 
     </div>
   </div>
 
-  <div class="login-image">
+  <div class="login-image" >
     <img src="login-image.png" alt="Call Center Agent" class="responsive-image">
   </div>
 </div>

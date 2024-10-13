@@ -11,4 +11,5 @@ import {HttpClientModule} from '@angular/common/http';
 })
 export class AppComponent {
   constructor(public router: Router) {}
+  title = 'ABCALL';
 }

@@ -1,9 +1,10 @@
 import {CommonModule} from '@angular/common';
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
 import {AuthService} from '../services/auth.service';
 import {catchError, take} from 'rxjs';
 import {HttpClientModule} from '@angular/common/http';
+//import { ToastrModule } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -13,24 +14,30 @@ import {HttpClientModule} from '@angular/common/http';
   providers: [AuthService],
   standalone: true
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   loginForm!: FormGroup;
   authError!: boolean;
-  authOk!: boolean;
+  authFlag!: string;
 
-  ngOnInit() {
-    this.authError = false;
-    this.authOk = false;
+  /*ngOnInit() {
+    this.authFlag = "";
+    this.loginForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(8)]]
+    });
+  }*/
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService
+    //private toastController: ToastController
+  ) {
+    this.authFlag = '';
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService
-  ) {}
 
   public async submit() {
     this.authService
@@ -38,18 +45,26 @@ export class LoginComponent implements OnInit {
       .pipe(
         take(1),
         catchError(async (error) => {
-          console.log('Error de autenticacion');
           console.log(error);
-          this.authError = true;
-          this.authOk = false;
+          this.authFlag = 'Datos de usuario incorrectos';
+          /*const errorMsg: string = "Datos de usuario incorrectos";
+          const toast = await this.toastController.create({
+            message: errorMsg,
+            duration: 5000,
+            cssClass: 'fs-normal',
+            color: 'danger',
+            icon: 'alert-circle-outline',
+            position: 'bottom',
+            swipeGesture: 'vertical'
+          });
+          toast.present();
+          this.isLoading = false*/
         })
       )
       .subscribe(async (value) => {
         if (value) {
-          console.log('Autenticacion exitosa');
+          this.authFlag = 'Has iniciado sesión correctamente';
           this.loginForm.reset();
-          this.authOk = true;
-          this.authError = false;
         }
       });
   }
