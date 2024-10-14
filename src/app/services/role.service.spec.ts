@@ -35,7 +35,7 @@ describe('RoleService', () => {
   describe('crearPermiso', () => {
     it('makes expected calls', () => {
       const httpTestingController = TestBed.inject(HttpTestingController);
-      const permisoStub: Permiso = {} as any;
+      const permisoStub: Permiso = {} as Permiso;
       service.crearPermiso(permisoStub).subscribe((res) => {
         expect(res).toEqual(permisoStub);
       });
@@ -55,6 +55,40 @@ describe('RoleService', () => {
       const req = httpTestingController.expectOne('http://localhost:8002/roles');
       expect(req.request.method).toEqual('GET');
       req.flush([]);
+      httpTestingController.verify();
+    });
+  });
+
+  describe('getRole', () => {
+    it('makes expected calls ', () => {
+      const httpTestingController = TestBed.inject(HttpTestingController);
+      const roleStub: Role = {ID: 1, NOMBRE: 'Admin', PERMISOS: []} as Role;
+      service.getRole(1).subscribe((res) => {
+        console.log(res);
+        expect(res).toEqual(roleStub);
+      });
+      const req = httpTestingController.expectOne('http://localhost:8002/role/' + 1);
+      expect(req.request.method).toEqual('GET');
+      req.flush(roleStub);
+      httpTestingController.verify();
+    });
+  });
+
+  describe('associatePermisoToRole', () => {
+    it('makes expected calls', () => {
+      const httpTestingController = TestBed.inject(HttpTestingController);
+      const roleStub: Role = {ID: 1, NOMBRE: 'Admin', PERMISOS: []} as Role;
+      const permisoStub: [Permiso] = [
+        {ID: 1, NOMBRE: 'crear', ESTADO: true},
+        {ID: 2, NOMBRE: 'actualizar', ESTADO: true}
+      ] as unknown as [Permiso];
+      service.associatePermisoToRole(1, permisoStub).subscribe((res) => {
+        console.log(res);
+        expect(res).toEqual(roleStub);
+      });
+      const req = httpTestingController.expectOne('http://localhost:8002/role/' + 1 + '/permiso');
+      expect(req.request.method).toEqual('POST');
+      req.flush(roleStub);
       httpTestingController.verify();
     });
   });

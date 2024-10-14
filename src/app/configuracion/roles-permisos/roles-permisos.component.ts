@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {NgFor, NgIf} from '@angular/common';
 import {Role} from '../../models/role';
 import {RoleService} from '../../services/role.service';
+import {Permiso} from '../../models/permiso';
 
 @Component({
   selector: 'app-roles-permisos',
@@ -15,7 +16,7 @@ export class RolesPermisosComponent implements OnInit {
   public roles: Role[] = [];
   public role: Role | undefined;
   public isVisible = false;
-  public permisos: any;
+  public permisos: Permiso[] = [];
   constructor(public roleService: RoleService) {}
 
   ngOnInit(): void {
@@ -42,7 +43,7 @@ export class RolesPermisosComponent implements OnInit {
         this.isVisible = !this.isVisible;
       },
       (error) => {
-        console.error('Error al obtener los roles', error);
+        console.error('Error al obtener el role', error);
       }
     );
   }
