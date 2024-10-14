@@ -1,0 +1,92 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+  }
+  
+  .container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .sidebar {
+    background-color: #7e30cc;
+    width: 250px;
+    padding: 20px;
+    color: white;
+  }
+  
+  .sidebar h2 {
+    margin-bottom: 20px;
+  }
+  
+  .sidebar nav a {
+    color: white;
+    text-decoration: none;
+    margin-bottom: 15px;
+    display: block;
+  }
+  
+  .sidebar nav a:hover {
+    text-decoration: underline;
+  }
+  
+  .content {
+    flex-grow: 1;
+    padding: 40px;
+    background-color: white;
+  }
+  
+  h1 {
+    color: #7e30cc;
+    margin-bottom: 20px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  input, select, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  textarea {
+    resize: vertical;
+  }
+  
+  .button-group {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .button-group button {
+    background-color: #7e30cc;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .button-group .btn-close {
+    background-color: #757575;
+  }
+  
+  .button-group button:hover {
+    opacity: 0.9;
+  }
+  
