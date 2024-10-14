@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {NavbarComponent} from '../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-create-incidencias',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule, NavbarComponent],
   templateUrl: './create-incidencias.component.html',
   styleUrl: './create-incidencias.component.scss'
 })

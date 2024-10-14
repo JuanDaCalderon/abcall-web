@@ -1,101 +1,95 @@
 <div class="container">
     <!-- Sidebar -->
     <div class="sidebar">
-      <h2>ABCallManager</h2>
-      <nav>
-        <a routerLink="/">Home</a>
-        <a routerLink="/create-incident">Crear una incidencia</a>
-        <a routerLink="/incidents-list">Lista de incidentes asociados a un cliente y/o usuario</a>
-        <a routerLink="/logout">Salir</a>
-      </nav>
+        <!--<app-navbar></app-navbar>-->
     </div>
   
     <!-- Content -->
     <div class="content">
       <h1>Crear nueva incidencia</h1>
   
-      <!-- Reactive Form Binding with Angular -->
+      <!-- Formulario con estructura en dos columnas -->
       <form [formGroup]="incidentForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="cliente">Cliente</label>
-          <select id="cliente" formControlName="cliente">
-            <option>Cliente</option>
-            <!-- Add more options dynamically if needed -->
-          </select>
-        </div>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="cliente">Cliente</label>
+            <select id="cliente" formControlName="cliente">
+              <option>Cliente</option>
+            </select>
+          </div>
   
-        <div class="form-group">
-          <label for="fecha">Fecha y hora</label>
-          <input type="datetime-local" id="fecha" formControlName="fecha">
-        </div>
+          <div class="form-group">
+            <label for="fecha">Fecha y hora</label>
+            <input type="datetime-local" id="fecha" formControlName="fecha">
+          </div>
   
-        <div class="form-group">
-          <label for="nombreUsuario">Nombre usuario</label>
-          <input type="text" id="nombreUsuario" formControlName="nombreUsuario" placeholder="Nombre usuario">
-        </div>
+          <div class="form-group">
+            <label for="nombreUsuario">Nombre usuario</label>
+            <input type="text" id="nombreUsuario" formControlName="nombreUsuario" placeholder="Nombre usuario">
+          </div>
   
-        <div class="form-group">
-          <label for="telefonoUsuario">Teléfono usuario</label>
-          <input type="tel" id="telefonoUsuario" formControlName="telefonoUsuario" placeholder="Teléfono usuario">
-        </div>
+          <div class="form-group">
+            <label for="correoUsuario">Correo usuario</label>
+            <input type="email" id="correoUsuario" formControlName="correoUsuario" placeholder="Correo usuario">
+          </div>
   
-        <div class="form-group">
-          <label for="correoUsuario">Correo usuario</label>
-          <input type="email" id="correoUsuario" formControlName="correoUsuario" placeholder="Correo usuario">
-        </div>
+          <div class="form-group">
+            <label for="telefonoUsuario">Teléfono usuario</label>
+            <input type="tel" id="telefonoUsuario" formControlName="telefonoUsuario" placeholder="Teléfono usuario">
+          </div>
   
-        <div class="form-group">
-          <label for="direccionUsuario">Dirección usuario</label>
-          <input type="text" id="direccionUsuario" formControlName="direccionUsuario" placeholder="Dirección usuario">
-        </div>
+          <div class="form-group">
+            <label for="direccionUsuario">Dirección usuario</label>
+            <input type="text" id="direccionUsuario" formControlName="direccionUsuario" placeholder="Dirección usuario">
+          </div>
   
-        <div class="form-group">
-          <label for="descripcionProblema">Descripción del problema</label>
-          <textarea id="descripcionProblema" formControlName="descripcionProblema" rows="4" placeholder="Descripción del problema"></textarea>
-        </div>
+          <!-- Campo que debe ocupar toda la fila -->
+          <div class="form-group full-width">
+            <label for="descripcionProblema">Descripción del problema</label>
+            <textarea id="descripcionProblema" formControlName="descripcionProblema" rows="4" placeholder="Descripción del problema"></textarea>
+          </div>
   
-        <div class="form-group">
-          <label for="tipoIncidencia">Tipo de incidencia</label>
-          <select id="tipoIncidencia" formControlName="tipoIncidencia">
-            <option>Incidencia</option>
-            <!-- Add more options dynamically -->
-          </select>
-        </div>
+          <div class="form-group">
+            <label for="tipoIncidencia">Tipo de incidencia</label>
+            <select id="tipoIncidencia" formControlName="tipoIncidencia">
+              <option>Incidencia</option>
+            </select>
+          </div>
   
-        <div class="form-group">
-          <label for="canalIngreso">Canal de ingreso</label>
-          <select id="canalIngreso" formControlName="canalIngreso">
-            <option>Web</option>
-            <!-- Add more options dynamically -->
-          </select>
-        </div>
+          <div class="form-group">
+            <label for="canalIngreso">Canal de ingreso</label>
+            <select id="canalIngreso" formControlName="canalIngreso">
+              <option>Web</option>
+            </select>
+          </div>
   
-        <div class="form-group">
-          <label for="prioridad">Prioridad</label>
-          <select id="prioridad" formControlName="prioridad">
-            <option>Baja</option>
-            <option>Media</option>
-            <option>Alta</option>
-          </select>
-        </div>
+          <div class="form-group">
+            <label for="prioridad">Prioridad</label>
+            <select id="prioridad" formControlName="prioridad">
+              <option>Baja</option>
+              <option>Media</option>
+              <option>Alta</option>
+            </select>
+          </div>
   
-        <div class="form-group">
-          <label for="estado">Estado</label>
-          <select id="estado" formControlName="estado">
-            <option>Abierto</option>
-            <option>Cerrado</option>
-          </select>
-        </div>
+          <div class="form-group">
+            <label for="estado">Estado</label>
+            <select id="estado" formControlName="estado">
+              <option>Abierto</option>
+              <option>Cerrado</option>
+            </select>
+          </div>
   
-        <div class="form-group">
-          <label for="respuestaIA">Respuesta sugerida por IA</label>
-          <textarea id="respuestaIA" formControlName="respuestaIA" rows="2"></textarea>
+          <!-- Campo que debe ocupar toda la fila -->
+          <div class="form-group full-width">
+            <label for="respuestaIA">Respuesta sugerida por IA</label>
+            <textarea id="respuestaIA" formControlName="respuestaIA" rows="2"></textarea>
+          </div>
         </div>
   
         <div class="button-group">
           <button type="submit" class="btn-save">Guardar</button>
           <button type="button" class="btn-escalar" (click)="onEscalar()">Escalar</button>
-          <button type="button" class="btn-close" (click)="onCloseCase()">Cerrar caso</button>
         </div>
       </form>
     </div>
