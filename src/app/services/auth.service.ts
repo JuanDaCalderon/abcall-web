@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
+import {Usuario} from '../models/usuario';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,7 +17,7 @@ export class AuthService {
    * @param {string} password Password of the user
    * @returns {Observable<string>}
    */
-  public login(email: string, password: string): Observable<unknown> {
-    return this.http.post<unknown>(`${this.apiUrl}/usuario/login`, {email, password});
+  public login(email: string, password: string): Observable<Usuario> {
+    return this.http.post<Usuario>(`${this.apiUrl}/usuario/login`, {email, password});
   }
 }

@@ -19,18 +19,9 @@ export class LoginComponent {
   authError!: boolean;
   authFlag!: string;
 
-  /*ngOnInit() {
-    this.authFlag = "";
-    this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(8)]]
-    });
-  }*/
-
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService
-    //private toastController: ToastController
   ) {
     this.authFlag = '';
     this.loginForm = this.formBuilder.group({
@@ -44,8 +35,7 @@ export class LoginComponent {
       .login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
       .pipe(
         take(1),
-        catchError(async (error) => {
-          console.log(error);
+        catchError(async () => {
           this.authFlag = 'Datos de usuario incorrectos';
         })
       )

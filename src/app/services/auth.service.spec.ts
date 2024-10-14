@@ -36,8 +36,8 @@ describe('AuthService', () => {
     const email = 'test@example.com';
     const password = '123456789';
     subscriptions.push(
-      service.login(email, password).subscribe((response) => {
-        expect((response as any).token).toBe(mockResponse.token);
+      service.login(email, password).subscribe((usuario) => {
+        expect(usuario.token).toBe(mockResponse.token);
       })
     );
     const req = httpMock.expectOne(`${environment.apiUrl}/usuario/login`);
