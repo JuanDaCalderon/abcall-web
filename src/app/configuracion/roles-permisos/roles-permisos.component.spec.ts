@@ -11,7 +11,7 @@ describe('RolesPermisosComponent', () => {
   let roleServiceStub = jasmine.createSpyObj('RoleService', ['getAllRoles']);
 
   beforeEach(() => {
-    roleServiceStub = jasmine.createSpyObj('RoleService', ['getAllRoles']);
+    roleServiceStub = jasmine.createSpyObj('RoleService', ['getAllRoles', 'createRole', 'getRole']);
     TestBed.configureTestingModule({
       imports: [RolesPermisosComponent, HttpClientTestingModule],
       providers: [{provide: RoleService, useFactory: roleServiceStub}]
@@ -22,8 +22,18 @@ describe('RolesPermisosComponent', () => {
       {ID: 1, NOMBRE: 'Admin', PERMISOS: []},
       {ID: 2, NOMBRE: 'User', PERMISOS: []}
     ];
-    roleServiceStub.getAllRoles.and.returnValue(of(mockRoles));
+    const toastElement = document.createElement('div');
+    toastElement.id = 'liveToast';
+    toastElement.innerHTML = '<div class="toast-body"></div>';
+    document.body.appendChild(toastElement);
 
+    roleServiceStub.getAllRoles.and.returnValue(of(mockRoles));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (window as any).bootstrap = {
+      Toast: jasmine.createSpy().and.callFake(function () {
+        return {show: jasmine.createSpy('show')};
+      })
+    };
     fixture.detectChanges();
   });
 
@@ -37,6 +47,10 @@ describe('RolesPermisosComponent', () => {
 
   it(`isVisible has default value`, () => {
     expect(component.isVisible).toEqual(false);
+  });
+
+  it(`permisos has default value`, () => {
+    expect(component.permisos).toEqual([]);
   });
 
   describe('ngOnInit', () => {
@@ -95,6 +109,51 @@ describe('RolesPermisosComponent', () => {
       spyOn(roleServiceStub, 'getRole').and.returnValue(throwError(errorResponse));
       component.getRole(1);
       expect(roleServiceStub.getRole).toHaveBeenCalledWith(1);
+    });
+  });
+
+  describe('onSubmit', () => {
+    it('makes expected calls', () => {
+      const roleServiceStub: RoleService = fixture.debugElement.injector.get(RoleService);
+
+      spyOn(roleServiceStub, 'createRole').and.returnValue(of({message: 'Rol creado exitosamente!'}));
+      spyOn(component, 'showToast').and.callThrough();
+      component.roleForm.setValue({NOMBRE: 'Admin'});
+      component.onSubmit();
+      //expect(component.showToast).toHaveBeenCalled();
+      expect(component.showToast).toHaveBeenCalledWith('Rol creado exitosamente!', 'success');
+      expect(roleServiceStub.createRole).toHaveBeenCalled();
+    });
+
+    it('makes expected calls error', () => {
+      const roleServiceStub: RoleService = fixture.debugElement.injector.get(RoleService);
+      const errorResponse = {error: {message: 'El Role ya existe'}};
+      spyOn(roleServiceStub, 'createRole').and.returnValue(throwError(errorResponse));
+      spyOn(component, 'showToast').and.callThrough();
+      component.roleForm.setValue({NOMBRE: 'Admin'});
+      component.onSubmit();
+      //expect(component.showToast).toHaveBeenCalled();
+      expect(component.showToast).toHaveBeenCalledWith('El Role ya existe', 'error');
+      expect(roleServiceStub.createRole).toHaveBeenCalled();
+    });
+
+    it('makes expected calls error 2', () => {
+      const roleServiceStub: RoleService = fixture.debugElement.injector.get(RoleService);
+      const errorResponse = {error: {}};
+      spyOn(roleServiceStub, 'createRole').and.returnValue(throwError(errorResponse));
+      spyOn(component, 'showToast').and.callThrough();
+      component.roleForm.setValue({NOMBRE: 'Admin'});
+      component.onSubmit();
+      //expect(component.showToast).toHaveBeenCalled();
+      expect(component.showToast).toHaveBeenCalledWith('Ocurrió un error inesperado', 'error');
+      expect(roleServiceStub.createRole).toHaveBeenCalled();
+    });
+
+    afterEach(() => {
+      const toastElement = document.getElementById('liveToast');
+      if (toastElement) {
+        toastElement.remove();
+      }
     });
   });
 });

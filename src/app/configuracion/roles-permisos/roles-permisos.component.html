@@ -3,7 +3,10 @@
 <div class="row align-content-center">
   <div class="col"></div>
   <div class="col-auto">
-    <button class="btn btn-purple">Crear Role</button>
+    <button type="button" class="btn btn-purple" data-bs-toggle="modal" data-bs-target="#createRole">
+      Crear Role
+    </button>
+
   </div>
   <div class="col"></div>
 </div>
@@ -47,3 +50,43 @@
   <div class="col-2"></div>
 </div>
 </div>
+
+
+
+<div class="modal fade" id="createRole" tabindex="-1" aria-labelledby="createRoleLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="createRoleLabel">Crear Role</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form [formGroup]="roleForm" (ngSubmit)="onSubmit()"  class="row g-2 needs-validation">
+      <div class="modal-body">
+        <div class="form-group">
+        <div class="col-md mb-3">
+          <label for="NOMBRE" class="form-label">Nombre </label>
+          <input type="text" class="form-control" id="NOMBRE" name="NOMBRE" formControlName="NOMBRE" placeholder="Role">
+          <div *ngIf="roleForm.get('NOMBRE')?.invalid && roleForm.get('NOMBRE')?.touched" class="text-danger">
+            El nombre del rol es requerido.
+          </div>
+        </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" [disabled]="roleForm.invalid" class="btn btn-purple">Guardar</button>
+      </div>
+    </form>
+    </div>
+  </div>
+  <div id="liveToast" class="toast align-items-center position-fixed bottom-0 end-0 text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        Mensaje de la notificación.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+
+
