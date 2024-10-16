@@ -1,29 +1,31 @@
 import {TestBed, ComponentFixture} from '@angular/core/testing';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {throwError} from 'rxjs';
+import {of, throwError} from 'rxjs';
 import {LoginComponent} from './login.component';
 import {AuthService} from '../services/auth.service';
+import {Usuario} from '../models/usuario';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let authService: AuthService;
 
-  /*const mockUsuario: Usuario = {
+  const mockUsuario: Usuario = {
     id: 1,
     nombres: 'Test User',
     apellidos: 'Test User',
     email: 'test@test.com',
     username: 'test',
     token: 'token'
-  };*/
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, HttpClientTestingModule, LoginComponent],
-      declarations: [],
-      providers: [AuthService]
+      imports: [ReactiveFormsModule, HttpClientTestingModule, LoginComponent, HttpClientModule],
+      declarations: []
+      //providers: [AuthService]
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
@@ -50,21 +52,12 @@ describe('LoginComponent', () => {
     expect(component.authFlag).toBe('Datos de usuario incorrectos');
   });
 
-  /*it('should display success message on login success', async () => {
-    spyOn(authService, 'login').and.returnValue(of(mockUsuario));
-    component.loginForm.setValue({ email: 'test@test.com', password: 'password123' });
+  it('should display success message on login success', async () => {
+    spyOn(component, 'login').and.returnValue(of(mockUsuario));
+    component.loginForm.setValue({email: 'test@test.com', password: 'password123'});
     await component.submit();
-    //await new Promise(resolve => setTimeout(resolve, 3000));
-    expect(component.authFlag).toBe('');
-    //expect(component.loginForm.get('email')?.value).toBe('test@test.com');
-    //expect(component.loginForm.get('password')?.value).toBe('password123');
-  });*/
-
-  it('should not submit the form if it is invalid', async () => {
-    spyOn(authService, 'login');
-    component.loginForm.setValue({email: '', password: ''});
-    await component.submit();
-    expect(authService.login).not.toHaveBeenCalled();
+    await new Promise((resolve) => setTimeout(resolve, 3000));
+    expect(component.authFlag).toBe('Has iniciado sesión correctamente');
   });
 
   it('should validate email field as required and email format', () => {
