@@ -17,7 +17,7 @@
           <input type="email" id="email" formControlName="email" placeholder="example@example.com">
           
           <div class="alert-text" *ngIf="loginForm.get('email')!.touched && loginForm.get('email')!.hasError('required')">
-            correo requerido
+            Correo requerido
           </div>
           <div class="alert-text" *ngIf="loginForm.get('email')!.hasError('email')">
             Formato correo invalido
@@ -38,7 +38,7 @@
         </div>
 
         <div class="button-group">
-          <button type="submit" [disabled]="!loginForm.valid">entrar</button>
+          <button id="guardar" type="submit" [disabled]="!loginForm.valid">entrar</button>
         </div>
         <div class="alert-text" id="authFlag" >
           {{authFlag}}
