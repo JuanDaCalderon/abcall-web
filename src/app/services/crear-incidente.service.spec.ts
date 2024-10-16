@@ -58,7 +58,7 @@ describe('Service: CrearIncidente', () => {
         expect(incidente).toEqual(mockIncidente);
       });
 
-    const req = httpMock.expectOne(`${environment.apiUrl}:8000/incidente`);
+    const req = httpMock.expectOne(`${environment.apiUrl}:8000/incidentes`);
     expect(req.request.method).toBe('POST');
     req.flush(mockIncidente);
   });

@@ -3,24 +3,37 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {CreateIncidenciasComponent} from './create-incidencias.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {CrearIncidenteService} from '../../services/crear-incidente.service';
 import {of, throwError} from 'rxjs';
 import {Incidente} from '../../models/incidente';
 
 describe('CreateIncidenciasComponent', () => {
   let component: CreateIncidenciasComponent;
   let fixture: ComponentFixture<CreateIncidenciasComponent>;
-  let crearIncidenteService: CrearIncidenteService;
+  //let crearIncidenteService: CrearIncidenteService;
+
+  const mockIncidente: Incidente = {
+    id: 1,
+    cliente: 'Test Client',
+    fechacreacion: '2023-10-01',
+    usuario: 'Test User',
+    correo: 'prueba@prueba.com',
+    direccion: 'Test address',
+    telefono: '123456789',
+    descripcion: 'Test description',
+    prioridad: 'High',
+    estado: 'Open',
+    comentarios: 'Test comments'
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ReactiveFormsModule, HttpClientTestingModule, CreateIncidenciasComponent],
-      providers: [CrearIncidenteService]
+      providers: []
     }).compileComponents();
 
     fixture = TestBed.createComponent(CreateIncidenciasComponent);
     component = fixture.componentInstance;
-    crearIncidenteService = TestBed.inject(CrearIncidenteService);
+    //crearIncidenteService = TestBed.inject(CrearIncidenteService);
     fixture.detectChanges();
   });
 
@@ -40,37 +53,23 @@ describe('CreateIncidenciasComponent', () => {
     expect(component.incidentForm.get('canalIngreso')?.disabled).toBeTrue();
   });
 
-  /*it('should not submit the form if it is invalid', () => {
-    spyOn(crearIncidenteService, 'crearIncidente').and.returnValue(of({}));
+  it('should not submit the form if it is invalid', () => {
+    spyOn(component, 'crearIncidente').and.returnValue(of(mockIncidente));
     component.incidentForm.get('nombreUsuario')?.setValue('');
     component.onSubmit();
-    expect(crearIncidenteService.crearIncidente).not.toHaveBeenCalled();
-  });*/
+    expect(component.crearIncidente).not.toHaveBeenCalled();
+  });
 
   it('should submit the form if it is valid', () => {
-    const mockIncidencia: Incidente = {
-      id: 8,
-      cliente: 'bavaria',
-      fechacreacion: '2024-10-10 09:00:00',
-      usuario: 'pepito perez',
-      correo: 'a@a.com',
-      direccion: 'calle 1 # 1-2',
-      telefono: '300123456789',
-      descripcion: 'descripcion prueba',
-      prioridad: 'baja',
-      estado: 'abierto',
-      comentarios: 'comentario de prueba'
-    };
-
-    spyOn(crearIncidenteService, 'crearIncidente').and.returnValue(of(mockIncidencia));
+    spyOn(component, 'crearIncidente').and.returnValue(of(mockIncidente));
     component.incidentForm.get('nombreUsuario')?.setValue('Test User');
     component.incidentForm.get('descripcionProblema')?.setValue('Test Description');
     component.onSubmit();
-    expect(crearIncidenteService.crearIncidente).toHaveBeenCalled();
+    expect(component.crearIncidente).toHaveBeenCalled();
   });
 
   it('should handle form submission error', () => {
-    spyOn(crearIncidenteService, 'crearIncidente').and.returnValue(throwError('error'));
+    spyOn(component, 'crearIncidente').and.returnValue(throwError('error'));
     component.incidentForm.get('nombreUsuario')?.setValue('Test User');
     component.incidentForm.get('descripcionProblema')?.setValue('Test Description');
     component.onSubmit();
@@ -78,21 +77,7 @@ describe('CreateIncidenciasComponent', () => {
   });
 
   it('should reset the form after successful submission', () => {
-    const mockIncidencia: Incidente = {
-      id: 8,
-      cliente: 'bavaria',
-      fechacreacion: '2024-10-10 09:00:00',
-      usuario: 'pepito perez',
-      correo: 'a@a.com',
-      direccion: 'calle 1 # 1-2',
-      telefono: '300123456789',
-      descripcion: 'descripcion prueba',
-      prioridad: 'baja',
-      estado: 'abierto',
-      comentarios: 'comentario de prueba'
-    };
-
-    spyOn(crearIncidenteService, 'crearIncidente').and.returnValue(of(mockIncidencia));
+    spyOn(component, 'crearIncidente').and.returnValue(of(mockIncidente));
     component.incidentForm.get('nombreUsuario')?.setValue('Test User');
     component.incidentForm.get('descripcionProblema')?.setValue('Test Description');
     component.onSubmit();

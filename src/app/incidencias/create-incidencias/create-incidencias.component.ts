@@ -2,9 +2,11 @@ import {CommonModule} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {CrearIncidenteService} from '../../services/crear-incidente.service';
-import {catchError, take} from 'rxjs';
-import {HttpClientModule} from '@angular/common/http';
+import {catchError, Observable, take} from 'rxjs';
+import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {NavbarComponent} from '../../components/navbar/navbar.component';
+import {Incidente} from '../../models/incidente';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-create-incidencias',
@@ -17,10 +19,12 @@ import {NavbarComponent} from '../../components/navbar/navbar.component';
 export class CreateIncidenciasComponent implements OnInit {
   incidentForm!: FormGroup;
   crearIncidenteFlag!: string;
+  private apiUrl = environment.apiUrl;
 
   constructor(
     private fb: FormBuilder,
-    private crearIncidenteService: CrearIncidenteService
+    private crearIncidenteService: CrearIncidenteService,
+    private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -51,19 +55,18 @@ export class CreateIncidenciasComponent implements OnInit {
   onSubmit(): void {
     if (this.incidentForm.valid) {
       // Handle form submission logic, such as sending data to a backend
-      this.crearIncidenteService
-        .crearIncidente(
-          this.incidentForm.get('cliente')?.value,
-          this.incidentForm.get('fecha')?.value,
-          this.incidentForm.get('nombreUsuario')?.value,
-          this.incidentForm.get('correoUsuario')?.value,
-          this.incidentForm.get('direccionUsuario')?.value,
-          this.incidentForm.get('telefonoUsuario')?.value,
-          this.incidentForm.get('descripcionProblema')?.value,
-          this.incidentForm.get('prioridad')?.value,
-          this.incidentForm.get('estado')?.value,
-          this.incidentForm.get('respuestaIA')?.value
-        )
+      this.crearIncidente(
+        this.incidentForm.get('cliente')?.value,
+        this.incidentForm.get('fecha')?.value,
+        this.incidentForm.get('nombreUsuario')?.value,
+        this.incidentForm.get('correoUsuario')?.value,
+        this.incidentForm.get('direccionUsuario')?.value,
+        this.incidentForm.get('telefonoUsuario')?.value,
+        this.incidentForm.get('descripcionProblema')?.value,
+        this.incidentForm.get('prioridad')?.value,
+        this.incidentForm.get('estado')?.value,
+        this.incidentForm.get('respuestaIA')?.value
+      )
         .pipe(
           take(1),
           catchError(async () => {
@@ -77,6 +80,32 @@ export class CreateIncidenciasComponent implements OnInit {
           }
         });
     }
+  }
+
+  public crearIncidente(
+    cliente: string,
+    fechacreacion: string,
+    usuario: string,
+    correo: string,
+    direccion: string,
+    telefono: string,
+    descripcion: string,
+    prioridad: string,
+    estado: string,
+    comentarios: string
+  ): Observable<Incidente> {
+    return this.http.post<Incidente>(`${this.apiUrl}:8000/incidentes`, {
+      cliente,
+      fechacreacion,
+      usuario,
+      correo,
+      direccion,
+      telefono,
+      descripcion,
+      prioridad,
+      estado,
+      comentarios
+    });
   }
 
   onEscalar(): void {
