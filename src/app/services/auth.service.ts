@@ -18,6 +18,6 @@ export class AuthService {
    * @returns {Observable<string>}
    */
   public login(email: string, password: string): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrl}/usuario/login`, {email, password});
+    return this.http.post<Usuario>(`${this.apiUrl}:8001/usuario/login`, {email, password});
   }
 }

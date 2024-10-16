@@ -1,11 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NavbarComponent} from '../../components/navbar/navbar.component';
+import {CommonModule} from '@angular/common';
 
 @Component({
   selector: 'app-create-incidencias',
   standalone: true,
-  imports: [ReactiveFormsModule, NavbarComponent],
+  imports: [ReactiveFormsModule, NavbarComponent, CommonModule],
   templateUrl: './create-incidencias.component.html',
   styleUrl: './create-incidencias.component.scss'
 })
@@ -16,11 +17,11 @@ export class CreateIncidenciasComponent implements OnInit {
 
   ngOnInit(): void {
     this.incidentForm = this.fb.group({
-      cliente: ['', Validators.required],
+      cliente: [''],
       fecha: [new Date().toISOString().substring(0, 16), Validators.required],
       nombreUsuario: ['', Validators.required],
-      telefonoUsuario: ['', Validators.required],
-      correoUsuario: ['', [Validators.required, Validators.email]],
+      telefonoUsuario: [''],
+      correoUsuario: [''],
       direccionUsuario: [''],
       descripcionProblema: ['', Validators.required],
       tipoIncidencia: ['Incidencia'],
@@ -29,6 +30,14 @@ export class CreateIncidenciasComponent implements OnInit {
       estado: ['Abierto'],
       respuestaIA: ['']
     });
+
+    const colombiaTime = new Date().toLocaleString('en-US', {timeZone: 'America/Bogota'});
+    this.incidentForm.patchValue({
+      fecha: new Date(colombiaTime).toISOString().substring(0, 16)
+    });
+
+    this.incidentForm.get('fecha')?.disable();
+    this.incidentForm.get('canalIngreso')?.disable();
   }
 
   onSubmit(): void {

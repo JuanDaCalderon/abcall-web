@@ -39,7 +39,7 @@ body {
 
 .content {
   flex-grow: 1;
-  padding: 40px;
+  padding: 30px;
   background-color: white;
 }
 
@@ -63,7 +63,7 @@ h1 {
 
 label {
   //font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 2px;
 }
 
 input, select, textarea {
@@ -110,4 +110,8 @@ button.btn-close {
 
 button:hover {
   opacity: 0.9;
+}
+
+.alert-text {
+  color: red
 }

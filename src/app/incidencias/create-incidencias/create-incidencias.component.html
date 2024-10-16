@@ -13,8 +13,10 @@
         <div class="form-grid">
           <div class="form-group">
             <label for="cliente">Cliente</label>
-            <select id="cliente" formControlName="cliente">
-              <option>Cliente</option>
+            <select id="cliente" formControlName="cliente" >
+              <option>Bavaria</option>
+              <option>Bancolombia</option>
+              <option>EEB</option>
             </select>
           </div>
   
@@ -26,7 +28,10 @@
           <div class="form-group">
             <label for="nombreUsuario">Nombre usuario</label>
             <input type="text" id="nombreUsuario" formControlName="nombreUsuario" placeholder="Nombre usuario">
-          </div>
+            <div class="alert-text" *ngIf="incidentForm.get('nombreUsuario')!.touched && incidentForm.get('nombreUsuario')!.hasError('required')">
+                Nombre usuario requerido
+            </div>
+        </div>
   
           <div class="form-group">
             <label for="correoUsuario">Correo usuario</label>
@@ -47,12 +52,16 @@
           <div class="form-group full-width">
             <label for="descripcionProblema">Descripción del problema</label>
             <textarea id="descripcionProblema" formControlName="descripcionProblema" rows="4" placeholder="Descripción del problema"></textarea>
-          </div>
+            <div class="alert-text" *ngIf="incidentForm.get('descripcionProblema')!.touched && incidentForm.get('descripcionProblema')!.hasError('required')">
+                Descripción del problema requerido
+            </div>
+        </div>
   
           <div class="form-group">
             <label for="tipoIncidencia">Tipo de incidencia</label>
             <select id="tipoIncidencia" formControlName="tipoIncidencia">
               <option>Incidencia</option>
+              <option>PQRS</option>
             </select>
           </div>
   
@@ -76,6 +85,8 @@
             <label for="estado">Estado</label>
             <select id="estado" formControlName="estado">
               <option>Abierto</option>
+              <option>En proceso</option>
+              <option>Aespera de respuesta usuario</option>
               <option>Cerrado</option>
             </select>
           </div>
