@@ -8,24 +8,25 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class RoleService {
+  private url = 'http://localhost:8002/';
   constructor(private _http: HttpClient) {}
 
   createRole(role: Role) {
-    return this._http.post('http://localhost:8002/role', role);
+    return this._http.post(this.url + 'role', role);
   }
 
   getRole(role_id: number): Observable<Role> {
-    return this._http.get<Role>('http://localhost:8002/role/' + role_id);
+    return this._http.get<Role>(this.url + 'role/' + role_id);
   }
 
   getAllRoles(): Observable<Role[]> {
-    return this._http.get<Role[]>('http://localhost:8002/roles');
+    return this._http.get<Role[]>(this.url + 'roles');
   }
   crearPermiso(permiso: Permiso): Observable<Permiso> {
-    return this._http.post<Permiso>('http://localhost:8002/permiso', permiso);
+    return this._http.post<Permiso>(this.url + 'permiso', permiso);
   }
 
   associatePermisoToRole(role_id: number, permisos: [Permiso]): Observable<Role> {
-    return this._http.post<Role>('http://localhost:8002/role/' + role_id + '/permiso', permisos);
+    return this._http.post<Role>(this.url + 'role/' + role_id + '/permiso', permisos);
   }
 }
