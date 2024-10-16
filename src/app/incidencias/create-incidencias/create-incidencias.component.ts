@@ -50,9 +50,7 @@ export class CreateIncidenciasComponent implements OnInit {
 
   onSubmit(): void {
     if (this.incidentForm.valid) {
-      console.log('Form submitted:', this.incidentForm.value);
       // Handle form submission logic, such as sending data to a backend
-
       this.crearIncidenteService
         .crearIncidente(
           this.incidentForm.get('cliente')?.value,
@@ -78,18 +76,14 @@ export class CreateIncidenciasComponent implements OnInit {
             this.incidentForm.reset();
           }
         });
-    } else {
-      console.log('Form is invalid');
     }
   }
 
   onEscalar(): void {
-    console.log('Escalar button clicked');
     // Handle the escalation logic here
   }
 
   onCloseCase(): void {
-    console.log('Cerrar caso button clicked');
     // Handle closing the case
   }
 }
