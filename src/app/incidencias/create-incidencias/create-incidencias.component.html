@@ -22,7 +22,7 @@
   
           <div class="form-group">
             <label for="fecha">Fecha y hora</label>
-            <input type="datetime-local" id="fecha" formControlName="fecha">
+            <input type="text" id="fecha" formControlName="fecha">
           </div>
   
           <div class="form-group">
@@ -101,6 +101,9 @@
         <div class="button-group">
           <button type="submit" class="btn-save">Guardar</button>
           <button type="button" class="btn-escalar" (click)="onEscalar()">Escalar</button>
+        </div>
+        <div class="alert-text" id="authFlag" >
+          {{crearIncidenteFlag}}
         </div>
       </form>
     </div>

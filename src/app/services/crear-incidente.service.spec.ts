@@ -22,33 +22,37 @@ describe('Service: CrearIncidente', () => {
     httpMock.verify();
   });
 
-  fit('should be created', () => {
+  it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  fit('should create an incident', () => {
+  it('should create an incident', () => {
     const mockIncidente: Incidente = {
       id: 1,
-      descripcion: 'Test description',
-      estado: 'Open',
-      fechacreacion: '2023-10-01',
-      gestorabc: 'Test Manager',
       cliente: 'Test Client',
+      fechacreacion: '2023-10-01',
       usuario: 'Test User',
-      comentarios: 'Test comments',
-      prioridad: 'High'
+      correo: 'prueba@prueba.com',
+      direccion: 'Test address',
+      telefono: '123456789',
+      descripcion: 'Test description',
+      prioridad: 'High',
+      estado: 'Open',
+      comentarios: 'Test comments'
     };
 
     service
       .crearIncidente(
-        mockIncidente.descripcion,
-        mockIncidente.estado,
-        mockIncidente.fechacreacion,
-        mockIncidente.gestorabc,
         mockIncidente.cliente,
+        mockIncidente.fechacreacion,
         mockIncidente.usuario,
-        mockIncidente.comentarios,
-        mockIncidente.prioridad
+        mockIncidente.correo,
+        mockIncidente.direccion,
+        mockIncidente.telefono,
+        mockIncidente.descripcion,
+        mockIncidente.prioridad,
+        mockIncidente.estado,
+        mockIncidente.comentarios
       )
       .subscribe((incidente: Incidente) => {
         expect(incidente).toEqual(mockIncidente);

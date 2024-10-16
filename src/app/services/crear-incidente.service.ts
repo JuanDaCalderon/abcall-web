@@ -13,30 +13,44 @@ export class CrearIncidenteService {
   constructor(private http: HttpClient) {}
 
   /**
-   * Login the user to the backend
+   * Create incident to the backend
    * @param {string} email Email of the user
    * @param {string} password Password of the user
+   * @param {string} cliente
+   * @param {string} fechacreacion
+   * @param {string} usuario
+   * @param {string} correo
+   * @param {string} direccion
+   * @param {string} telefono
+   * @param {string} descripcion
+   * @param {string} prioridad
+   * @param {string} estado
+   * @param {string} comentarios
    * @returns {Observable<string>}
    */
   public crearIncidente(
-    descripcion: string,
-    estado: string,
-    fechacreacion: string,
-    gestorabc: string,
     cliente: string,
+    fechacreacion: string,
     usuario: string,
-    comentarios: string,
-    prioridad: string
+    correo: string,
+    direccion: string,
+    telefono: string,
+    descripcion: string,
+    prioridad: string,
+    estado: string,
+    comentarios: string
   ): Observable<Incidente> {
-    return this.http.post<Incidente>(`${this.apiUrl}:8000/incidente`, {
-      descripcion,
-      estado,
-      fechacreacion,
-      gestorabc,
+    return this.http.post<Incidente>(`${this.apiUrl}:8000/incidentes`, {
       cliente,
+      fechacreacion,
       usuario,
-      comentarios,
-      prioridad
+      correo,
+      direccion,
+      telefono,
+      descripcion,
+      prioridad,
+      estado,
+      comentarios
     });
   }
 }
