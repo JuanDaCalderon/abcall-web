@@ -70,6 +70,7 @@ export class RolesPermisosComponent implements OnInit {
           console.log('Rol creado exitosamente:', response);
           this.showToast('Rol creado exitosamente!', 'success');
           this.roleForm.reset();
+          this.getAllRoles();
         },
         (error) => {
           const errorMessage = error?.error?.message || 'Ocurrió un error inesperado';

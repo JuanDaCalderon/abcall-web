@@ -115,12 +115,10 @@ describe('RolesPermisosComponent', () => {
   describe('onSubmit', () => {
     it('makes expected calls', () => {
       const roleServiceStub: RoleService = fixture.debugElement.injector.get(RoleService);
-
       spyOn(roleServiceStub, 'createRole').and.returnValue(of({message: 'Rol creado exitosamente!'}));
       spyOn(component, 'showToast').and.callThrough();
       component.roleForm.setValue({NOMBRE: 'Admin'});
       component.onSubmit();
-      //expect(component.showToast).toHaveBeenCalled();
       expect(component.showToast).toHaveBeenCalledWith('Rol creado exitosamente!', 'success');
       expect(roleServiceStub.createRole).toHaveBeenCalled();
     });
@@ -132,7 +130,6 @@ describe('RolesPermisosComponent', () => {
       spyOn(component, 'showToast').and.callThrough();
       component.roleForm.setValue({NOMBRE: 'Admin'});
       component.onSubmit();
-      //expect(component.showToast).toHaveBeenCalled();
       expect(component.showToast).toHaveBeenCalledWith('El Role ya existe', 'error');
       expect(roleServiceStub.createRole).toHaveBeenCalled();
     });
