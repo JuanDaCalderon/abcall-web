@@ -11,8 +11,8 @@ export const routes: Routes = [
     component: HomeComponent,
     children: [
       {path: '', component: ListIncidenciasComponent},
-      {path: 'roles', component: RolesPermisosComponent},
-      {path: 'cliente', component: CrearClienteComponent}
+      {path: 'roles', title: 'roles', component: RolesPermisosComponent},
+      {path: 'cliente', title: 'cliente', component: CrearClienteComponent}
     ]
   },
   {path: '**', component: AccesosComponent}
