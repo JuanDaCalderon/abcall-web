@@ -19,28 +19,28 @@ import {environment} from '../../../environments/environment';
 export class CreateIncidenciasComponent implements OnInit {
   incidentForm!: FormGroup;
   crearIncidenteFlag!: string;
-  private apiUrl = environment.apiUrl;
+  private apiUrl = environment.urlApi + environment.portCrearIncidentes;
 
   constructor(
     private fb: FormBuilder,
-    private crearIncidenteService: CrearIncidenteService,
+    //private crearIncidenteService: CrearIncidenteService,
     private http: HttpClient
   ) {}
 
   ngOnInit(): void {
     this.incidentForm = this.fb.group({
-      cliente: [''],
+      cliente: ['', Validators.required],
       fecha: [new Date().toISOString().substring(0, 16), Validators.required],
       nombreUsuario: ['', Validators.required],
       telefonoUsuario: [''],
-      correoUsuario: [''],
+      correoUsuario: ['', Validators.email],
       direccionUsuario: [''],
       descripcionProblema: ['', Validators.required],
       tipoIncidencia: ['Incidencia'],
       canalIngreso: ['Web'],
       prioridad: ['Baja'],
       estado: ['Abierto'],
-      respuestaIA: ['']
+      respuestaIA: ['', Validators.required]
     });
 
     const colombiaTimeWithSeconds = new Date().toLocaleString('en-US', {timeZone: 'America/Bogota'});

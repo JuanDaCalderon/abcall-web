@@ -9,7 +9,7 @@ import {HttpClient} from '@angular/common/http';
 })
 export class CrearIncidenteService {
   /** API url */
-  private apiUrl = environment.apiUrl;
+  private apiUrl = environment.urlApi + environment.portCrearIncidentes;
   constructor(private http: HttpClient) {}
 
   /**

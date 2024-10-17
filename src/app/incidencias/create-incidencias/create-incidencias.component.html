@@ -1,8 +1,8 @@
-<div class="container">
-    <!-- Sidebar -->
+<div class="container align-content-center">
+    <!-- Sidebar
     <div class="sidebar">
-        <!--<app-navbar></app-navbar>-->
-    </div>
+        <app-navbar></app-navbar>
+    </div> -->
   
     <!-- Content -->
     <div class="content">
@@ -18,6 +18,9 @@
               <option>Bancolombia</option>
               <option>EEB</option>
             </select>
+            <div class="alert-text" *ngIf="incidentForm.get('cliente')!.touched && incidentForm.get('cliente')!.hasError('required')">
+              Cliente requerido
+            </div>
           </div>
   
           <div class="form-group">
@@ -36,6 +39,9 @@
           <div class="form-group">
             <label for="correoUsuario">Correo usuario</label>
             <input type="email" id="correoUsuario" formControlName="correoUsuario" placeholder="Correo usuario">
+            <div class="alert-text" *ngIf="incidentForm.get('correoUsuario')!.touched && incidentForm.get('correoUsuario')!.hasError('email')">
+              Formato de correo inválido
+            </div>
           </div>
   
           <div class="form-group">
@@ -86,7 +92,7 @@
             <select id="estado" formControlName="estado">
               <option>Abierto</option>
               <option>En proceso</option>
-              <option>Aespera de respuesta usuario</option>
+              <option>A espera de respuesta usuario</option>
               <option>Cerrado</option>
             </select>
           </div>
@@ -99,8 +105,8 @@
         </div>
   
         <div class="button-group">
-          <button type="submit" class="btn-save">Guardar</button>
-          <button type="button" class="btn-escalar" (click)="onEscalar()">Escalar</button>
+          <button type="submit" id="guardar" class="btn-save">Guardar</button>
+          <button type="button" id="escalar" class="btn-escalar" (click)="onEscalar()">Escalar</button>
         </div>
         <div class="alert-text" id="authFlag" >
           {{crearIncidenteFlag}}
