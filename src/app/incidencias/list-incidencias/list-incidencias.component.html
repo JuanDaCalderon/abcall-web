@@ -1,12 +1,12 @@
 <div class="container-fluid top">
-  <h2>TODAS LAS INCIDENCIAS</h2>
+  <h2>INCIDENCIAS ASIGNADAS A MI</h2>
   <div class="row row-cols-1 row-cols-md-1">
-    <div class="col-auto">
+    <div class="col-auto" *ngFor="let incidencia of incidencias">
       <div class="card">
         <div class="card-body">
           <div class="row">
             <div class="col-8">
-              This is some text within a card body.
+              {{ incidencia.descripcion }}
             </div>
             <div class="col-auto"></div>
             <div class="col align-content-end">
