@@ -9,7 +9,7 @@
     </a>
     <h5 class="navbar-brand">ROL</h5>
 
-    <div class="offcanvas offcanvas-start show" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: #9517ea; visibility: visible;">
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: #9517ea; visibility: visible;">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title secundario" id="offcanvasNavbarLabel">
           ABCall Manager
@@ -19,7 +19,7 @@
       <div class="offcanvas-body">
         <ul class="navbar-nav nav nav-pills justify-content-start flex-grow-1 pe-3">
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" routerLink="../home" routerLinkActive="active" ariaCurrentWhenActive="page">
+            <a class="nav-link" aria-current="page" routerLink="../home" routerLinkActive="active" ariaCurrentWhenActive="page" [routerLinkActiveOptions]="{exact: true}">
               <span> <i class="fa-solid fa-house fa-lg"></i> </span>
               Inicio
             </a>
