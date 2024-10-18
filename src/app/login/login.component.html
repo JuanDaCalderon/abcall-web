@@ -1,7 +1,7 @@
 <div class="login-container">
 
   <div class = "flag" *ngIf="language === 'es'">
-   <img src="./assets/img/en.jpg" class="icon-flag" alt="Icono bandera Reino Unido" 
+   <img src="./assets/img/en.jpg" id="languageButton" class="icon-flag" alt="Icono bandera Reino Unido" 
     (click)="changeLang('en')"
     (keydown.enter)="changeLang('en')" 
     tabindex="0">
@@ -22,7 +22,7 @@
 
         <!--Email-->
         <div class="input-field">
-          <label for="email">{{ 'abc.login.input.email' | translate}}</label>
+          <label for="email" id="emailLabel">{{ 'abc.login.input.email' | translate}}</label>
           <input type="email" id="email" formControlName="email" placeholder="example@example.com">
 
           <div class="alert-text" id="emailRequired" *ngIf="loginForm.get('email')!.touched && loginForm.get('email')!.hasError('required')">
@@ -35,7 +35,7 @@
 
         <!--password-->
         <div class="input-field">
-          <label for="password">{{ 'abc.login.input.password' | translate}}</label>
+          <label for="password" id="passwordLabel">{{ 'abc.login.input.password' | translate}}</label>
           <input type="password" id="password" formControlName="password" placeholder="*******">
 
           <div class="alert-text" id="passwordRequired" *ngIf="loginForm.get('password')!.touched && loginForm.get('password')!.hasError('required')">
@@ -49,8 +49,11 @@
         <div class="button-group">
           <button id="guardar" type="submit" [disabled]="!loginForm.valid">{{ 'abc.btn.login' | translate}}</button>
         </div>
-        <div class="alert-text" id="authFlag" >
-          {{authFlag}}
+        <div class="alert-text" id="authFlagError" *ngIf='authFlag === "Datos de usuario incorrectos"'>
+          {{ 'abc.toast.incorrect.message' | translate}}
+        </div>
+        <div class="alert-text" id="authFlagSucces" *ngIf='authFlag === "Has iniciado sesión correctamente"' >
+          {{ 'abc.toast.success.message' | translate}}
         </div>
       </form>
 
