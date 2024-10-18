@@ -1,0 +1,59 @@
+<div class="login-container">
+
+  <div class = "flag">
+    <img src="uk-flag.png" class="icon-flag" alt="Icono bandera uk lag">
+  </div>
+
+  <div class="login-form">
+    <div class="form-content">
+      <img src="logo.png" class="icon" alt="logo">
+
+      <form
+        [formGroup]="loginForm" (submit)="!loginForm.invalid && submit()">
+
+        <!--Email-->
+        <div class="input-field">
+          <label for="email">Correo electronico</label>
+          <input type="email" id="email" formControlName="email" placeholder="example@example.com">
+          
+          <div class="alert-text" *ngIf="loginForm.get('email')!.touched && loginForm.get('email')!.hasError('required')">
+            Correo requerido
+          </div>
+          <div class="alert-text" *ngIf="loginForm.get('email')!.hasError('email')">
+            Formato correo invalido
+          </div>
+        </div>
+             
+        <!--password-->
+        <div class="input-field">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" formControlName="password" placeholder="*******">
+
+          <div class="alert-text" *ngIf="loginForm.get('password')!.touched && loginForm.get('password')!.hasError('required')">
+            Contraseña requerida
+          </div>
+          <div class="alert-text" *ngIf="loginForm.get('password')!.hasError('minlength')">
+            Contraseña menos 8 caracteres
+          </div>
+        </div>
+
+        <div class="button-group">
+          <button id="guardar" type="submit" [disabled]="!loginForm.valid">entrar</button>
+        </div>
+        <div class="alert-text" id="authFlag" >
+          {{authFlag}}
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <div class="login-image" >
+    <img src="login-image.png" alt="Call Center Agent" class="responsive-image">
+  </div>
+</div>
+
+
+
+
+

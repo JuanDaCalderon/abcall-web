@@ -1,0 +1,13 @@
+{
+    "abc.footer.copy": "MISO - Proyecto final - Grupo 01",
+    "abc.header.login": "Iniciar sesión",
+    "abc.login.input.email": "Correo electrónico",
+    "abc.login.input.error.required.email": "El correo es obligatorio",
+    "abc.login.input.error.format.email": "El correo debe tener formato de email",
+    "abc.login.input.password": "Contraseña",
+    "abc.login.input.error.required.password": "La contraseña es obligatoria",
+    "abc.login.input.error.minlength.password": "La contraseña debe tener al menos 8 caracteres",
+    "abc.btn.login": "Entrar",
+    "abc.toast.success.message": "Has iniciado sesión correctamente",
+    "abc.toast.incorrect.message": "Datos de usuario incorrectos"
+}
