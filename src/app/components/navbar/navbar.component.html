@@ -26,12 +26,12 @@
           <li>
             <hr class="divider">
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Administrador' ">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' ">
             <a class="nav-link" routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-circle-plus fa-lg"></i></span>
               Crear un Gestor</a>
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Administrador' ">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' ">
             <a class="nav-link" routerLink="cliente" routerLinkActive="active" ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-circle-plus fa-lg"></i></span>
               Crear un Cliente</a>
@@ -47,13 +47,13 @@
           <li>
             <hr class="divider">
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Administrador' " >
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' " >
             <a class="nav-link " routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-wrench fa-lg"></i></span>
               Personalizar texto saludo y cierre
             </a>
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Administrador' ">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' ">
             <a class="nav-link " routerLink="roles" routerLinkActive="active" ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-wrench fa-lg"></i></span>
               Gestion de roles y permisos</a>
@@ -84,7 +84,7 @@
               <span><i class="fa-solid fa-square-poll-vertical"></i></span>
               Tablero incidentes por gestor</a>
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Administrador' ">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' ">
             <a class="nav-link" routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-square-poll-vertical"></i></span>
               Tablero incidentes por cliente</a>
@@ -92,7 +92,7 @@
           <li>
             <hr class="divider">
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Administrador' ">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' ">
             <a class="nav-link" >
               <span><i class="fa-solid fa-file-arrow-down"></i></span>
               Descargar reporte de incidentes</a>

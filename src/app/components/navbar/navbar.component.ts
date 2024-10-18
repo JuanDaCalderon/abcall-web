@@ -12,7 +12,7 @@ import {Role} from '../../models/role';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit {
-  public usuario: Usuario = new Usuario(0, '', '', '', '', '', new Role(0, '', []));
+  public usuario: Usuario = new Usuario(0, '', '', '', '', '', '', '', '', '', new Role(0, '', []));
 
   constructor(
     private router: Router,
