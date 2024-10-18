@@ -1,14 +1,17 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Cliente} from '../models/cliente';
+import {environment} from '../../environments/environment';
+import {UsuarioInterface} from '../models/usuario-interface';
+import {Usuario} from '../models/usuario';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
-  private url = 'http://localhost:8003/';
+  private url = environment.urlApi + environment.portUsuario + '/';
   constructor(private _http: HttpClient) {}
-  createCliente(client: Cliente): Observable<Cliente> {
-    return this._http.post<Cliente>(this.url + 'usuario/cliente', client);
+  createCliente(client: UsuarioInterface): Observable<Usuario> {
+    return this._http.post<Usuario>(this.url + 'usuario/register', client);
   }
 }
