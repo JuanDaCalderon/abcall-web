@@ -1,7 +1,8 @@
 import {CommonModule} from '@angular/common';
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
 import {catchError, take, Observable} from 'rxjs';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {Usuario} from '../models/usuario';
 import {environment} from '../../environments/environment';
@@ -12,21 +13,23 @@ import {environment} from '../../environments/environment';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [ReactiveFormsModule, CommonModule, HttpClientModule],
+  imports: [ReactiveFormsModule, CommonModule, HttpClientModule, TranslateModule],
   providers: [],
   standalone: true
 })
 export class LoginComponent {
   loginForm!: FormGroup;
-  authFlag!: string;
-  private apiUrl = environment.apiUrl;
+  authFlag = '';
+  language = 'es';
+  apiUrl = environment.apiUrl;
+  translate: TranslateService = inject(TranslateService);
 
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient
+
     //private authService: AuthService
   ) {
-    this.authFlag = '';
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]]
@@ -53,7 +56,8 @@ export class LoginComponent {
     return this.http.post<Usuario>(`${this.apiUrl}:8001/usuario/login`, {email, password});
   }
 
-  //changeLanguage(lang: string) {
-  //  this.translate.use(lang);
-  //}
+  public changeLang(lang: string): void {
+    this.language = lang;
+    this.translate.use(lang);
+  }
 }
