@@ -5,7 +5,7 @@ import {of, throwError} from 'rxjs';
 import {LoginComponent} from './login.component';
 import {AuthService} from '../services/auth.service';
 import {Usuario} from '../models/usuario';
-import {HttpClientModule} from '@angular/common/http';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -15,7 +15,7 @@ describe('LoginComponent', () => {
   beforeEach(async () => {
     AuthServiceStub = jasmine.createSpyObj('AuthService', ['login']);
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, HttpClientTestingModule, LoginComponent, HttpClientModule],
+      imports: [ReactiveFormsModule, HttpClientTestingModule, LoginComponent, RouterTestingModule],
       declarations: [],
       providers: [{provide: AuthService, useValue: AuthServiceStub}]
     }).compileComponents();
@@ -63,7 +63,6 @@ describe('LoginComponent', () => {
     spyOn(AuthServiceStub, 'login').and.returnValue(of(mockResponse));
     component.loginForm.setValue({email: 'test@test.com', password: 'password123'});
     component.submit();
-    //expect(AuthServiceStub.login).toHaveBeenCalledWith(mockResponse);
     expect(component.authFlag).toBe('Has iniciado sesión correctamente');
   });
 

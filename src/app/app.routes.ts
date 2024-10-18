@@ -4,12 +4,14 @@ import {RolesPermisosComponent} from './configuracion/roles-permisos/roles-permi
 import {ListIncidenciasComponent} from './incidencias/list-incidencias/list-incidencias.component';
 import {CrearClienteComponent} from './configuracion/crear-cliente/crear-cliente.component';
 import {LoginComponent} from './login/login.component';
+import {AuthGuard} from './guards/auth.guard';
 
 export const routes: Routes = [
   {path: '', component: LoginComponent},
   {
     path: 'home',
     component: HomeComponent,
+    canActivate: [AuthGuard],
     children: [
       {path: '', component: ListIncidenciasComponent},
       {path: 'roles', title: 'roles', component: RolesPermisosComponent},
