@@ -24,8 +24,6 @@ describe('AuthGuard', () => {
   describe('canActivate', () => {
     it('makes expected calls', () => {
       const routerStub: Router = TestBed.inject(Router);
-      //const activatedRouteSnapshotStub: ActivatedRouteSnapshot = {} as any;
-      //const routerStateSnapshotStub: RouterStateSnapshot = {} as any;
       spyOn(routerStub, 'navigate').and.callThrough();
       service.canActivate();
       expect(routerStub.navigate).toHaveBeenCalled();
