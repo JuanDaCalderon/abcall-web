@@ -9,13 +9,13 @@
       <img src="logo.png" class="icon" alt="logo">
 
       <form
-        [formGroup]="loginForm" (submit)="!loginForm.invalid && submit()">
+        [formGroup]="loginForm" (submit)="submit()">
 
         <!--Email-->
         <div class="input-field">
           <label for="email">Correo electronico</label>
           <input type="email" id="email" formControlName="email" placeholder="example@example.com">
-          
+
           <div class="alert-text" *ngIf="loginForm.get('email')!.touched && loginForm.get('email')!.hasError('required')">
             Correo requerido
           </div>
@@ -23,7 +23,7 @@
             Formato correo invalido
           </div>
         </div>
-             
+
         <!--password-->
         <div class="input-field">
           <label for="password">Contraseña</label>
@@ -38,7 +38,7 @@
         </div>
 
         <div class="button-group">
-          <button id="guardar" type="submit" [disabled]="!loginForm.valid">entrar</button>
+          <button id="guardar" type="submit" [disabled]="loginForm.invalid">entrar</button>
         </div>
         <div class="alert-text" id="authFlag" >
           {{authFlag}}

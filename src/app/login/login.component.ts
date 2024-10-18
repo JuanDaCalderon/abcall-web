@@ -1,30 +1,24 @@
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgIf} from '@angular/common';
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
-import {catchError, take, Observable} from 'rxjs';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {Usuario} from '../models/usuario';
-import {environment} from '../../environments/environment';
+import {AuthService} from '../services/auth.service';
 //import { ToastrModule } from 'ngx-toastr';
-//import {AuthService} from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [ReactiveFormsModule, CommonModule, HttpClientModule],
-  providers: [],
+  imports: [ReactiveFormsModule, CommonModule, NgIf],
+  providers: [AuthService],
   standalone: true
 })
 export class LoginComponent {
   loginForm!: FormGroup;
   authFlag!: string;
-  private apiUrl = environment.apiUrl;
 
   constructor(
     private formBuilder: FormBuilder,
-    private http: HttpClient
-    //private authService: AuthService
+    private authService: AuthService
   ) {
     this.authFlag = '';
     this.loginForm = this.formBuilder.group({
@@ -33,27 +27,25 @@ export class LoginComponent {
     });
   }
 
-  public async submit() {
-    this.login(this.loginForm.get('email')?.value, this.loginForm.get('password')?.value)
-      .pipe(
-        take(1),
-        catchError(async () => {
-          this.authFlag = 'Datos de usuario incorrectos';
-        })
-      )
-      .subscribe(async (value) => {
-        if (value) {
+  submit(): void {
+    if (this.loginForm.valid) {
+      const newlogin = {
+        email: this.loginForm.value.email,
+        password: this.loginForm.value.password
+      };
+
+      this.authService.login(newlogin.email, newlogin.password).subscribe(
+        (response) => {
+          console.log('Has iniciado sesión correctamente:', response);
           this.authFlag = 'Has iniciado sesión correctamente';
           this.loginForm.reset();
+        },
+        (error) => {
+          const errorMessage = error?.error?.message || 'Ocurrió un error inesperado';
+          console.error('Error al iniciar sesion:', errorMessage);
+          this.authFlag = 'Datos de usuario incorrectos';
         }
-      });
+      );
+    }
   }
-
-  public login(email: string, password: string): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrl}:8001/usuario/login`, {email, password});
-  }
-
-  //changeLanguage(lang: string) {
-  //  this.translate.use(lang);
-  //}
 }
