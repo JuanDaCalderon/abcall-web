@@ -22,7 +22,6 @@ describe('LoginComponent', () => {
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
-    //authService = TestBed.inject(AuthService);
     fixture.detectChanges();
   });
 

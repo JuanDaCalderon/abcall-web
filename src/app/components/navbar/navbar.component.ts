@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {ActivatedRoute, Router, RouterLinkActive} from '@angular/router';
 import {Usuario} from '../../models/usuario';
 import {NgIf} from '@angular/common';
 import {Role} from '../../models/role';
@@ -7,7 +7,7 @@ import {Role} from '../../models/role';
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [RouterLink, RouterOutlet, RouterLinkActive, NgIf],
+  imports: [RouterLinkActive, NgIf],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
@@ -21,7 +21,6 @@ export class NavbarComponent implements OnInit {
   ngOnInit(): void {
     const storedUsuario = localStorage.getItem('usuario');
     this.usuario = storedUsuario ? JSON.parse(storedUsuario) : null;
-    console.log(this.usuario);
   }
 
   logout(): void {

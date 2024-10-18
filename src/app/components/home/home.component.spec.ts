@@ -15,6 +15,8 @@ describe('HomeComponent', () => {
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
+
+    localStorage.setItem('usuario', JSON.stringify({rol: 'Admin'}));
     fixture.detectChanges();
   });
 
