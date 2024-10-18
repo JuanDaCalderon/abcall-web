@@ -25,10 +25,10 @@
           <label for="email">{{ 'abc.login.input.email' | translate}}</label>
           <input type="email" id="email" formControlName="email" placeholder="example@example.com">
 
-          <div class="alert-text" *ngIf="loginForm.get('email')!.touched && loginForm.get('email')!.hasError('required')">
+          <div class="alert-text" id="emailRequired" *ngIf="loginForm.get('email')!.touched && loginForm.get('email')!.hasError('required')">
             {{ 'abc.login.input.error.required.email' | translate}}
           </div>
-          <div class="alert-text" *ngIf="loginForm.get('email')!.hasError('email')">
+          <div class="alert-text" id="emailFormatError" *ngIf="loginForm.get('email')!.hasError('email')">
             {{ 'abc.login.input.error.format.email' | translate}}
           </div>
         </div>
@@ -38,10 +38,10 @@
           <label for="password">{{ 'abc.login.input.password' | translate}}</label>
           <input type="password" id="password" formControlName="password" placeholder="*******">
 
-          <div class="alert-text" *ngIf="loginForm.get('password')!.touched && loginForm.get('password')!.hasError('required')">
+          <div class="alert-text" id="passwordRequired" *ngIf="loginForm.get('password')!.touched && loginForm.get('password')!.hasError('required')">
             {{ 'abc.login.input.error.required.password' | translate}}
           </div>
-          <div class="alert-text" *ngIf="loginForm.get('password')!.hasError('minlength')">
+          <div class="alert-text" id="passwordMinLength" *ngIf="loginForm.get('password')!.hasError('minlength')">
             {{ 'abc.login.input.error.minlength.password' | translate}}
           </div>
         </div>
