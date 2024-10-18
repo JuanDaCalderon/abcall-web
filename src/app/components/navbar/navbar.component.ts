@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
-import {AuthService} from '../../services/auth.service';
 import {Usuario} from '../../models/usuario';
 import {NgIf} from '@angular/common';
 
@@ -15,7 +14,6 @@ export class NavbarComponent {
   public usuario: Usuario;
 
   constructor(
-    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -25,7 +23,7 @@ export class NavbarComponent {
   }
 
   logout(): void {
-    this.authService.logout();
+    localStorage.removeItem('usuario');
     this.router.navigate(['/']);
   }
 }
