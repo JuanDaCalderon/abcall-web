@@ -8,7 +8,7 @@ import {Usuario} from '../models/usuario';
 })
 export class AuthService {
   /** API url */
-  private apiUrl = environment.apiUrl;
+  private apiUrl = environment.urlApi + environment.portUsuario;
   constructor(private http: HttpClient) {}
 
   /**
