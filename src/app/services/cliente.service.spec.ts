@@ -2,7 +2,8 @@ import {TestBed} from '@angular/core/testing';
 
 import {ClienteService} from './cliente.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {Cliente} from '../models/cliente';
+import {UsuarioInterface} from '../models/usuario-interface';
+import {Usuario} from '../models/usuario';
 
 describe('ClienteService', () => {
   let service: ClienteService;
@@ -22,19 +23,38 @@ describe('ClienteService', () => {
   describe('createRole', () => {
     it('makes expected calls', () => {
       const httpTestingController = TestBed.inject(HttpTestingController);
-      const clienteStub: Cliente = {
+      const clienteStub: UsuarioInterface = {
         id: 1,
-        nombre: 'pepito perez',
+        nombres: 'pepito',
         email: 'pepito@perez.com',
-        telefono: '8888888',
-        direccion: 'calle 1'
-      } as Cliente;
+        telefono: '888888888',
+        direccion: 'calle 1',
+        username: 'pepitoperex',
+        password: '123456789',
+        apellidos: 'perez',
+        gestortier: '',
+        rol: 2
+      } as UsuarioInterface;
+
+      const clienteResponseStub: Usuario = {
+        id: 1,
+        nombres: 'pepito',
+        email: 'pepito@perez.com',
+        telefono: '888888888',
+        direccion: 'calle 1',
+        username: 'pepitoperex',
+        password: '123456789',
+        apellidos: 'perez',
+        gestortier: '',
+        token: '',
+        rol: {NOMBRE: 'administrador'}
+      } as Usuario;
       service.createCliente(clienteStub).subscribe((res) => {
-        expect(res).toEqual(clienteStub);
+        expect(res).toEqual(clienteResponseStub);
       });
-      const req = httpTestingController.expectOne('http://localhost:8003/usuario/cliente');
+      const req = httpTestingController.expectOne('http://localhost:8003/usuario/register');
       expect(req.request.method).toEqual('POST');
-      req.flush(clienteStub);
+      req.flush(clienteResponseStub);
       httpTestingController.verify();
     });
   });

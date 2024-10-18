@@ -4,7 +4,7 @@ import {CrearClienteComponent} from './crear-cliente.component';
 import {ClienteService} from '../../services/cliente.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {of, throwError} from 'rxjs';
-import {Cliente} from '../../models/cliente';
+import {UsuarioInterface} from '../../models/usuario-interface';
 
 describe('CrearClienteComponent', () => {
   let component: CrearClienteComponent;
@@ -19,7 +19,18 @@ describe('CrearClienteComponent', () => {
     }).compileComponents();
     fixture = TestBed.createComponent(CrearClienteComponent);
     component = fixture.componentInstance;
-    const mockCliente: Cliente = {id: 1, nombre: 'pepito perez', email: 'pepito@perez.com', telefono: '8888888', direccion: 'calle 1'};
+    const mockCliente: UsuarioInterface = {
+      id: 1,
+      nombres: 'pepito',
+      email: 'pepito@perez.com',
+      telefono: '888888888',
+      direccion: 'calle 1',
+      username: 'pepitoperex',
+      password: '123456789',
+      apellidos: 'perez',
+      gestortier: '',
+      rol: 2
+    };
     clienteServiceStub.createCliente.and.returnValue(of(mockCliente));
 
     const toastElement = document.createElement('div');
@@ -44,10 +55,11 @@ describe('CrearClienteComponent', () => {
       //const clienteServiceStub: ClienteService = fixture.debugElement.injector.get(ClienteService);
       spyOn(component, 'showToast').and.callThrough();
       component.clientForm.setValue({
-        nombre: 'pepito perez',
+        nombres: 'pepito',
         email: 'pepito@perez.com',
-        telefono: '88888888',
-        direccion: 'calle 2 #5-78'
+        telefono: '888888888',
+        direccion: 'calle 1',
+        apellidos: 'perez'
       });
       component.onSubmit();
       expect(component.showToast).toHaveBeenCalledWith('Cliente creado exitosamente!', 'success');
@@ -59,7 +71,8 @@ describe('CrearClienteComponent', () => {
       clienteServiceStub.createCliente.and.returnValue(throwError(errorResponse));
       spyOn(component, 'showToast').and.callThrough();
       component.clientForm.setValue({
-        nombre: 'pepito perez',
+        nombres: 'pepito',
+        apellidos: 'perez',
         email: 'pepito@perez.com',
         telefono: '88888888',
         direccion: 'calle 2 #5-78'
@@ -74,7 +87,8 @@ describe('CrearClienteComponent', () => {
       clienteServiceStub.createCliente.and.returnValue(throwError(errorResponse));
       spyOn(component, 'showToast').and.callThrough();
       component.clientForm.setValue({
-        nombre: 'pepito perez',
+        nombres: 'pepito',
+        apellidos: 'perez',
         email: 'pepito@perez.com',
         telefono: '88888888',
         direccion: 'calle 2 #5-78'
