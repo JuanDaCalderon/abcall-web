@@ -48,7 +48,7 @@ describe('ClienteService', () => {
         apellidos: 'perez',
         gestortier: '',
         token: '',
-        rol: {NOMBRE: 'administrador'}
+        rol: {nombre: 'administrador'}
       } as Usuario;
       service.createCliente(clienteStub).subscribe((res) => {
         expect(res).toEqual(clienteResponseStub);
