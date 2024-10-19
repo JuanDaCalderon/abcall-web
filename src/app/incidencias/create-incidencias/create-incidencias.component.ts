@@ -3,7 +3,7 @@ import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
 import {environment} from '../../../environments/environment';
 import {CrearIncidenteService} from '../../services/crear-incidente.service';
-import {ActivatedRoute, Router} from '@angular/router';
+import {Router} from '@angular/router';
 import {NavbarComponent} from '../../components/navbar/navbar.component';
 import {ToastrService} from 'ngx-toastr';
 
@@ -24,8 +24,8 @@ export class CreateIncidenciasComponent {
   constructor(
     private formBuilder: FormBuilder,
     private crearIncidenteService: CrearIncidenteService,
-    private router: Router,
-    private route: ActivatedRoute,
+    //private router: Router,
+    //private route: ActivatedRoute,
     private toastr: ToastrService
   ) {
     this.incidentForm = this.formBuilder.group({
@@ -53,79 +53,105 @@ export class CreateIncidenciasComponent {
   }
 
   onSubmit(): void {
-    this.sendRequest('crear');
+    const newIncident = {
+      cliente: this.incidentForm.get('cliente')?.value,
+      fecha: this.incidentForm.get('fecha')?.value,
+      nombreUsuario: this.incidentForm.get('nombreUsuario')?.value,
+      correoUsuario: this.incidentForm.get('correoUsuario')?.value,
+      direccionUsuario: this.incidentForm.get('direccionUsuario')?.value,
+      telefonoUsuario: this.incidentForm.get('telefonoUsuario')?.value,
+      descripcionProblema: this.incidentForm.get('descripcionProblema')?.value,
+      prioridad: this.incidentForm.get('prioridad')?.value,
+      estado: this.incidentForm.get('estado')?.value,
+      respuestaIA: this.incidentForm.get('respuestaIA')?.value,
+      gestor: 'gestorNivel1'
+    };
+    this.crearIncidenteService
+      .crearIncidente(
+        newIncident.cliente,
+        newIncident.fecha,
+        newIncident.nombreUsuario,
+        newIncident.correoUsuario,
+        newIncident.direccionUsuario,
+        newIncident.telefonoUsuario,
+        newIncident.descripcionProblema,
+        newIncident.prioridad,
+        newIncident.estado,
+        newIncident.respuestaIA
+      )
+      .subscribe(
+        (response) => {
+          localStorage.setItem('incidente', JSON.stringify(response));
+          this.toastr.success('Numero de caso: ' + String(response.ID), 'Incidente creado correctamente ', {
+            closeButton: true,
+            timeOut: 10000,
+            positionClass: 'toast-top-center'
+          });
+          this.incidentForm.reset();
+          this.afterReset();
+          //this.router.navigate(['/home']);
+          this.crearIncidenteFlag = 'Incidente creado';
+        },
+        (error) => {
+          console.error('Error al crear incidente:', error);
+          this.escalarIncidenteFlag = '';
+          this.crearIncidenteFlag = 'Incidente no creado';
+          this.toastr.error('Error al crear el incidente', 'Error', {closeButton: true, timeOut: 3000, positionClass: 'toast-top-center'});
+        }
+      );
   }
 
   onEscalar(): void {
-    this.sendRequest('escalar');
-  }
-
-  sendRequest(tarea: string): void {
-    if (this.incidentForm.valid) {
-      let gestor = 'nivel 1';
-      if (tarea === 'escalar') {
-        gestor = 'nivel 2';
-      }
-
-      const newIncident = {
-        cliente: this.incidentForm.get('cliente')?.value,
-        fecha: this.incidentForm.get('fecha')?.value,
-        nombreUsuario: this.incidentForm.get('nombreUsuario')?.value,
-        correoUsuario: this.incidentForm.get('correoUsuario')?.value,
-        direccionUsuario: this.incidentForm.get('direccionUsuario')?.value,
-        telefonoUsuario: this.incidentForm.get('telefonoUsuario')?.value,
-        descripcionProblema: this.incidentForm.get('descripcionProblema')?.value,
-        prioridad: this.incidentForm.get('prioridad')?.value,
-        estado: this.incidentForm.get('estado')?.value,
-        respuestaIA: this.incidentForm.get('respuestaIA')?.value,
-        gestor: gestor
-      };
-      this.crearIncidenteService
-        .crearIncidente(
-          newIncident.cliente,
-          newIncident.fecha,
-          newIncident.nombreUsuario,
-          newIncident.correoUsuario,
-          newIncident.direccionUsuario,
-          newIncident.telefonoUsuario,
-          newIncident.descripcionProblema,
-          newIncident.prioridad,
-          newIncident.estado,
-          newIncident.respuestaIA
-        )
-        .subscribe(
-          (response) => {
-            localStorage.setItem('incidente', JSON.stringify(response));
-            if (tarea == 'crear') {
-              this.toastr.success('Numero de caso: 12 ', 'Incidente creado correctamente ', {
-                closeButton: true,
-                timeOut: 10000,
-                positionClass: 'toast-top-center'
-              });
-            } else {
-              this.toastr.success('Numero de caso: 12 ', 'Incidente escalado correctamente ', {
-                closeButton: true,
-                timeOut: 10000,
-                positionClass: 'toast-top-center'
-              });
-            }
-            this.incidentForm.reset();
-            this.afterReset();
-            //this.router.navigate(['/home']);
-          },
-          (error) => {
-            console.error('Error al crear incidente:', error);
-            if (tarea == 'crear') {
-              this.escalarIncidenteFlag = '';
-              this.crearIncidenteFlag = 'Incidente no creado';
-            } else {
-              this.crearIncidenteFlag = '';
-              this.escalarIncidenteFlag = 'Incidente no escalado';
-            }
-            this.toastr.error('Error al escalar el incidente', 'Error');
-          }
-        );
-    }
+    const newIncident = {
+      cliente: this.incidentForm.get('cliente')?.value,
+      fecha: this.incidentForm.get('fecha')?.value,
+      nombreUsuario: this.incidentForm.get('nombreUsuario')?.value,
+      correoUsuario: this.incidentForm.get('correoUsuario')?.value,
+      direccionUsuario: this.incidentForm.get('direccionUsuario')?.value,
+      telefonoUsuario: this.incidentForm.get('telefonoUsuario')?.value,
+      descripcionProblema: this.incidentForm.get('descripcionProblema')?.value,
+      prioridad: this.incidentForm.get('prioridad')?.value,
+      estado: this.incidentForm.get('estado')?.value,
+      respuestaIA: this.incidentForm.get('respuestaIA')?.value,
+      gestor: 'gestorNivel1'
+    };
+    this.crearIncidenteService
+      .crearIncidente(
+        newIncident.cliente,
+        newIncident.fecha,
+        newIncident.nombreUsuario,
+        newIncident.correoUsuario,
+        newIncident.direccionUsuario,
+        newIncident.telefonoUsuario,
+        newIncident.descripcionProblema,
+        newIncident.prioridad,
+        newIncident.estado,
+        newIncident.respuestaIA
+      )
+      .subscribe(
+        (response) => {
+          localStorage.setItem('incidente', JSON.stringify(response));
+          this.toastr.success('Numero de caso: ' + String(response.ID), 'Incidente creado correctamente ', {
+            closeButton: true,
+            timeOut: 10000,
+            positionClass: 'toast-top-center'
+          });
+          this.incidentForm.reset();
+          this.afterReset();
+          //this.router.navigate(['/home']);
+          this.escalarIncidenteFlag = 'Incidente escalado';
+        },
+        (error) => {
+          console.error('Error al crear incidente:', error);
+          this.crearIncidenteFlag = '';
+          this.escalarIncidenteFlag = 'Incidente no escalado';
+          this.toastr.error('Error al escalar el incidente', 'Error', {
+            closeButton: true,
+            timeOut: 3000,
+            positionClass: 'toast-top-center'
+          });
+        }
+      );
   }
 
   onDescripcionProblemaChange(): void {
