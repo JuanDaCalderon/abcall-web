@@ -1,34 +1,32 @@
 import {CommonModule} from '@angular/common';
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {CrearIncidenteService} from '../../services/crear-incidente.service';
-import {catchError, Observable, take} from 'rxjs';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {NavbarComponent} from '../../components/navbar/navbar.component';
-import {Incidente} from '../../models/incidente';
+import {Component} from '@angular/core';
+import {FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
 import {environment} from '../../../environments/environment';
+import {CrearIncidenteService} from '../../services/crear-incidente.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {NavbarComponent} from '../../components/navbar/navbar.component';
 
 @Component({
   selector: 'app-create-incidencias',
   templateUrl: './create-incidencias.component.html',
   styleUrl: './create-incidencias.component.scss',
-  imports: [ReactiveFormsModule, NavbarComponent, CommonModule, HttpClientModule],
-  providers: [CrearIncidenteService],
+  imports: [ReactiveFormsModule, NavbarComponent, CommonModule],
+  providers: [CrearIncidenteService, Router],
   standalone: true
 })
-export class CreateIncidenciasComponent implements OnInit {
+export class CreateIncidenciasComponent {
   incidentForm!: FormGroup;
-  crearIncidenteFlag!: string;
-  private apiUrl = environment.urlApi + environment.portCrearIncidentes;
+  crearIncidenteFlag = '';
+  escalarIncidenteFlag = '';
+  apiUrl = environment.urlApi + environment.portCrearIncidentes;
 
   constructor(
-    private fb: FormBuilder,
-    //private crearIncidenteService: CrearIncidenteService,
-    private http: HttpClient
-  ) {}
-
-  ngOnInit(): void {
-    this.incidentForm = this.fb.group({
+    private formBuilder: FormBuilder,
+    private crearIncidenteService: CrearIncidenteService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
+    this.incidentForm = this.formBuilder.group({
       cliente: ['', Validators.required],
       fecha: [new Date().toISOString().substring(0, 16), Validators.required],
       nombreUsuario: ['', Validators.required],
@@ -47,72 +45,86 @@ export class CreateIncidenciasComponent implements OnInit {
     this.incidentForm.patchValue({
       fecha: new Date(colombiaTimeWithSeconds).toISOString().replace('T', ' ').substring(0, 19)
     });
-
     this.incidentForm.get('fecha')?.disable();
     this.incidentForm.get('canalIngreso')?.disable();
+    this.incidentForm.get('respuestaIA')?.disable();
   }
 
   onSubmit(): void {
-    if (this.incidentForm.valid) {
-      // Handle form submission logic, such as sending data to a backend
-      this.crearIncidente(
-        this.incidentForm.get('cliente')?.value,
-        this.incidentForm.get('fecha')?.value,
-        this.incidentForm.get('nombreUsuario')?.value,
-        this.incidentForm.get('correoUsuario')?.value,
-        this.incidentForm.get('direccionUsuario')?.value,
-        this.incidentForm.get('telefonoUsuario')?.value,
-        this.incidentForm.get('descripcionProblema')?.value,
-        this.incidentForm.get('prioridad')?.value,
-        this.incidentForm.get('estado')?.value,
-        this.incidentForm.get('respuestaIA')?.value
-      )
-        .pipe(
-          take(1),
-          catchError(async () => {
-            this.crearIncidenteFlag = 'Incidente no creado';
-          })
-        )
-        .subscribe(async (value) => {
-          if (value) {
-            this.crearIncidenteFlag = 'Incidente creado correctamente';
-            this.incidentForm.reset();
-          }
-        });
-    }
-  }
-
-  public crearIncidente(
-    cliente: string,
-    fechacreacion: string,
-    usuario: string,
-    correo: string,
-    direccion: string,
-    telefono: string,
-    descripcion: string,
-    prioridad: string,
-    estado: string,
-    comentarios: string
-  ): Observable<Incidente> {
-    return this.http.post<Incidente>(`${this.apiUrl}:8000/incidentes`, {
-      cliente,
-      fechacreacion,
-      usuario,
-      correo,
-      direccion,
-      telefono,
-      descripcion,
-      prioridad,
-      estado,
-      comentarios
-    });
+    this.sendRequest('crear');
   }
 
   onEscalar(): void {
-    // Handle the escalation logic here
+    this.sendRequest('escalar');
   }
 
-  onCloseCase(): void {
-    // Handle closing the case
+  sendRequest(tarea: string): void {
+    if (this.incidentForm.valid) {
+      let gestor = 'nivel 1';
+      if (tarea === 'escalar') {
+        gestor = 'nivel 2';
+      }
+
+      const newIncident = {
+        cliente: this.incidentForm.get('cliente')?.value,
+        fecha: this.incidentForm.get('fecha')?.value,
+        nombreUsuario: this.incidentForm.get('nombreUsuario')?.value,
+        correoUsuario: this.incidentForm.get('correoUsuario')?.value,
+        direccionUsuario: this.incidentForm.get('direccionUsuario')?.value,
+        telefonoUsuario: this.incidentForm.get('telefonoUsuario')?.value,
+        descripcionProblema: this.incidentForm.get('descripcionProblema')?.value,
+        prioridad: this.incidentForm.get('prioridad')?.value,
+        estado: this.incidentForm.get('estado')?.value,
+        respuestaIA: this.incidentForm.get('respuestaIA')?.value,
+        gestor: gestor
+      };
+      this.crearIncidenteService
+        .crearIncidente(
+          newIncident.cliente,
+          newIncident.fecha,
+          newIncident.nombreUsuario,
+          newIncident.correoUsuario,
+          newIncident.direccionUsuario,
+          newIncident.telefonoUsuario,
+          newIncident.descripcionProblema,
+          newIncident.prioridad,
+          newIncident.estado,
+          newIncident.respuestaIA
+        )
+        .subscribe(
+          (response) => {
+            localStorage.setItem('incidente', JSON.stringify(response));
+            if (tarea == 'crear') {
+              this.crearIncidenteFlag = 'Incidente creado correctamente';
+            } else {
+              this.escalarIncidenteFlag = 'Incidente escalado correctamente';
+            }
+            this.incidentForm.reset();
+          },
+          (error) => {
+            console.error('Error al crear incidente:', error);
+            if (tarea == 'crear') {
+              this.escalarIncidenteFlag = '';
+              this.crearIncidenteFlag = 'Incidente no creado';
+            } else {
+              this.crearIncidenteFlag = '';
+              this.escalarIncidenteFlag = 'Incidente no escalado';
+            }
+          }
+        );
+    }
+  }
+
+  onDescripcionProblemaChange(): void {
+    const value = this.incidentForm.get('descripcionProblema')?.value;
+    if (value && value.trim != '') {
+      this.incidentForm.get('respuestaIA')?.enable();
+      this.incidentForm.get('respuestaIA')?.setValue('Respuesta generdada por IA');
+      this.incidentForm.get('respuestaIA')?.disable();
+    } else {
+      this.incidentForm.get('respuestaIA')?.enable();
+      this.incidentForm.get('respuestaIA')?.setValue('');
+      this.incidentForm.get('respuestaIA')?.disable();
+    }
   }
 }

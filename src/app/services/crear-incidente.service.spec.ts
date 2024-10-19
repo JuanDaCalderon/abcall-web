@@ -24,11 +24,11 @@ describe('Service: CrearIncidente', () => {
     httpMock.verify();
   });
 
-  fit('should be created', () => {
+  it('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  fit('should create an incident', () => {
+  it('should create an incident', () => {
     const mockIncidente: Incidente = {
       id: 1,
       cliente: 'Test Client',

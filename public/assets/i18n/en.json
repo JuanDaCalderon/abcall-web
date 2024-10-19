@@ -10,5 +10,6 @@
     "abc.btn.login": "Login",
     "abc.toast.success.message": "You have successfully logged in",
     "abc.toast.incorrect.message": "Incorrect user data",
-    "hello": "Hello"
+    "abc.crear-incidencia.crear.success.message": "Incident created successfully",
+    "abc.crear-incidencia.escalar.success.message": "Incident escalated successfully"
 }

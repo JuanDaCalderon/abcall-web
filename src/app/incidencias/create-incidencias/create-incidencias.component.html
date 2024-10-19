@@ -57,7 +57,7 @@
           <!-- Campo que debe ocupar toda la fila -->
           <div class="form-group full-width">
             <label for="descripcionProblema">Descripción del problema</label>
-            <textarea id="descripcionProblema" formControlName="descripcionProblema" rows="4" placeholder="Descripción del problema"></textarea>
+            <textarea id="descripcionProblema" formControlName="descripcionProblema" rows="4" placeholder="Descripción del problema" (input)="onDescripcionProblemaChange()"></textarea>
             <div class="alert-text" *ngIf="incidentForm.get('descripcionProblema')!.touched && incidentForm.get('descripcionProblema')!.hasError('required')">
                 Descripción del problema requerido
             </div>
@@ -105,11 +105,14 @@
         </div>
   
         <div class="button-group">
-          <button type="submit" id="guardar" class="btn-save">Guardar</button>
-          <button type="button" id="escalar" class="btn-escalar" (click)="onEscalar()">Escalar</button>
+          <button type="submit" id="guardar" class="btn-save" [ngClass]="{'btn-disabled': !incidentForm.valid}">Guardar</button>
+          <button type="button" id="escalar" class="btn-escalar" [ngClass]="{'btn-disabled': !incidentForm.valid}" (click)="onEscalar()">Escalar</button>
         </div>
-        <div class="alert-text" id="authFlag" >
+        <div class="alert-text" id="crearIncidenteFlag" >
           {{crearIncidenteFlag}}
+        </div>
+        <div class="alert-text" id="escalarIncidenteFlag" >
+          {{escalarIncidenteFlag}}
         </div>
       </form>
     </div>

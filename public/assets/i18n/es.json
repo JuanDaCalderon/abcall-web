@@ -10,5 +10,6 @@
     "abc.btn.login": "Entrar",
     "abc.toast.success.message": "Has iniciado sesión correctamente",
     "abc.toast.incorrect.message": "Datos de usuario incorrectos",
-    "hello": "Hola"
+    "abc.crear-incidencia.crear.success.message": "Incidencia creada correctamente",
+    "abc.crear-incidencia.escalar.success.message": "Incidencia escalada correctamente"
 }
