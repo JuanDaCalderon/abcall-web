@@ -2,6 +2,7 @@ import {ApplicationConfig, importProvidersFrom, provideZoneChangeDetection} from
 import {provideRouter} from '@angular/router';
 import {routes} from './app.routes';
 import {HttpClient, provideHttpClient, withInterceptorsFromDi} from '@angular/common/http';
+import {AuthGuard} from './guards/auth.guard';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
@@ -14,6 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes),
     provideHttpClient(),
+    AuthGuard,
     importProvidersFrom([
       TranslateModule.forRoot({
         loader: {

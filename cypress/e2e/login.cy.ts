@@ -29,22 +29,7 @@ describe('LoginComponent E2E Tests', () => {
         cy.get('div[id="authFlagError"]').should('contain', 'Datos de usuario incorrectos');
     });
 
-    /*fit('should display success message on login success', () => {
-        cy.intercept('POST', '/api/auth/login', {
-            statusCode: 200,
-            body: {
-                token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW5kYWNhbGppQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiYmVkYW1va2EiLCJleHAiOjE3Mjg3MDE4NDV9.8AweMAcU5LCvA7TzPRf5kRJgHCRgrTEEfEC_gg4Ml7c',
-            },
-        }).as('loginRequest');
-
-        cy.get('input[id="email"]').type('test@test.com');
-        cy.get('input[id="password"]').type('password123');
-        cy.get('button[type="submit"]').click();
-
-        //cy.wait('@loginRequest');
-        cy.get('div[id="authFlag"]').should('contain', 'Has iniciado sesión correctamente');
-    });*/
-
+   
     it('should validate email field as required and email format', () => {
         cy.get('input[id="email"]').focus().blur();
         cy.get('div[id="emailRequired"]').should('contain', 'El correo es obligatorio');

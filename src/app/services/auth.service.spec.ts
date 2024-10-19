@@ -46,4 +46,10 @@ describe('AuthService', () => {
 
     req.flush(mockResponse);
   });
+
+  it('should remove "usuario" from localStorage on logout', () => {
+    spyOn(localStorage, 'removeItem');
+    service.logout();
+    expect(localStorage.removeItem).toHaveBeenCalledWith('usuario');
+  });
 });

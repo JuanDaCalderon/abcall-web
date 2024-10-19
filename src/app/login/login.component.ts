@@ -4,14 +4,14 @@ import {FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {environment} from '../../environments/environment';
 import {AuthService} from '../services/auth.service';
-//import { ToastrModule } from 'ngx-toastr';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
   imports: [ReactiveFormsModule, CommonModule, NgIf, TranslateModule],
-  providers: [AuthService],
+  providers: [AuthService, Router],
   standalone: true
 })
 export class LoginComponent {
@@ -23,14 +23,15 @@ export class LoginComponent {
 
   constructor(
     private formBuilder: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
-
   submit(): void {
     if (this.loginForm.valid) {
       const newlogin = {
@@ -41,8 +42,10 @@ export class LoginComponent {
       this.authService.login(newlogin.email, newlogin.password).subscribe(
         (response) => {
           console.log('Has iniciado sesión correctamente:', response);
+          localStorage.setItem('usuario', JSON.stringify(response));
           this.authFlag = 'Has iniciado sesión correctamente';
           this.loginForm.reset();
+          this.router.navigate(['/home']);
         },
         (error) => {
           const errorMessage = error?.error?.message || 'Ocurrió un error inesperado';
