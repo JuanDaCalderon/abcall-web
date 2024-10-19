@@ -1,0 +1,20 @@
+.secundario{
+  color: #E1CFEE;
+}
+
+.nav-link{
+  color: #E1CFEE;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link{
+  background-color: #E1CFEE;
+  color: #9517ea;
+}
+
+.divider{
+  color: #E1CFEE;
+}
+
+.nav-footer{
+  padding: var(--bs-offcanvas-padding-y) var(--bs-offcanvas-padding-x);
+  overflow-y: auto;
+}
