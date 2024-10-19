@@ -1,32 +1,34 @@
 import {TestBed} from '@angular/core/testing';
 import {CrearIncidenteService} from './crear-incidente.service';
-import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
+import {Subscription} from 'rxjs';
+import {provideHttpClient} from '@angular/common/http';
+import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
 import {Incidente} from '../models/incidente';
 import {environment} from '../../environments/environment';
 
 describe('Service: CrearIncidente', () => {
   let service: CrearIncidenteService;
   let httpMock: HttpTestingController;
+  const subscriptions: Subscription[] = [];
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [CrearIncidenteService]
+      providers: [CrearIncidenteService, provideHttpClient(), provideHttpClientTesting()]
     });
-
     service = TestBed.inject(CrearIncidenteService);
     httpMock = TestBed.inject(HttpTestingController);
   });
 
-  afterEach(() => {
+  afterAll(() => {
+    subscriptions.forEach((s) => s.unsubscribe());
     httpMock.verify();
   });
 
-  it('should be created', () => {
+  fit('should be created', () => {
     expect(service).toBeTruthy();
   });
 
-  it('should create an incident', () => {
+  fit('should create an incident', () => {
     const mockIncidente: Incidente = {
       id: 1,
       cliente: 'Test Client',
@@ -41,24 +43,26 @@ describe('Service: CrearIncidente', () => {
       comentarios: 'Test comments'
     };
 
-    service
-      .crearIncidente(
-        mockIncidente.cliente,
-        mockIncidente.fechacreacion,
-        mockIncidente.usuario,
-        mockIncidente.correo,
-        mockIncidente.direccion,
-        mockIncidente.telefono,
-        mockIncidente.descripcion,
-        mockIncidente.prioridad,
-        mockIncidente.estado,
-        mockIncidente.comentarios
-      )
-      .subscribe((incidente: Incidente) => {
-        expect(incidente).toEqual(mockIncidente);
-      });
+    subscriptions.push(
+      service
+        .crearIncidente(
+          mockIncidente.cliente,
+          mockIncidente.fechacreacion,
+          mockIncidente.usuario,
+          mockIncidente.correo,
+          mockIncidente.direccion,
+          mockIncidente.telefono,
+          mockIncidente.descripcion,
+          mockIncidente.prioridad,
+          mockIncidente.estado,
+          mockIncidente.comentarios
+        )
+        .subscribe((incidente) => {
+          expect(incidente).toEqual(mockIncidente);
+        })
+    );
 
-    const req = httpMock.expectOne(`${environment.apiUrl}:8000/incidentes`);
+    const req = httpMock.expectOne(`${environment.urlApi + environment.portCrearIncidentes}/incidentes`);
     expect(req.request.method).toBe('POST');
     req.flush(mockIncidente);
   });

@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Incidente} from '../models/incidente';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {Incidente} from '../models/incidente';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +40,7 @@ export class CrearIncidenteService {
     estado: string,
     comentarios: string
   ): Observable<Incidente> {
-    return this.http.post<Incidente>(`${this.apiUrl}:8000/incidentes`, {
+    return this.http.post<Incidente>(`${this.apiUrl}/incidentes`, {
       cliente,
       fechacreacion,
       usuario,
