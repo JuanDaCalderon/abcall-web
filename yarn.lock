@@ -243,7 +243,7 @@
     symbol-observable "4.0.0"
     yargs "17.7.2"
 
-"@angular/common@^18.0.0 || ^19.0.0", "@angular/common@^18.2.0", "@angular/common@>=16.0.0", "@angular/common@18.2.7":
+"@angular/common@^18.0.0 || ^19.0.0", "@angular/common@^18.2.0", "@angular/common@>=16.0.0", "@angular/common@>=16.0.0-0", "@angular/common@18.2.7":
   version "18.2.7"
   resolved "https://registry.npmjs.org/@angular/common/-/common-18.2.7.tgz"
   integrity sha512-5vDBmBR2JcIxHVEDunKXNU+T+OvTGiHZTSo35GFOHJxKFgX5g6+0tJBZunK04oBZGbJQUmp3pg2kMvuKKjZnkQ==
@@ -271,7 +271,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/core@^18.0.0 || ^19.0.0", "@angular/core@^18.2.0", "@angular/core@>=14", "@angular/core@>=16.0.0", "@angular/core@18.2.7":
+"@angular/core@^18.0.0 || ^19.0.0", "@angular/core@^18.2.0", "@angular/core@>=14", "@angular/core@>=16.0.0", "@angular/core@>=16.0.0-0", "@angular/core@18.2.7":
   version "18.2.7"
   resolved "https://registry.npmjs.org/@angular/core/-/core-18.2.7.tgz"
   integrity sha512-hLOxgxLiyWm9iVHBsUsJfx1hDsXWZnfJBlr+N7cev53f0CDoPfbshqq6KV+JFqXFDguzR9dKHm1ewT1jK3e6Tw==
@@ -299,7 +299,7 @@
   dependencies:
     tslib "^2.3.0"
 
-"@angular/platform-browser@^18.0.0 || ^19.0.0", "@angular/platform-browser@^18.2.0", "@angular/platform-browser@18.2.7":
+"@angular/platform-browser@^18.0.0 || ^19.0.0", "@angular/platform-browser@^18.2.0", "@angular/platform-browser@>=16.0.0-0", "@angular/platform-browser@18.2.7":
   version "18.2.7"
   resolved "https://registry.npmjs.org/@angular/platform-browser/-/platform-browser-18.2.7.tgz"
   integrity sha512-xgj2DH/isFrMZ73dJJm89NRnWBI3AHtugQrZbIapkKBdEt/C1o4SR2W2cV4mPb9o+ELnWurfrxFt9o/q2vnVLw==
@@ -5975,6 +5975,13 @@ neo-async@^2.6.2:
   version "2.6.2"
   resolved "https://registry.npmjs.org/neo-async/-/neo-async-2.6.2.tgz"
   integrity sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==
+
+ngx-toastr@^19.0.0:
+  version "19.0.0"
+  resolved "https://registry.npmjs.org/ngx-toastr/-/ngx-toastr-19.0.0.tgz"
+  integrity sha512-6pTnktwwWD+kx342wuMOWB4+bkyX9221pAgGz3SHOJH0/MI9erLucS8PeeJDFwbUYyh75nQ6AzVtolgHxi52dQ==
+  dependencies:
+    tslib "^2.3.0"
 
 node-addon-api@^6.1.0:
   version "6.1.0"
