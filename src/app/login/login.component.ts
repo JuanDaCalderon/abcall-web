@@ -1,6 +1,8 @@
 import {CommonModule, NgIf} from '@angular/common';
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {environment} from '../../environments/environment';
 import {AuthService} from '../services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -8,13 +10,16 @@ import {ActivatedRoute, Router} from '@angular/router';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [ReactiveFormsModule, CommonModule, NgIf],
+  imports: [ReactiveFormsModule, CommonModule, NgIf, TranslateModule],
   providers: [AuthService, Router],
   standalone: true
 })
 export class LoginComponent {
   loginForm!: FormGroup;
-  authFlag!: string;
+  authFlag = '';
+  language = 'es';
+  apiUrl = environment.urlApi + environment.portUsuario;
+  translate: TranslateService = inject(TranslateService);
 
   constructor(
     private formBuilder: FormBuilder,
@@ -22,7 +27,6 @@ export class LoginComponent {
     private router: Router,
     private route: ActivatedRoute
   ) {
-    this.authFlag = '';
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]]
@@ -50,5 +54,10 @@ export class LoginComponent {
         }
       );
     }
+  }
+
+  public changeLang(lang: string): void {
+    this.language = lang;
+    this.translate.use(lang);
   }
 }

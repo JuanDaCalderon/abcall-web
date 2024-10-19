@@ -4,14 +4,15 @@ import {ClienteService} from './cliente.service';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {UsuarioInterface} from '../models/usuario-interface';
 import {Usuario} from '../models/usuario';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 
 describe('ClienteService', () => {
   let service: ClienteService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-      providers: [ClienteService]
+      imports: [HttpClientTestingModule, TranslateModule.forRoot()],
+      providers: [ClienteService, TranslateService]
     });
     service = TestBed.inject(ClienteService);
   });
