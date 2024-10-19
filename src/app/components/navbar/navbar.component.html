@@ -41,6 +41,11 @@
               <span><i class="fa-solid fa-circle-plus fa-lg"></i></span>
               Crear un Usuario</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" routerLink="gestor" ariaCurrentWhenActive="page">
+              <span><i class="fa-solid fa-circle-plus fa-lg"></i></span>
+              Crear gestor</a>
+          </li>
           <li *ngIf="usuario && usuario.rol.NOMBRE === 'gestor' ">
             <hr class="divider">
           </li>
