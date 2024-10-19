@@ -45,7 +45,7 @@
             <hr class="divider">
           </li>
           <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'gestor' || usuario.rol.NOMBRE === 'administrador' || usuario.rol.NOMBRE === 'superadministrador' ">
-            <a class="nav-link " routerLink=""  ariaCurrentWhenActive="page">
+            <a class="nav-link " routerLink="incidencia" routerLinkActive="active"  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-circle-plus fa-lg"></i></span>
               Crear una Incidencia</a>
           </li>
