@@ -14,5 +14,6 @@
     "abc.get.issues.status": "Estado",
     "abc.get.issues.priority": "Prioridad",
     "abc.get.issues.customer": "Cliente",
-    "abc.get.issues.user": "Usuario"
+    "abc.get.issues.user": "Usuario",
+    "hello": "Hola"
 }

@@ -10,9 +10,5 @@
     "abc.btn.login": "Login",
     "abc.toast.success.message": "You have successfully logged in",
     "abc.toast.incorrect.message": "Incorrect user data",
-    "abc.get.issues.issue": "Issue",
-    "abc.get.issues.status": "Status",
-    "abc.get.issues.priority": "Priority",
-    "abc.get.issues.customer": "Customer",
-    "abc.get.issues.user": "User"
+    "hello": "Hello"
 }

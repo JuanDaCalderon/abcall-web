@@ -26,20 +26,25 @@
           <li>
             <hr class="divider">
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' ">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' || usuario.rol.NOMBRE === 'superadministrador' ">
             <a class="nav-link" routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-circle-plus fa-lg"></i></span>
               Crear un Gestor</a>
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' ">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' || usuario.rol.NOMBRE === 'superadministrador' ">
             <a class="nav-link" routerLink="cliente" routerLinkActive="active" ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-circle-plus fa-lg"></i></span>
               Crear un Cliente</a>
           </li>
-          <li *ngIf="usuario && usuario.rol.NOMBRE === 'Gestor' ">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'gestor' || usuario.rol.NOMBRE === 'administrador' || usuario.rol.NOMBRE === 'superadministrador' ">
+            <a class="nav-link" routerLink="" ariaCurrentWhenActive="page">
+              <span><i class="fa-solid fa-circle-plus fa-lg"></i></span>
+              Crear un Usuario</a>
+          </li>
+          <li *ngIf="usuario && usuario.rol.NOMBRE === 'gestor' ">
             <hr class="divider">
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Gestor' ">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'gestor' || usuario.rol.NOMBRE === 'administrador' || usuario.rol.NOMBRE === 'superadministrador' ">
             <a class="nav-link " routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-circle-plus fa-lg"></i></span>
               Crear una Incidencia</a>
@@ -47,13 +52,13 @@
           <li>
             <hr class="divider">
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' " >
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' || usuario.rol.NOMBRE === 'superadministrador' " >
             <a class="nav-link " routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-wrench fa-lg"></i></span>
               Personalizar texto saludo y cierre
             </a>
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' ">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' || usuario.rol.NOMBRE === 'superadministrador' ">
             <a class="nav-link " routerLink="roles" routerLinkActive="active" ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-wrench fa-lg"></i></span>
               Gestion de roles y permisos</a>
@@ -61,12 +66,12 @@
           <li>
             <hr class="divider">
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Gestor' ">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'gestor' || usuario.rol.NOMBRE === 'superadministrador' ">
             <a class="nav-link " routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-list-ul fa-lg"></i></span>
               Lista de incidentes asociados a un cliente y/o usuario</a>
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Gestor' ">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'gestor' || usuario.rol.NOMBRE === 'superadministrador' ">
             <a class="nav-link" routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-list-ul fa-lg"></i></span>
               Filtrar la informacion del tablero por tipo de incidente</a>
@@ -74,17 +79,17 @@
           <li>
             <hr class="divider">
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Gestor' ">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'gestor' || usuario.rol.NOMBRE === 'superadministrador' ">
             <a class="nav-link" routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-square-poll-vertical"></i></span>
               Tablero incidentes por usuario de ABC</a>
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Cliente' ">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Cliente' || usuario.rol.NOMBRE === 'superadministrador' ">
             <a class="nav-link" routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-square-poll-vertical"></i></span>
               Tablero incidentes por gestor</a>
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' ">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' || usuario.rol.NOMBRE === 'superadministrador' ">
             <a class="nav-link" routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-square-poll-vertical"></i></span>
               Tablero incidentes por cliente</a>
@@ -92,7 +97,7 @@
           <li>
             <hr class="divider">
           </li>
-          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' ">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' || usuario.rol.NOMBRE === 'superadministrador' ">
             <a class="nav-link" >
               <span><i class="fa-solid fa-file-arrow-down"></i></span>
               Descargar reporte de incidentes</a>

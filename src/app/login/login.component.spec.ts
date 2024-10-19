@@ -1,6 +1,7 @@
 import {TestBed, ComponentFixture} from '@angular/core/testing';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {of, throwError} from 'rxjs';
 import {LoginComponent} from './login.component';
 import {AuthService} from '../services/auth.service';
@@ -11,17 +12,20 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
   let AuthServiceStub = jasmine.createSpyObj('AuthService', ['login']);
+  let translateService: TranslateService;
 
   beforeEach(async () => {
     AuthServiceStub = jasmine.createSpyObj('AuthService', ['login']);
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, HttpClientTestingModule, LoginComponent, RouterTestingModule],
+      imports: [ReactiveFormsModule, HttpClientTestingModule, LoginComponent, RouterTestingModule, TranslateModule.forRoot()],
       declarations: [],
       providers: [{provide: AuthService, useValue: AuthServiceStub}]
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
+    translateService = TestBed.inject(TranslateService);
+    //authService = TestBed.inject(AuthService);
     fixture.detectChanges();
   });
 
@@ -79,5 +83,12 @@ describe('LoginComponent', () => {
     expect(password?.hasError('required')).toBeTruthy();
     password?.setValue('short');
     expect(password?.hasError('minlength')).toBeTruthy();
+  });
+
+  it('should change language when changeLang is called', () => {
+    const translateSpy = spyOn(translateService, 'use');
+    component.changeLang('en');
+    expect(component.language).toBe('en');
+    expect(translateSpy).toHaveBeenCalledWith('en');
   });
 });
