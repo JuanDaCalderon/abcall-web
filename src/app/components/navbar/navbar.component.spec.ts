@@ -15,8 +15,8 @@ describe('NavbarComponent', () => {
   const paramMapMock: ParamMap = {
     has: (key: string) => key === 'id',
     get: (key: string) => (key === 'id' ? '123' : null),
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    getAll: (key: string) => [],
+
+    //getAll: (key: string) => [],
     keys: []
   };
   beforeEach(async () => {
