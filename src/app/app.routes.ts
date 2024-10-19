@@ -8,7 +8,7 @@ import {CreateIncidenciasComponent} from './incidencias/create-incidencias/creat
 import {AuthGuard} from './guards/auth.guard';
 
 export const routes: Routes = [
-  {path: '', component: CreateIncidenciasComponent},
+  {path: '', component: LoginComponent},
   {
     path: 'home',
     component: HomeComponent,
@@ -16,7 +16,8 @@ export const routes: Routes = [
     children: [
       {path: '', component: ListIncidenciasComponent},
       {path: 'roles', title: 'roles', component: RolesPermisosComponent},
-      {path: 'cliente', title: 'cliente', component: CrearClienteComponent}
+      {path: 'cliente', title: 'cliente', component: CrearClienteComponent},
+      {path: 'create', title: 'create', component: CreateIncidenciasComponent}
     ]
   },
   {path: '**', component: LoginComponent}
