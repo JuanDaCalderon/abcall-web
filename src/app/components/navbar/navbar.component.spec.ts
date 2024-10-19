@@ -16,7 +16,7 @@ describe('NavbarComponent', () => {
     has: (key: string) => key === 'id',
     get: (key: string) => (key === 'id' ? '123' : null),
 
-    //getAll: (key: string) => [],
+    getAll: () => [],
     keys: []
   };
   beforeEach(async () => {

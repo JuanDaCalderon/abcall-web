@@ -108,12 +108,6 @@
           <button type="submit" id="guardar" class="btn-save" [ngClass]="{'btn-disabled': !incidentForm.valid}">Guardar</button>
           <button type="button" id="escalar" class="btn-escalar" [ngClass]="{'btn-disabled': !incidentForm.valid}" (click)="onEscalar()">Escalar</button>
         </div>
-        <div class="alert-text" id="crearIncidenteFlag" >
-          {{crearIncidenteFlag}}
-        </div>
-        <div class="alert-text" id="escalarIncidenteFlag" >
-          {{escalarIncidenteFlag}}
-        </div>
       </form>
     </div>
   </div>
