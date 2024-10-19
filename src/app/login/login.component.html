@@ -1,7 +1,16 @@
 <div class="login-container">
 
-  <div class = "flag">
-    <img src="uk-flag.png" class="icon-flag" alt="Icono bandera uk lag">
+  <div class = "flag" *ngIf="language === 'es'">
+   <img src="./assets/img/en.jpg" id="languageButton" class="icon-flag" alt="Icono bandera Reino Unido" 
+    (click)="changeLang('en')"
+    (keydown.enter)="changeLang('en')" 
+    tabindex="0">
+  </div>
+  <div class = "flag" *ngIf="language === 'en'">
+    <img src="./assets/img/es.jpg" class="icon-flag" alt="Icono bandera Colombia"
+    (click)="changeLang('es')"
+    (keydown.enter)="changeLang('en')" 
+    tabindex="0">
   </div>
 
   <div class="login-form">
@@ -9,39 +18,42 @@
       <img src="logo.png" class="icon" alt="logo">
 
       <form
-        [formGroup]="loginForm" (submit)="!loginForm.invalid && submit()">
+        [formGroup]="loginForm" (submit)="submit()">
 
         <!--Email-->
         <div class="input-field">
-          <label for="email">Correo electronico</label>
+          <label for="email" id="emailLabel">{{ 'abc.login.input.email' | translate}}</label>
           <input type="email" id="email" formControlName="email" placeholder="example@example.com">
-          
-          <div class="alert-text" *ngIf="loginForm.get('email')!.touched && loginForm.get('email')!.hasError('required')">
-            correo requerido
+
+          <div class="alert-text" id="emailRequired" *ngIf="loginForm.get('email')!.touched && loginForm.get('email')!.hasError('required')">
+            {{ 'abc.login.input.error.required.email' | translate}}
           </div>
-          <div class="alert-text" *ngIf="loginForm.get('email')!.hasError('email')">
-            Formato correo invalido
+          <div class="alert-text" id="emailFormatError" *ngIf="loginForm.get('email')!.hasError('email')">
+            {{ 'abc.login.input.error.format.email' | translate}}
           </div>
         </div>
-             
+
         <!--password-->
         <div class="input-field">
-          <label for="password">Contraseña</label>
+          <label for="password" id="passwordLabel">{{ 'abc.login.input.password' | translate}}</label>
           <input type="password" id="password" formControlName="password" placeholder="*******">
 
-          <div class="alert-text" *ngIf="loginForm.get('password')!.touched && loginForm.get('password')!.hasError('required')">
-            Contraseña requerida
+          <div class="alert-text" id="passwordRequired" *ngIf="loginForm.get('password')!.touched && loginForm.get('password')!.hasError('required')">
+            {{ 'abc.login.input.error.required.password' | translate}}
           </div>
-          <div class="alert-text" *ngIf="loginForm.get('password')!.hasError('minlength')">
-            Contraseña menos 8 caracteres
+          <div class="alert-text" id="passwordMinLength" *ngIf="loginForm.get('password')!.hasError('minlength')">
+            {{ 'abc.login.input.error.minlength.password' | translate}}
           </div>
         </div>
 
         <div class="button-group">
-          <button type="submit" [disabled]="!loginForm.valid">entrar</button>
+          <button id="guardar" type="submit" [disabled]="!loginForm.valid">{{ 'abc.btn.login' | translate}}</button>
         </div>
-        <div class="alert-text" id="authFlag" >
-          {{authFlag}}
+        <div class="alert-text" id="authFlagError" *ngIf='authFlag === "Datos de usuario incorrectos"'>
+          {{ 'abc.toast.incorrect.message' | translate}}
+        </div>
+        <div class="alert-text" id="authFlagSucces" *ngIf='authFlag === "Has iniciado sesión correctamente"' >
+          {{ 'abc.toast.success.message' | translate}}
         </div>
       </form>
 

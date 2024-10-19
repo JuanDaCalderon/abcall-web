@@ -40,10 +40,16 @@ describe('AuthService', () => {
         expect(usuario.token).toBe(mockResponse.token);
       })
     );
-    const req = httpMock.expectOne(`${environment.apiUrl}:8001/usuario/login`);
+    const req = httpMock.expectOne(`${environment.urlApi + environment.portUsuario}/usuario/login`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual({email, password});
 
     req.flush(mockResponse);
+  });
+
+  it('should remove "usuario" from localStorage on logout', () => {
+    spyOn(localStorage, 'removeItem');
+    service.logout();
+    expect(localStorage.removeItem).toHaveBeenCalledWith('usuario');
   });
 });

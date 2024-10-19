@@ -4,12 +4,11 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" routerLink="/home">
-      <img src="logo.png" alt="" width="30" height="30" class="d-inline-block align-text-top">
-      ABCall Manager
+      <img src="logo.png" alt="" width="220" height="35" class="d-inline-block align-text-top">
     </a>
-    <h5 class="navbar-brand">ROL</h5>
+    <h5 class="navbar-brand">{{ usuario.rol.NOMBRE || 'ROLE'}}</h5>
 
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: #9517ea;">
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="background-color: #9517ea; visibility: visible;">
       <div class="offcanvas-header">
         <h5 class="offcanvas-title secundario" id="offcanvasNavbarLabel">
           ABCall Manager
@@ -18,8 +17,8 @@
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav nav nav-pills justify-content-start flex-grow-1 pe-3">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="home" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <li class="nav-item" *ngIf="usuario">
+            <a class="nav-link" aria-current="page" routerLink="../home" routerLinkActive="active" ariaCurrentWhenActive="page" [routerLinkActiveOptions]="{exact: true}">
               <span> <i class="fa-solid fa-house fa-lg"></i> </span>
               Inicio
             </a>
@@ -27,74 +26,74 @@
           <li>
             <hr class="divider">
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="home" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' ">
+            <a class="nav-link" routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-circle-plus fa-lg"></i></span>
               Crear un Gestor</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="home" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' ">
+            <a class="nav-link" routerLink="cliente" routerLinkActive="active" ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-circle-plus fa-lg"></i></span>
               Crear un Cliente</a>
           </li>
-          <li>
+          <li *ngIf="usuario && usuario.rol.NOMBRE === 'Gestor' ">
             <hr class="divider">
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="home" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Gestor' ">
+            <a class="nav-link " routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-circle-plus fa-lg"></i></span>
               Crear una Incidencia</a>
           </li>
           <li>
             <hr class="divider">
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="home" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' " >
+            <a class="nav-link " routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-wrench fa-lg"></i></span>
               Personalizar texto saludo y cierre
             </a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="home/roles" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' ">
+            <a class="nav-link " routerLink="roles" routerLinkActive="active" ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-wrench fa-lg"></i></span>
               Gestion de roles y permisos</a>
           </li>
           <li>
             <hr class="divider">
           </li>
-          <li class="nav-item">
-            <a class="nav-link " href="home" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Gestor' ">
+            <a class="nav-link " routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-list-ul fa-lg"></i></span>
               Lista de incidentes asociados a un cliente y/o usuario</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="home" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Gestor' ">
+            <a class="nav-link" routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-list-ul fa-lg"></i></span>
               Filtrar la informacion del tablero por tipo de incidente</a>
           </li>
           <li>
             <hr class="divider">
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="home" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Gestor' ">
+            <a class="nav-link" routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-square-poll-vertical"></i></span>
               Tablero incidentes por usuario de ABC</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="home" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'Cliente' ">
+            <a class="nav-link" routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-square-poll-vertical"></i></span>
               Tablero incidentes por gestor</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="home" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' ">
+            <a class="nav-link" routerLink=""  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-square-poll-vertical"></i></span>
               Tablero incidentes por cliente</a>
           </li>
           <li>
             <hr class="divider">
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="home" routerLinkActive="active" ariaCurrentWhenActive="page">
+          <li class="nav-item" *ngIf="usuario && usuario.rol.NOMBRE === 'administrador' ">
+            <a class="nav-link" >
               <span><i class="fa-solid fa-file-arrow-down"></i></span>
               Descargar reporte de incidentes</a>
           </li>
@@ -104,10 +103,10 @@
       <div  class="nav-footer">
         <ul class="navbar-nav nav nav-pills justify-content-start flex-grow-1 pe-3">
           <li class="nav-item">
-            <a class="nav-link" href="">
+            <button class="nav-link" (click)="logout()">
               <span><i class="fa-solid fa-arrow-right-from-bracket fa-lg"></i></span>
               Salir
-            </a>
+            </button>
           </li>
         </ul>
       </div>

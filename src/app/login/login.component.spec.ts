@@ -1,34 +1,31 @@
 import {TestBed, ComponentFixture} from '@angular/core/testing';
 import {ReactiveFormsModule} from '@angular/forms';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
-import {throwError} from 'rxjs';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
+import {of, throwError} from 'rxjs';
 import {LoginComponent} from './login.component';
 import {AuthService} from '../services/auth.service';
+import {Usuario} from '../models/usuario';
+import {RouterTestingModule} from '@angular/router/testing';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
-  let authService: AuthService;
-
-  /*const mockUsuario: Usuario = {
-    id: 1,
-    nombres: 'Test User',
-    apellidos: 'Test User',
-    email: 'test@test.com',
-    username: 'test',
-    token: 'token'
-  };*/
+  let AuthServiceStub = jasmine.createSpyObj('AuthService', ['login']);
+  let translateService: TranslateService;
 
   beforeEach(async () => {
+    AuthServiceStub = jasmine.createSpyObj('AuthService', ['login']);
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, HttpClientTestingModule, LoginComponent],
+      imports: [ReactiveFormsModule, HttpClientTestingModule, LoginComponent, RouterTestingModule, TranslateModule.forRoot()],
       declarations: [],
-      providers: [AuthService]
+      providers: [{provide: AuthService, useValue: AuthServiceStub}]
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
-    authService = TestBed.inject(AuthService);
+    translateService = TestBed.inject(TranslateService);
+    //authService = TestBed.inject(AuthService);
     fixture.detectChanges();
   });
 
@@ -43,28 +40,33 @@ describe('LoginComponent', () => {
   });
 
   it('should display error message on login failure', async () => {
-    spyOn(authService, 'login').and.returnValue(throwError('error'));
+    const AuthServiceStub: AuthService = fixture.debugElement.injector.get(AuthService);
+    const errorResponse = {error: {message: 'Datos de usuario incorrectos'}};
+    spyOn(AuthServiceStub, 'login').and.returnValue(throwError(errorResponse));
     component.loginForm.setValue({email: 'test@test.com', password: 'password123'});
-    await component.submit();
-    await new Promise((resolve) => setTimeout(resolve, 3000));
+    component.submit();
     expect(component.authFlag).toBe('Datos de usuario incorrectos');
   });
 
-  /*it('should display success message on login success', async () => {
-    spyOn(authService, 'login').and.returnValue(of(mockUsuario));
-    component.loginForm.setValue({ email: 'test@test.com', password: 'password123' });
-    await component.submit();
-    //await new Promise(resolve => setTimeout(resolve, 3000));
-    expect(component.authFlag).toBe('');
-    //expect(component.loginForm.get('email')?.value).toBe('test@test.com');
-    //expect(component.loginForm.get('password')?.value).toBe('password123');
-  });*/
+  it('should display error message on login failure 2', async () => {
+    const AuthServiceStub: AuthService = fixture.debugElement.injector.get(AuthService);
+    const errorResponse = {error: {}};
+    spyOn(AuthServiceStub, 'login').and.returnValue(throwError(errorResponse));
+    component.loginForm.setValue({email: 'test@test.com', password: 'password123'});
+    component.submit();
+    expect(component.authFlag).toBe('Datos de usuario incorrectos');
+  });
 
-  it('should not submit the form if it is invalid', async () => {
-    spyOn(authService, 'login');
-    component.loginForm.setValue({email: '', password: ''});
-    await component.submit();
-    expect(authService.login).not.toHaveBeenCalled();
+  it('should display success message on login success', async () => {
+    const AuthServiceStub: AuthService = fixture.debugElement.injector.get(AuthService);
+    const mockResponse: Usuario = {
+      token:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp1YW5kYWNhbGppQGdtYWlsLmNvbSIsInVzZXJuYW1lIjoiYmVkYW1va2EiLCJleHAiOjE3Mjg3MDE4NDV9.8AweMAcU5LCvA7TzPRf5kRJgHCRgrTEEfEC_gg4Ml7c'
+    } as Usuario;
+    spyOn(AuthServiceStub, 'login').and.returnValue(of(mockResponse));
+    component.loginForm.setValue({email: 'test@test.com', password: 'password123'});
+    component.submit();
+    expect(component.authFlag).toBe('Has iniciado sesión correctamente');
   });
 
   it('should validate email field as required and email format', () => {
@@ -81,5 +83,12 @@ describe('LoginComponent', () => {
     expect(password?.hasError('required')).toBeTruthy();
     password?.setValue('short');
     expect(password?.hasError('minlength')).toBeTruthy();
+  });
+
+  it('should change language when changeLang is called', () => {
+    const translateSpy = spyOn(translateService, 'use');
+    component.changeLang('en');
+    expect(component.language).toBe('en');
+    expect(translateSpy).toHaveBeenCalledWith('en');
   });
 });

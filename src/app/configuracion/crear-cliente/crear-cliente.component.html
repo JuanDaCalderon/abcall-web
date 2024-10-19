@@ -1,0 +1,64 @@
+<div class="container top align-content-center">
+  <h2 class=" text-md-center">CREAR UN NUEVO CLIENTE</h2>
+  <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="row g-2 needs-validation">
+      <div class="col-md-6 mb-3">
+        <label for="nombres" class="form-label">Nombres</label>
+        <input type="text" class="form-control" id="nombres" name="nombres" formControlName="nombres" placeholder="Pepito" pattern="^[a-zA-Z ]*$">
+        <div *ngIf="clientForm.get('nombres')?.invalid && clientForm.get('nombres')?.touched" class="text-danger">
+          El nombre del cliente es requerido.
+        </div>
+        <div *ngIf="clientForm.controls['nombres'].errors?.['pattern']" class="text-danger">
+          Solo se permiten letras
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="nombre" class="form-label">Apellidos</label>
+        <input type="text" class="form-control" id="apellidos" name="apellidos" formControlName="apellidos" placeholder="perez" pattern="^[a-zA-Z ]*$">
+        <div *ngIf="clientForm.controls['apellidos'].errors?.['pattern']" class="text-danger">
+          Solo se permiten letras
+        </div>
+        <div *ngIf="clientForm.get('apellidos')?.invalid && clientForm.get('apellidos')?.touched" class="text-danger">
+          El apellidos del cliente es requerido.
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="email" class="form-label">Correo</label>
+        <input type="email" class="form-control" id="email" name="email" formControlName="email" placeholder="name@example.com">
+        <div *ngIf="clientForm.get('email')?.invalid && clientForm.get('email')?.touched" class="text-danger">
+          El email del cliente es requerido.
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="telefono" class="form-label">Telefono</label>
+        <input type="text" class="form-control" id="telefono" name="telefono" formControlName="telefono" placeholder="22222" minlength="8" pattern="^[0-9]*$">
+        <div *ngIf="clientForm.get('telefono')?.invalid && clientForm.get('telefono')?.touched" class="text-danger">
+          El telefono del cliente es requerido.
+        </div>
+        <div *ngIf="clientForm.controls['telefono'].errors?.['pattern']" class="text-danger">
+          Solo se permiten Numeros
+        </div>
+        <div *ngIf="clientForm.controls['telefono'].errors?.['minlength']" class="text-danger">
+          Debe ser mayor a 8 caracteres
+        </div>
+      </div>
+      <div class="col-md-12 mb-3">
+        <label for="direccion" class="form-label">Direccion</label>
+        <input type="text" class="form-control" id="direccion" name="direccion" formControlName="direccion" placeholder="call 2 #55-88">
+        <div *ngIf="clientForm.get('direccion')?.invalid && clientForm.get('direccion')?.touched" class="text-danger">
+          El direccion del cliente es requerido.
+        </div>
+      </div>
+    <div class="d-grid gap-2 col-6 mx-auto align-content-center ">
+      <button class="btn btn-purple btn-lg"  type="submit" [disabled]="clientForm.invalid">Guardar</button>
+    </div>
+  </form>
+  <div id="liveToast" class="toast align-items-center position-fixed bottom-0 end-0 text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="d-flex">
+      <div class="toast-body">
+        Mensaje de la notificación.
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+  </div>
+</div>
+

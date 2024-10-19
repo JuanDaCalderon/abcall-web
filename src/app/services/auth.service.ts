@@ -8,7 +8,7 @@ import {Usuario} from '../models/usuario';
 })
 export class AuthService {
   /** API url */
-  private apiUrl = environment.apiUrl;
+  private apiUrl = environment.urlApi + environment.portUsuario;
   constructor(private http: HttpClient) {}
 
   /**
@@ -17,7 +17,11 @@ export class AuthService {
    * @param {string} password Password of the user
    * @returns {Observable<string>}
    */
-  public login(email: string, password: string): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrl}:8001/usuario/login`, {email, password});
+  login(email: string, password: string): Observable<Usuario> {
+    return this.http.post<Usuario>(`${this.apiUrl}/usuario/login`, {email, password});
+  }
+
+  logout(): void {
+    localStorage.removeItem('usuario');
   }
 }

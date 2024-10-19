@@ -9,5 +9,6 @@
     "abc.login.input.error.minlength.password": "Password must be at least 8 characters long",
     "abc.btn.login": "Login",
     "abc.toast.success.message": "You have successfully logged in",
-    "abc.toast.incorrect.message": "Incorrect user data"
+    "abc.toast.incorrect.message": "Incorrect user data",
+    "hello": "Hello"
 }

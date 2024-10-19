@@ -37,7 +37,9 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "node_modules/@popperjs/core/dist/umd/popper.min.js"
             ]
           },
           "configurations": {
@@ -173,6 +175,6 @@
       "@angular-eslint/schematics",
       "@schematics/angular"
     ],
-    "analytics": "685f304a-5ee8-4a44-b4f8-48a58d333095"
+    "analytics": false
   }
 }

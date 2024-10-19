@@ -9,5 +9,6 @@
     "abc.login.input.error.minlength.password": "La contraseña debe tener al menos 8 caracteres",
     "abc.btn.login": "Entrar",
     "abc.toast.success.message": "Has iniciado sesión correctamente",
-    "abc.toast.incorrect.message": "Datos de usuario incorrectos"
+    "abc.toast.incorrect.message": "Datos de usuario incorrectos",
+    "hello": "Hola"
 }
