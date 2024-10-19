@@ -1,12 +1,22 @@
 <div class="container-fluid top">
-  <h2>INCIDENCIAS ASIGNADAS A MI</h2>
+  <div class="row align-items-center">
+    <div class="col mb-3">
+      <h2>INCIDENCIAS ASIGNADAS A MI</h2>
+    </div>
+    <div class="col-auto mb-3">
+      <button class="btn btn-outline-secondary" (click)="reloadIncidencias()">
+        <i class="fas fa-sync-alt"></i>
+      </button>
+    </div>
+  </div>
   <div class="row row-cols-1 row-cols-md-1">
-    <div class="col-auto" *ngFor="let incidencia of incidencias">
+    <div class="col-auto mb-3" *ngFor="let incidencia of incidencias">
       <div class="card">
         <div class="card-body">
           <div class="row">
-            <div class="col-8">
-              {{ incidencia.descripcion }}
+            <div class="col-10">
+              <h5 class="card-title">Incidencia # {{ incidencia.ID }}</h5>
+              <p class="card-text">Estado: {{ incidencia.ESTADO }} | Prioridad: {{ incidencia.PRIORIDAD }} | Cliente: {{ incidencia.CLIENTE }} | Usuario: {{ incidencia.USUARIO }}</p>
             </div>
             <div class="col-auto"></div>
             <div class="col align-content-end">

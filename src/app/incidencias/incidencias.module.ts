@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgFor} from '@angular/common';
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule]
+  imports: [CommonModule, NgFor]
 })
 export class IncidenciasModule {}
