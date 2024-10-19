@@ -5,6 +5,7 @@ import {environment} from '../../../environments/environment';
 import {CrearIncidenteService} from '../../services/crear-incidente.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NavbarComponent} from '../../components/navbar/navbar.component';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-incidencias',
@@ -24,7 +25,8 @@ export class CreateIncidenciasComponent {
     private formBuilder: FormBuilder,
     private crearIncidenteService: CrearIncidenteService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastr: ToastrService
   ) {
     this.incidentForm = this.formBuilder.group({
       cliente: ['', Validators.required],
@@ -95,11 +97,21 @@ export class CreateIncidenciasComponent {
           (response) => {
             localStorage.setItem('incidente', JSON.stringify(response));
             if (tarea == 'crear') {
-              this.crearIncidenteFlag = 'Incidente creado correctamente';
+              this.toastr.success('Numero de caso: 12 ', 'Incidente creado correctamente ', {
+                closeButton: true,
+                timeOut: 10000,
+                positionClass: 'toast-top-center'
+              });
             } else {
-              this.escalarIncidenteFlag = 'Incidente escalado correctamente';
+              this.toastr.success('Numero de caso: 12 ', 'Incidente escalado correctamente ', {
+                closeButton: true,
+                timeOut: 10000,
+                positionClass: 'toast-top-center'
+              });
             }
             this.incidentForm.reset();
+            this.afterReset();
+            //this.router.navigate(['/home']);
           },
           (error) => {
             console.error('Error al crear incidente:', error);
@@ -110,6 +122,7 @@ export class CreateIncidenciasComponent {
               this.crearIncidenteFlag = '';
               this.escalarIncidenteFlag = 'Incidente no escalado';
             }
+            this.toastr.error('Error al escalar el incidente', 'Error');
           }
         );
     }
@@ -126,5 +139,24 @@ export class CreateIncidenciasComponent {
       this.incidentForm.get('respuestaIA')?.setValue('');
       this.incidentForm.get('respuestaIA')?.disable();
     }
+  }
+
+  afterReset(): void {
+    this.crearIncidenteFlag = '';
+    this.escalarIncidenteFlag = '';
+
+    this.incidentForm.get('tipoIncidencia')?.setValue('Incidencia');
+    this.incidentForm.get('canalIngreso')?.setValue('Web');
+    this.incidentForm.get('prioridad')?.setValue('Baja');
+    this.incidentForm.get('estado')?.setValue('Abierto');
+
+    this.incidentForm.get('fecha')?.disable();
+    this.incidentForm.get('canalIngreso')?.disable();
+    this.incidentForm.get('respuestaIA')?.disable();
+
+    const colombiaTimeWithSeconds = new Date().toLocaleString('en-US', {timeZone: 'America/Bogota'});
+    this.incidentForm.patchValue({
+      fecha: new Date(colombiaTimeWithSeconds).toISOString().replace('T', ' ').substring(0, 19)
+    });
   }
 }
