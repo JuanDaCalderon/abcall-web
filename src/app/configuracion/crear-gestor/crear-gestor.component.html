@@ -3,7 +3,7 @@
     <form [formGroup]="crearGestorForm" (ngSubmit)="onSubmit()" class="row g-2 needs-validation">
         <div class="col-md-6 mb-3">
             <label for="email" class="form-label">Correo</label>
-            <input type="email" class="form-control" id="email" name="email" formControlName="email"
+            <input data-cy="email-input" type="email" class="form-control" id="email" name="email" formControlName="email"
                 placeholder="name@example.com">
             <div *ngIf="crearGestorForm.get('email')?.invalid && crearGestorForm.get('email')?.touched"
                 class="text-danger">
@@ -16,7 +16,7 @@
         </div>
         <div class="col-md-6 mb-3">
             <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" name="username" formControlName="username"
+            <input data-cy="username-input" type="text" class="form-control" id="username" name="username" formControlName="username"
                 placeholder="PepitoMotoRatones">
             <div *ngIf="crearGestorForm.get('username')?.invalid && crearGestorForm.get('username')?.touched"
                 class="text-danger">
@@ -25,7 +25,7 @@
         </div>
         <div class="col-md-6 mb-3">
             <label for="telefono" class="form-label">Telefono</label>
-            <input type="text" class="form-control" id="telefono" name="telefono" formControlName="telefono"
+            <input data-cy="telefono-input" type="text" class="form-control" id="telefono" name="telefono" formControlName="telefono"
                 placeholder="22222">
             <div *ngIf="crearGestorForm.get('telefono')?.invalid && crearGestorForm.get('telefono')?.touched"
                 class="text-danger">
@@ -38,12 +38,12 @@
         </div>
         <div class="col-md-6 mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password" formControlName="password"
+            <input data-cy="password-input" type="password" class="form-control" id="password" name="password" formControlName="password"
                 placeholder="*******">
         </div>
         <div class="col-md-6 mb-3">
             <label for="nombres" class="form-label">Nombres</label>
-            <input type="text" class="form-control" id="nombres" name="nombres" formControlName="nombres"
+            <input data-cy="nombres-input" type="text" class="form-control" id="nombres" name="nombres" formControlName="nombres"
                 placeholder="pepito">
             <div *ngIf="crearGestorForm.get('nombres')?.invalid && crearGestorForm.get('nombres')?.touched"
                 class="text-danger">
@@ -52,7 +52,7 @@
         </div>
         <div class="col-md-6 mb-3">
             <label for="apellidos" class="form-label">Apellidos</label>
-            <input type="text" class="form-control" id="apellidos" name="apellidos" formControlName="apellidos"
+            <input data-cy="apellidos-input" type="text" class="form-control" id="apellidos" name="apellidos" formControlName="apellidos"
                 placeholder="perez">
             <div *ngIf="crearGestorForm.get('apellidos')?.invalid && crearGestorForm.get('apellidos')?.touched"
                 class="text-danger">
@@ -61,12 +61,12 @@
         </div>
         <div class="col-md-6 mb-3">
             <label for="direccion" class="form-label">Direccion</label>
-            <input type="text" class="form-control" id="direccion" name="direccion" formControlName="direccion"
+            <input data-cy="direccion-input" type="text" class="form-control" id="direccion" name="direccion" formControlName="direccion"
                 placeholder="Calle XX #XX - XX">
         </div>
         <div class="col-md-6 mb-3">
             <label for="gestortier" class="form-label">Tier del gestor</label>
-            <select class="form-select" aria-label="Tier del gestor" id="gestortier" name="gestortier"
+            <select data-cy="gestortier-input" class="form-select" aria-label="Tier del gestor" id="gestortier" name="gestortier"
                 formControlName="gestortier">
                 <option [value]="gestorTiers.junior" selected>{{gestorTiers.junior}}</option>
                 <option [value]="gestorTiers.mid">{{gestorTiers.mid}}</option>
@@ -78,7 +78,7 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-6">
-                    <button class="btn btn-purple btn-lg w-50" type="submit" [disabled]="crearGestorForm.invalid">Crear
+                    <button data-cy="submit-button" class="btn btn-purple btn-lg w-50" type="submit" [disabled]="crearGestorForm.invalid">Crear
                         Gestor</button>
                 </div>
             </div>
