@@ -10,4 +10,5 @@ import {Router, RouterOutlet} from '@angular/router';
 })
 export class AppComponent {
   constructor(public router: Router) {}
+  title = 'ABCALL';
 }

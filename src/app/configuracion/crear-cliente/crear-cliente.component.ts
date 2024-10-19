@@ -1,11 +1,11 @@
 import {NgIf} from '@angular/common';
 import {Component} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ClienteService} from '../../services/cliente.service';
 @Component({
   selector: 'app-crear-cliente',
   standalone: true,
-  imports: [NgIf, ReactiveFormsModule],
+  imports: [NgIf, FormsModule, ReactiveFormsModule],
   templateUrl: './crear-cliente.component.html',
   styleUrl: './crear-cliente.component.scss'
 })
@@ -16,7 +16,8 @@ export class CrearClienteComponent {
     private clienteService: ClienteService
   ) {
     this.clientForm = this.fb.group({
-      nombre: ['', Validators.required],
+      nombres: ['', Validators.required],
+      apellidos: ['', Validators.required],
       email: ['', Validators.required],
       telefono: ['', Validators.required],
       direccion: ['', Validators.required]
@@ -26,10 +27,15 @@ export class CrearClienteComponent {
     if (this.clientForm.valid) {
       const newClient = {
         id: 0,
-        nombre: this.clientForm.value.nombre,
+        username: this.clientForm.value.nombres + this.clientForm.value.apellidos,
+        password: '123456789',
+        nombres: this.clientForm.value.nombres,
+        apellidos: this.clientForm.value.apellidos,
         email: this.clientForm.value.email,
         telefono: this.clientForm.value.telefono,
-        direccion: this.clientForm.value.direccion
+        direccion: this.clientForm.value.direccion,
+        gestortier: '',
+        rol: 2
       };
 
       this.clienteService.createCliente(newClient).subscribe(
