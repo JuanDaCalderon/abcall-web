@@ -10,6 +10,7 @@ import {environment} from '../../environments/environment';
 })
 export class RoleService {
   private url = environment.urlApi + environment.portRole + '/';
+  private url2 = environment.urlApi + environment.portUsuario + '/';
   constructor(private _http: HttpClient) {}
 
   createRole(role: Role) {
@@ -21,7 +22,7 @@ export class RoleService {
   }
 
   getAllRoles(): Observable<Role[]> {
-    return this._http.get<Role[]>(this.url + 'roles');
+    return this._http.get<Role[]>(this.url2 + 'roles');
   }
   crearPermiso(permiso: Permiso): Observable<Permiso> {
     return this._http.post<Permiso>(this.url + 'permiso', permiso);

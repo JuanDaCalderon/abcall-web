@@ -85,7 +85,7 @@ export class CreateIncidenciasComponent {
           this.toastr.success('Numero de caso: ' + String(response.ID), 'Incidente creado correctamente ', {
             closeButton: true,
             timeOut: 10000,
-            positionClass: 'toast-top-center'
+            positionClass: 'toast-bottom-center'
           });
           this.incidentForm.reset();
           this.afterReset();
@@ -96,7 +96,11 @@ export class CreateIncidenciasComponent {
           console.error('Error al crear incidente:', error);
           this.escalarIncidenteFlag = '';
           this.crearIncidenteFlag = 'Incidente no creado';
-          this.toastr.error('Error al crear el incidente', 'Error', {closeButton: true, timeOut: 3000, positionClass: 'toast-top-center'});
+          this.toastr.error('Error al crear el incidente', 'Error', {
+            closeButton: true,
+            timeOut: 3000,
+            positionClass: 'toast-bottom-center'
+          });
         }
       );
   }
@@ -134,7 +138,7 @@ export class CreateIncidenciasComponent {
           this.toastr.success('Numero de caso: ' + String(response.ID), 'Incidente creado correctamente ', {
             closeButton: true,
             timeOut: 10000,
-            positionClass: 'toast-top-center'
+            positionClass: 'toast-bottom-center'
           });
           this.incidentForm.reset();
           this.afterReset();
@@ -148,7 +152,7 @@ export class CreateIncidenciasComponent {
           this.toastr.error('Error al escalar el incidente', 'Error', {
             closeButton: true,
             timeOut: 3000,
-            positionClass: 'toast-top-center'
+            positionClass: 'toast-bottom-center'
           });
         }
       );

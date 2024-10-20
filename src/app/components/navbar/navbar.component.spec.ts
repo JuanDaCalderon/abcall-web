@@ -5,6 +5,7 @@ import {AuthService} from '../../services/auth.service';
 import {ActivatedRouteSnapshot} from '@angular/router';
 import {of} from 'rxjs';
 import {RouterTestingModule} from '@angular/router/testing';
+import {HttpClientTestingModule} from '@angular/common/http/testing';
 
 describe('NavbarComponent', () => {
   let component: NavbarComponent;
@@ -46,7 +47,7 @@ describe('NavbarComponent', () => {
       }
     };
     await TestBed.configureTestingModule({
-      imports: [NavbarComponent, RouterTestingModule],
+      imports: [NavbarComponent, HttpClientTestingModule, RouterTestingModule],
       providers: [
         {provide: ActivatedRoute, useValue: activatedRouteStub},
         {provide: AuthService, useValue: authServiceSpy}
