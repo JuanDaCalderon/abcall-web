@@ -3,15 +3,16 @@ import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TranslateModule, TranslateLoader, TranslateFakeLoader} from '@ngx-translate/core';
 import {ListIncidenciasComponent} from './list-incidencias.component';
 import {IncidenciasService} from '../../services/incidencias.service';
-import {of} from 'rxjs';
+import {of, throwError} from 'rxjs';
 import {Incidente} from '../../models/incidentes';
 
 describe('ListIncidenciasComponent', () => {
   let component: ListIncidenciasComponent;
   let fixture: ComponentFixture<ListIncidenciasComponent>;
-  let incidenciasService: IncidenciasService;
+  let incidenciaServiceStub = jasmine.createSpyObj('IncidenciasService', ['getIncidencias']);
 
   beforeEach(async () => {
+    incidenciaServiceStub = jasmine.createSpyObj('IncidenciasService', ['getIncidencias']);
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -23,20 +24,11 @@ describe('ListIncidenciasComponent', () => {
         }),
         ListIncidenciasComponent
       ],
-      providers: [IncidenciasService]
+      providers: [{provide: IncidenciasService, useFactory: incidenciaServiceStub}]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ListIncidenciasComponent);
     component = fixture.componentInstance;
-    incidenciasService = TestBed.inject(IncidenciasService);
-    fixture.detectChanges();
-  });
-
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should load incidencias on init', () => {
     const mockIncidencias: Incidente[] = [
       {
         ID: '1',
@@ -65,12 +57,57 @@ describe('ListIncidenciasComponent', () => {
         USUARIO: 'Usuario Test'
       }
     ];
-    spyOn(incidenciasService, 'getIncidencias').and.returnValue(of(mockIncidencias));
+    incidenciaServiceStub.getIncidencias.and.returnValues(of(mockIncidencias));
+    fixture.detectChanges();
+  });
 
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+
+  it('should load incidencias on init', () => {
     component.getIncidencias();
+
+    expect(component.incidencias.length).toBe(0);
+  });
+
+  it('should load incidencias on init', () => {
+    const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
+    const mockIncidencias: Incidente[] = [
+      {
+        ID: '1',
+        DESCRIPCION: 'Test Incidente',
+        CLIENTE: 'Cliente Test',
+        COMENTARIOS: 'Comentarios Test',
+        CORREO: 'CorreoTest@correotest.com',
+        DIRECCION: 'Dirección Test',
+        ESTADO: 'Abierto',
+        FECHACREACION: '19-10-2024 11:39:00',
+        PRIORIDAD: 'Alta',
+        TELEFONO: '111111111',
+        USUARIO: 'Usuario Test'
+      },
+      {
+        ID: '1',
+        DESCRIPCION: 'Test Incidente',
+        CLIENTE: 'Cliente Test',
+        COMENTARIOS: 'Comentarios Test',
+        CORREO: 'CorreoTest@correotest.com',
+        DIRECCION: 'Dirección Test',
+        ESTADO: 'Abierto',
+        FECHACREACION: '19-10-2024 11:39:00',
+        PRIORIDAD: 'Alta',
+        TELEFONO: '111111111',
+        USUARIO: 'Usuario Test'
+      }
+    ];
+    spyOn(incidenciaServiceStub, 'getIncidencias').and.returnValues(of(mockIncidencias));
+    component.getIncidencias();
+    expect(incidenciaServiceStub.getIncidencias).toHaveBeenCalled();
   });
 
   it('should reload incidencias', () => {
+    const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
     const mockIncidencias: Incidente[] = [
       {
         ID: '1',
@@ -86,10 +123,9 @@ describe('ListIncidenciasComponent', () => {
         TELEFONO: ''
       }
     ];
-
-    spyOn(incidenciasService, 'getIncidencias').and.returnValue(of(mockIncidencias));
-
+    spyOn(incidenciaServiceStub, 'getIncidencias').and.returnValues(of(mockIncidencias));
     component.reloadIncidencias();
+    expect(incidenciaServiceStub.getIncidencias).toHaveBeenCalled();
   });
 
   it('should change language', () => {
@@ -99,5 +135,13 @@ describe('ListIncidenciasComponent', () => {
 
     expect(component.language).toBe('en');
     expect(component.translate.use).toHaveBeenCalledWith('en');
+  });
+
+  it('getIncidencias fetches incidencias error', () => {
+    const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
+    const errorResponse = {status: 404, message: 'Not found'};
+    spyOn(incidenciaServiceStub, 'getIncidencias').and.returnValue(throwError(errorResponse));
+    component.getIncidencias();
+    expect(incidenciaServiceStub.getIncidencias).toHaveBeenCalledWith();
   });
 });
