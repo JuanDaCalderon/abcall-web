@@ -31,7 +31,7 @@
           <div class="form-group">
             <label for="nombreUsuario">Nombre usuario</label>
             <input type="text" id="nombreUsuario" formControlName="nombreUsuario" placeholder="Nombre usuario">
-            <div class="alert-text" *ngIf="incidentForm.get('nombreUsuario')!.touched && incidentForm.get('nombreUsuario')!.hasError('required')">
+            <div class="alert-text" id="usuarioRequiredError" *ngIf="incidentForm.get('nombreUsuario')!.touched && incidentForm.get('nombreUsuario')!.hasError('required')">
                 Nombre usuario requerido
             </div>
         </div>
@@ -39,7 +39,7 @@
           <div class="form-group">
             <label for="correoUsuario">Correo usuario</label>
             <input type="email" id="correoUsuario" formControlName="correoUsuario" placeholder="Correo usuario">
-            <div class="alert-text" *ngIf="incidentForm.get('correoUsuario')!.touched && incidentForm.get('correoUsuario')!.hasError('email')">
+            <div class="alert-text" id= "mailFormatError" *ngIf="incidentForm.get('correoUsuario')!.touched && incidentForm.get('correoUsuario')!.hasError('email')">
               Formato de correo inválido
             </div>
           </div>
@@ -58,7 +58,7 @@
           <div class="form-group full-width">
             <label for="descripcionProblema">Descripción del problema</label>
             <textarea id="descripcionProblema" formControlName="descripcionProblema" rows="4" placeholder="Descripción del problema" (input)="onDescripcionProblemaChange()"></textarea>
-            <div class="alert-text" *ngIf="incidentForm.get('descripcionProblema')!.touched && incidentForm.get('descripcionProblema')!.hasError('required')">
+            <div class="alert-text" id="descripcionRequiredError" *ngIf="incidentForm.get('descripcionProblema')!.touched && incidentForm.get('descripcionProblema')!.hasError('required')">
                 Descripción del problema requerido
             </div>
         </div>
