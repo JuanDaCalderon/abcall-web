@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
+import {CommonModule, NgFor} from '@angular/common';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {ToastrModule} from 'ngx-toastr';
 
@@ -7,8 +7,10 @@ import {ToastrModule} from 'ngx-toastr';
   declarations: [],
   imports: [
     CommonModule,
+    NgFor,
     BrowserAnimationsModule, // Import this
-    ToastrModule.forRoot() // Import this
-  ]
+    ToastrModule // Import this
+  ],
+  providers: [{provide: ToastrModule, useFactory: ToastrModule.forRoot}]
 })
 export class IncidenciasModule {}

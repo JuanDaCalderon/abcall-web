@@ -10,6 +10,7 @@ export const environment = {
   urlApi: 'http://localhost:',
   portRole: '8002',
   portUsuario: '8003',
+  portConsulIncidencias: '8001',
   portCrearIncidentes: '8000'
 };
 
