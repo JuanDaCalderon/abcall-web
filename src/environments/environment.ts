@@ -5,8 +5,6 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:',
-  userPort: '8003',
   urlApi: 'http://localhost:',
   portRole: '8002',
   portUsuario: '8003',
