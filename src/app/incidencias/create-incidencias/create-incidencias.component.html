@@ -1,19 +1,9 @@
-<div class="container align-content-center">
-    <!-- Sidebar
-    <div class="sidebar">
-        <app-navbar></app-navbar>
-    </div> -->
-  
-    <!-- Content -->
-    <div class="content">
-      <h1>Crear nueva incidencia</h1>
-  
-      <!-- Formulario con estructura en dos columnas -->
-      <form [formGroup]="incidentForm" (ngSubmit)="onSubmit()">
-        <div class="form-grid">
-          <div class="form-group">
-            <label for="cliente">Cliente</label>
-            <select id="cliente" formControlName="cliente" >
+<div class="container top align-content-center">
+      <h1 class="text-md-center">Crear nueva incidencia</h1>
+      <form [formGroup]="incidentForm" (ngSubmit)="onSubmit()" class="row g-2">
+          <div class="col-md-6 mb-3">
+            <label for="cliente" class="form-label">Cliente</label>
+            <select id="cliente" formControlName="cliente" class="form-select" >
               <option>Bavaria</option>
               <option>Bancolombia</option>
               <option>EEB</option>
@@ -22,93 +12,95 @@
               Cliente requerido
             </div>
           </div>
-  
-          <div class="form-group">
-            <label for="fecha">Fecha y hora</label>
-            <input type="text" id="fecha" formControlName="fecha">
+
+          <div class="col-md-6 mb-3">
+            <label for="fecha" class="form-label">Fecha y hora</label>
+            <input class="form-control" type="text" id="fecha" formControlName="fecha">
           </div>
-  
-          <div class="form-group">
-            <label for="nombreUsuario">Nombre usuario</label>
-            <input type="text" id="nombreUsuario" formControlName="nombreUsuario" placeholder="Nombre usuario">
+
+          <div class="col-md-6 mb-3">
+            <label for="nombreUsuario" class="form-label">Nombre usuario</label>
+            <input class="form-control" type="text" id="nombreUsuario" formControlName="nombreUsuario" placeholder="Nombre usuario">
             <div class="alert-text" *ngIf="incidentForm.get('nombreUsuario')!.touched && incidentForm.get('nombreUsuario')!.hasError('required')">
                 Nombre usuario requerido
             </div>
         </div>
-  
-          <div class="form-group">
-            <label for="correoUsuario">Correo usuario</label>
-            <input type="email" id="correoUsuario" formControlName="correoUsuario" placeholder="Correo usuario">
+
+          <div class="col-md-6 mb-3">
+            <label for="correoUsuario" class="form-label">Correo usuario</label>
+            <input class="form-control" type="email" id="correoUsuario" formControlName="correoUsuario" placeholder="Correo usuario">
             <div class="alert-text" *ngIf="incidentForm.get('correoUsuario')!.touched && incidentForm.get('correoUsuario')!.hasError('email')">
               Formato de correo inválido
             </div>
           </div>
-  
-          <div class="form-group">
-            <label for="telefonoUsuario">Teléfono usuario</label>
-            <input type="tel" id="telefonoUsuario" formControlName="telefonoUsuario" placeholder="Teléfono usuario">
+
+          <div class="col-md-6 mb-3">
+            <label for="telefonoUsuario" class="form-label">Teléfono usuario</label>
+            <input class="form-control" type="tel" id="telefonoUsuario" formControlName="telefonoUsuario" placeholder="Teléfono usuario">
           </div>
-  
-          <div class="form-group">
-            <label for="direccionUsuario">Dirección usuario</label>
-            <input type="text" id="direccionUsuario" formControlName="direccionUsuario" placeholder="Dirección usuario">
+
+          <div class="col-md-6 mb-3">
+            <label for="direccionUsuario" class="form-label">Dirección usuario</label>
+            <input class="form-control" type="text" id="direccionUsuario" formControlName="direccionUsuario" placeholder="Dirección usuario">
           </div>
-  
+
           <!-- Campo que debe ocupar toda la fila -->
-          <div class="form-group full-width">
-            <label for="descripcionProblema">Descripción del problema</label>
-            <textarea id="descripcionProblema" formControlName="descripcionProblema" rows="4" placeholder="Descripción del problema" (input)="onDescripcionProblemaChange()"></textarea>
+          <div class="col-md-12 mb-3">
+            <label for="descripcionProblema" class="form-label">Descripción del problema</label>
+            <textarea class="form-control" id="descripcionProblema" formControlName="descripcionProblema" rows="4" placeholder="Descripción del problema" (input)="onDescripcionProblemaChange()"></textarea>
             <div class="alert-text" *ngIf="incidentForm.get('descripcionProblema')!.touched && incidentForm.get('descripcionProblema')!.hasError('required')">
                 Descripción del problema requerido
             </div>
         </div>
-  
-          <div class="form-group">
-            <label for="tipoIncidencia">Tipo de incidencia</label>
-            <select id="tipoIncidencia" formControlName="tipoIncidencia">
+
+          <div class="col-md-6 mb-3">
+            <label for="tipoIncidencia" class="form-label">Tipo de incidencia</label>
+            <select id="tipoIncidencia" formControlName="tipoIncidencia" class="form-select">
               <option>Incidencia</option>
               <option>PQRS</option>
             </select>
           </div>
-  
-          <div class="form-group">
-            <label for="canalIngreso">Canal de ingreso</label>
-            <select id="canalIngreso" formControlName="canalIngreso">
+
+          <div class="col-md-6 mb-3">
+            <label for="canalIngreso" class="form-label">Canal de ingreso</label>
+            <select id="canalIngreso" formControlName="canalIngreso" class="form-select">
               <option>Web</option>
             </select>
           </div>
-  
-          <div class="form-group">
-            <label for="prioridad">Prioridad</label>
-            <select id="prioridad" formControlName="prioridad">
+
+          <div class="col-md-6 mb-3">
+            <label for="prioridad" class="form-label">Prioridad</label>
+            <select id="prioridad" formControlName="prioridad" class="form-select">
               <option>Baja</option>
               <option>Media</option>
               <option>Alta</option>
             </select>
           </div>
-  
-          <div class="form-group">
-            <label for="estado">Estado</label>
-            <select id="estado" formControlName="estado">
+
+          <div class="col-md-6 mb-3">
+            <label for="estado" class="form-label">Estado</label>
+            <select id="estado" formControlName="estado" class="form-select">
               <option>Abierto</option>
               <option>En proceso</option>
               <option>A espera de respuesta usuario</option>
               <option>Cerrado</option>
             </select>
           </div>
-  
+
           <!-- Campo que debe ocupar toda la fila -->
-          <div class="form-group full-width">
-            <label for="respuestaIA">Respuesta sugerida por IA</label>
-            <textarea id="respuestaIA" formControlName="respuestaIA" rows="2"></textarea>
+          <div class="col-md-12 mb-3">
+            <label for="respuestaIA" class="form-label">Respuesta sugerida por IA</label>
+            <textarea class="form-control"  id="respuestaIA" formControlName="respuestaIA" rows="2"></textarea>
           </div>
-        </div>
-  
-        <div class="button-group">
-          <button type="submit" id="guardar" class="btn-save" [ngClass]="{'btn-disabled': !incidentForm.valid}">Guardar</button>
-          <button type="button" id="escalar" class="btn-escalar" [ngClass]="{'btn-disabled': !incidentForm.valid}" (click)="onEscalar()">Escalar</button>
-        </div>
+
+          <div class="row">
+            <div class="d-grid gap-2 col-4 mx-auto">
+              <button type="submit" id="guardar" class="btn btn-lg btn-purple" [ngClass]="{'btn-disabled': !incidentForm.valid}">Guardar</button>
+            </div>
+            <div class="col-2"></div>
+            <div class="d-grid gap-2 col-4 mx-auto">
+              <button type="button" id="escalar" class="btn btn-lg btn-secondary" [ngClass]="{'btn-disabled': !incidentForm.valid}" (click)="onEscalar()">Escalar</button>
+            </div>
+          </div>
       </form>
-    </div>
   </div>
-  
