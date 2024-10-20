@@ -1,12 +1,18 @@
 describe('CrearIncidenciasComponent E2E Tests', () => {
     beforeEach(() => {
+        cy.viewport(1024, 768);
         cy.visit('/login'); 
         cy.get('input[id="email"]').type('pepito@gmail.com');
         cy.get('input[id="password"]').type('123456789');
         cy.get('button[type="submit"]').click();
         cy.get('button[id="mostrarNavBar"]').click();
         cy.get('a[id="crearIncidencia"]').click();
-        
+
+        cy.wait(3000);
+
+        cy.contains('Prioridad').should('be.visible');
+
+
         //cy.visit('/home/incidencia'); 
     });
 
