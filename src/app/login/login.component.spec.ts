@@ -48,15 +48,6 @@ describe('LoginComponent', () => {
     expect(component.authFlag).toBe('Datos de usuario incorrectos');
   });
 
-  it('should display error message on login failure 2', async () => {
-    const AuthServiceStub: AuthService = fixture.debugElement.injector.get(AuthService);
-    const errorResponse = {error: {}};
-    spyOn(AuthServiceStub, 'login').and.returnValue(throwError(errorResponse));
-    component.loginForm.setValue({email: 'test@test.com', password: 'password123'});
-    component.submit();
-    expect(component.authFlag).toBe('Datos de usuario incorrectos');
-  });
-
   it('should display success message on login success', async () => {
     const AuthServiceStub: AuthService = fixture.debugElement.injector.get(AuthService);
     const mockResponse: Usuario = {

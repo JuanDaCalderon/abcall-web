@@ -49,7 +49,7 @@ export class LoginComponent {
           this.router.navigate(['/home']);
         },
         (error) => {
-          const errorMessage = error?.error?.message || 'Ocurrió un error inesperado';
+          const errorMessage = error?.error?.message;
           console.error('Error al iniciar sesion:', errorMessage);
           this.authFlag = 'Datos de usuario incorrectos';
         }

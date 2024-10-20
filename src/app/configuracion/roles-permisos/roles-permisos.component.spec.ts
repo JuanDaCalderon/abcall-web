@@ -19,8 +19,8 @@ describe('RolesPermisosComponent', () => {
     fixture = TestBed.createComponent(RolesPermisosComponent);
     component = fixture.componentInstance;
     const mockRoles: [Role, Role] = [
-      {ID: 1, NOMBRE: 'Admin', PERMISOS: []},
-      {ID: 2, NOMBRE: 'User', PERMISOS: []}
+      {id: 1, nombre: 'Admin', permisos: []},
+      {id: 2, nombre: 'User', permisos: []}
     ];
     const toastElement = document.createElement('div');
     toastElement.id = 'liveToast';
@@ -65,8 +65,8 @@ describe('RolesPermisosComponent', () => {
     it('getAllRoles fetches roles', () => {
       const roleServiceStub: RoleService = fixture.debugElement.injector.get(RoleService);
       const mockRoles: [Role, Role] = [
-        {ID: 1, NOMBRE: 'Admin', PERMISOS: []},
-        {ID: 2, NOMBRE: 'User', PERMISOS: []}
+        {id: 1, nombre: 'Admin', permisos: []},
+        {id: 2, nombre: 'User', permisos: []}
       ];
       spyOn(roleServiceStub, 'getAllRoles').and.returnValues(of(mockRoles));
       component.getAllRoles();
@@ -75,8 +75,8 @@ describe('RolesPermisosComponent', () => {
 
     it('getAllRoles updates roles array', () => {
       const mockRoles: [Role, Role] = [
-        {ID: 1, NOMBRE: 'Admin', PERMISOS: []},
-        {ID: 2, NOMBRE: 'User', PERMISOS: []}
+        {id: 1, nombre: 'Admin', permisos: []},
+        {id: 2, nombre: 'User', permisos: []}
       ];
       if (!roleServiceStub.getAllRoles.calls) {
         spyOn(roleServiceStub, 'getAllRoles').and.returnValues(of(mockRoles));
@@ -97,7 +97,7 @@ describe('RolesPermisosComponent', () => {
   describe('getRole', () => {
     it('getRole fetches roles', () => {
       const roleServiceStub: RoleService = fixture.debugElement.injector.get(RoleService);
-      const mockRoles: Role = {ID: 1, NOMBRE: 'Admin', PERMISOS: []};
+      const mockRoles: Role = {id: 1, nombre: 'Admin', permisos: []};
       spyOn(roleServiceStub, 'getRole').and.returnValue(of(mockRoles));
       component.getRole(1);
       expect(roleServiceStub.getRole).toHaveBeenCalled();
@@ -117,7 +117,7 @@ describe('RolesPermisosComponent', () => {
       const roleServiceStub: RoleService = fixture.debugElement.injector.get(RoleService);
       spyOn(roleServiceStub, 'createRole').and.returnValue(of({message: 'Rol creado exitosamente!'}));
       spyOn(component, 'showToast').and.callThrough();
-      component.roleForm.setValue({NOMBRE: 'Admin'});
+      component.roleForm.setValue({nombre: 'Admin'});
       component.onSubmit();
       expect(component.showToast).toHaveBeenCalledWith('Rol creado exitosamente!', 'success');
       expect(roleServiceStub.createRole).toHaveBeenCalled();
@@ -128,7 +128,7 @@ describe('RolesPermisosComponent', () => {
       const errorResponse = {error: {message: 'El Role ya existe'}};
       spyOn(roleServiceStub, 'createRole').and.returnValue(throwError(errorResponse));
       spyOn(component, 'showToast').and.callThrough();
-      component.roleForm.setValue({NOMBRE: 'Admin'});
+      component.roleForm.setValue({nombre: 'Admin'});
       component.onSubmit();
       expect(component.showToast).toHaveBeenCalledWith('El Role ya existe', 'error');
       expect(roleServiceStub.createRole).toHaveBeenCalled();
@@ -139,7 +139,7 @@ describe('RolesPermisosComponent', () => {
       const errorResponse = {error: {}};
       spyOn(roleServiceStub, 'createRole').and.returnValue(throwError(errorResponse));
       spyOn(component, 'showToast').and.callThrough();
-      component.roleForm.setValue({NOMBRE: 'Admin'});
+      component.roleForm.setValue({nombre: 'Admin'});
       component.onSubmit();
       //expect(component.showToast).toHaveBeenCalled();
       expect(component.showToast).toHaveBeenCalledWith('Ocurrió un error inesperado', 'error');

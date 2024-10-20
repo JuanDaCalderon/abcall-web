@@ -22,10 +22,10 @@
       </thead>
       <tbody>
         <tr *ngFor="let role of roles">
-          <td>{{role.ID}}</td>
-          <td>{{role.NOMBRE}}</td>
+          <td>{{role.id}}</td>
+          <td>{{role.nombre}}</td>
           <td>
-            <button class="btn btn-purple" (click)="getRole(role.ID)">Permisos</button>
+            <button class="btn btn-purple" (click)="getRole(role.id)">Permisos</button>
           </td>
         </tr>
       </tbody>
@@ -33,13 +33,13 @@
   </div>
   <div class="col-4 mt-3 border"  *ngIf="isVisible && role" >
     <div class="m-3">
-      <h4>Permisos de {{role.NOMBRE}}</h4>
+      <h4>Permisos de {{role.nombre}}</h4>
     </div>
     <form class="m-2 align-content-start">
       <div class="form-group border border-2">
         <div class="form-check form-check-reverse form-switch" *ngFor="let permiso of permisos">
-          <label class="form-check-label" for="{{permiso.ID}}">{{permiso.NOMBRE}}</label>
-          <input class="form-check-input" type="checkbox" role="switch" id="{{permiso.ID}}" [checked]="permiso.ESTADO">
+          <label class="form-check-label" for="{{permiso.id}}">{{permiso.nombre}}</label>
+          <input class="form-check-input" type="checkbox" role="switch" id="{{permiso.id}}" checked="true">
         </div>
       </div>
       <div class="form-group vstack gap-2 col-md-5 mx-auto">
@@ -64,9 +64,9 @@
       <div class="modal-body">
         <div class="form-group">
         <div class="col-md mb-3">
-          <label for="NOMBRE" class="form-label">Nombre </label>
-          <input type="text" class="form-control" id="NOMBRE" name="NOMBRE" formControlName="NOMBRE" placeholder="Role">
-          <div *ngIf="roleForm.get('NOMBRE')?.invalid && roleForm.get('NOMBRE')?.touched" class="text-danger">
+          <label for="nombre" class="form-label">Nombre </label>
+          <input type="text" class="form-control" id="nombre" name="nombre" formControlName="nombre" placeholder="Role">
+          <div *ngIf="roleForm.get('nombre')?.invalid && roleForm.get('nombre')?.touched" class="text-danger">
             El nombre del rol es requerido.
           </div>
         </div>

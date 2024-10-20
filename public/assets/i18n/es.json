@@ -18,5 +18,7 @@
     "abc.get.issues.my.issues": "Lista de incidentes",
     "abc.get.issues.button.view.edit": "Ver / Editar",
     "abc.get.issues.button.close": "Cerrar",
+    "abc.crear-incidencia.crear.success.message": "Incidencia creada correctamente",
+    "abc.crear-incidencia.escalar.success.message": "Incidencia escalada correctamente",
     "hello": "Hola"
 }

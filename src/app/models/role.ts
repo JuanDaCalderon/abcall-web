@@ -2,8 +2,8 @@ import {Permiso} from './permiso';
 
 export class Role {
   constructor(
-    public ID: number,
-    public NOMBRE: string,
-    public PERMISOS: Permiso[]
+    public id: number,
+    public nombre: string,
+    public permisos: Permiso[]
   ) {}
 }
