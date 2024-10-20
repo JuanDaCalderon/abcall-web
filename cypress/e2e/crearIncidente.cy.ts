@@ -1,6 +1,13 @@
 describe('CrearIncidenciasComponent E2E Tests', () => {
     beforeEach(() => {
-        cy.visit('/'); 
+        cy.visit('/login'); 
+        cy.get('input[id="email"]').type('pepito@gmail.com');
+        cy.get('input[id="password"]').type('123456789');
+        cy.get('button[type="submit"]').click();
+        cy.get('button[id="mostrarNavBar"]').click();
+        cy.get('a[id="crearIncidencia"]').click();
+        
+        //cy.visit('/home/incidencia'); 
     });
 
     it('should display the crearIncidencias form', () => {
