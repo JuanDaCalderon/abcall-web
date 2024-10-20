@@ -9,8 +9,8 @@ import {environment} from '../../environments/environment';
 })
 export class GestorService {
   /** API url */
-  private apiUrl = environment.apiUrl;
-  private userPort = environment.userPort;
+  private apiUrl = environment.urlApi;
+  private userPort = environment.portUsuario;
   constructor(private http: HttpClient) {}
 
   /**

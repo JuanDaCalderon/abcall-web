@@ -48,7 +48,7 @@ describe('GestorService', () => {
         expect(response.password).toBe(gestorMock.password);
       })
     );
-    const req = httpMock.expectOne(`${environment.apiUrl}${environment.userPort}/usuario/register`);
+    const req = httpMock.expectOne(`${environment.urlApi}${environment.portUsuario}/usuario/register`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(gestorMock);
     req.flush(gestorMock);
