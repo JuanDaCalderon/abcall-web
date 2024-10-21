@@ -25,7 +25,7 @@ export class RolesPermisosComponent implements OnInit {
     public roleService: RoleService
   ) {
     this.roleForm = this.fb.group({
-      NOMBRE: ['', Validators.required]
+      nombre: ['', Validators.required]
     });
   }
   ngOnInit(): void {
@@ -48,7 +48,7 @@ export class RolesPermisosComponent implements OnInit {
       (data: Role) => {
         this.role = data;
         console.log(this.role);
-        this.permisos = this.role.PERMISOS;
+        this.permisos = this.role.permisos;
         this.isVisible = !this.isVisible;
       },
       (error) => {
@@ -60,9 +60,9 @@ export class RolesPermisosComponent implements OnInit {
   onSubmit(): void {
     if (this.roleForm.valid) {
       const newRole = {
-        ID: 0,
-        NOMBRE: this.roleForm.value.NOMBRE,
-        PERMISOS: []
+        id: 0,
+        nombre: this.roleForm.value.nombre,
+        permisos: []
       };
 
       this.roleService.createRole(newRole).subscribe(
