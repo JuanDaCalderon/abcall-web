@@ -135,7 +135,7 @@ export class CreateIncidenciasComponent {
       .subscribe(
         (response) => {
           localStorage.setItem('incidente', JSON.stringify(response));
-          this.toastr.success('Numero de caso: ' + String(response.ID), 'Incidente creado correctamente ', {
+          this.toastr.success('Numero de caso: ' + String(response.ID), 'Incidente escalado correctamente ', {
             closeButton: true,
             timeOut: 10000,
             positionClass: 'toast-bottom-center'
