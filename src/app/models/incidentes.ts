@@ -7,7 +7,7 @@ export class Incidente {
     public DIRECCION: string,
     public ESTADO: string,
     public FECHACREACION: string,
-    public ID: string,
+    public ID: number,
     public PRIORIDAD: string,
     public TELEFONO: string,
     public USUARIO: string

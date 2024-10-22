@@ -7,7 +7,7 @@ import {CreateIncidenciasComponent} from './create-incidencias.component';
 import {CrearIncidenteService} from '../../services/crear-incidente.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {CrearClienteComponent} from '../../configuracion/crear-cliente/crear-cliente.component';
-import {Incidente} from '../../models/incidente';
+import {Incidente} from '../../models/incidentes';
 
 describe('CreateIncidenciasComponent', () => {
   let component: CreateIncidenciasComponent;

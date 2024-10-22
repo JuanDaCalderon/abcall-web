@@ -31,7 +31,7 @@ describe('ListIncidenciasComponent', () => {
     component = fixture.componentInstance;
     const mockIncidencias: Incidente[] = [
       {
-        ID: '1',
+        ID: 1,
         DESCRIPCION: 'Test Incidente',
         CLIENTE: 'Cliente Test',
         COMENTARIOS: 'Comentarios Test',
@@ -44,7 +44,7 @@ describe('ListIncidenciasComponent', () => {
         USUARIO: 'Usuario Test'
       },
       {
-        ID: '1',
+        ID: 1,
         DESCRIPCION: 'Test Incidente',
         CLIENTE: 'Cliente Test',
         COMENTARIOS: 'Comentarios Test',
@@ -75,7 +75,7 @@ describe('ListIncidenciasComponent', () => {
     const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
     const mockIncidencias: Incidente[] = [
       {
-        ID: '1',
+        ID: 1,
         DESCRIPCION: 'Test Incidente',
         CLIENTE: 'Cliente Test',
         COMENTARIOS: 'Comentarios Test',
@@ -88,7 +88,7 @@ describe('ListIncidenciasComponent', () => {
         USUARIO: 'Usuario Test'
       },
       {
-        ID: '1',
+        ID: 1,
         DESCRIPCION: 'Test Incidente',
         CLIENTE: 'Cliente Test',
         COMENTARIOS: 'Comentarios Test',
@@ -110,7 +110,7 @@ describe('ListIncidenciasComponent', () => {
     const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
     const mockIncidencias: Incidente[] = [
       {
-        ID: '1',
+        ID: 1,
         DESCRIPCION: 'Incidencia 1',
         ESTADO: 'Abierto',
         PRIORIDAD: 'Alta',

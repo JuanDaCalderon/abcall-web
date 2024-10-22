@@ -3,7 +3,7 @@ import {CrearIncidenteService} from './crear-incidente.service';
 import {Subscription} from 'rxjs';
 import {provideHttpClient} from '@angular/common/http';
 import {HttpTestingController, provideHttpClientTesting} from '@angular/common/http/testing';
-import {Incidente} from '../models/incidente';
+import {Incidente} from '../models/incidentes';
 import {environment} from '../../environments/environment';
 
 describe('Service: CrearIncidente', () => {

@@ -28,7 +28,7 @@ describe('IncidenciasService', () => {
   it('should fetch incidencias', () => {
     const mockIncidencias: Incidente[] = [
       {
-        ID: '1',
+        ID: 1,
         DESCRIPCION: 'Incidencia 1',
         ESTADO: 'Abierto',
         PRIORIDAD: 'Alta',
@@ -41,7 +41,7 @@ describe('IncidenciasService', () => {
         TELEFONO: ''
       },
       {
-        ID: '2',
+        ID: 2,
         DESCRIPCION: 'Incidencia 2',
         ESTADO: 'Cerrado',
         PRIORIDAD: 'Baja',
