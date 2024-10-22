@@ -4,11 +4,13 @@ import {Incidente} from '../../models/incidentes';
 import {NgFor, NgIf} from '@angular/common';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {Subject, takeUntil} from 'rxjs';
+import {FiltroIncidenciasPipe} from '../../pipes/filtro-incidencias.pipe';
+import {FormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-list-incidencias',
   standalone: true,
-  imports: [NgFor, NgIf, TranslateModule],
+  imports: [NgFor, NgIf, TranslateModule, FiltroIncidenciasPipe, FormsModule],
   providers: [IncidenciasService],
   templateUrl: './list-incidencias.component.html',
   styleUrl: './list-incidencias.component.scss'
@@ -18,7 +20,7 @@ export class ListIncidenciasComponent implements OnInit {
   language = 'es';
   translate: TranslateService = inject(TranslateService);
   private destroy$ = new Subject<void>();
-
+  criterioBusqueda = '';
   constructor(private incidenciasService: IncidenciasService) {}
 
   ngOnInit(): void {

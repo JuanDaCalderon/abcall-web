@@ -1,19 +1,19 @@
 <div class="container-fluid top">
-  
+
   <div class="row align-items-center">
     <div class="col mb-3">
       <h2>{{ 'abc.get.issues.my.issues' | translate}}</h2>
     </div>
     <div class = "flag col mb-3" *ngIf="language === 'es'">
-      <img src="./assets/img/en.jpg" id="languageButton" class="icon-flag" alt="Icono bandera Reino Unido" 
+      <img src="./assets/img/en.jpg" id="languageButton" class="icon-flag" alt="Icono bandera Reino Unido"
        (click)="changeLang('en')"
-       (keydown.enter)="changeLang('en')" 
+       (keydown.enter)="changeLang('en')"
        tabindex="0">
      </div>
      <div class = "flag col mb-3" *ngIf="language === 'en'">
        <img src="./assets/img/es.jpg" class="icon-flag" alt="Icono bandera Colombia"
        (click)="changeLang('es')"
-       (keydown.enter)="changeLang('es')" 
+       (keydown.enter)="changeLang('es')"
        tabindex="0">
      </div>
     <div class="col-auto mb-3">
@@ -22,8 +22,15 @@
       </button>
     </div>
   </div>
+  <div class="row">
+    <div class="col-4 mb-3">
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" id="criterioBusqueda" [(ngModel)]="criterioBusqueda"  name="criterioBusqueda" type="search" placeholder="Usuario" aria-label="Search">
+      </form>
+    </div>
+  </div>
   <div class="row row-cols-1 row-cols-md-1">
-    <div class="col-auto mb-3" *ngFor="let incidencia of incidencias">
+    <div class="col-auto mb-3" *ngFor="let incidencia of incidencias | filtroIncidencias: criterioBusqueda ">
       <div class="card">
         <div class="card-body">
           <div class="row">
@@ -31,8 +38,8 @@
               <h5 class="card-title">{{ 'abc.get.issues.issue' | translate}} # {{ incidencia.ID }}</h5>
               <p class="card-text">
                 {{ 'abc.get.issues.status' | translate}}: {{ incidencia.ESTADO }}
-                 | {{ 'abc.get.issues.priority' | translate}}: {{ incidencia.PRIORIDAD }} 
-                 | {{ 'abc.get.issues.customer' | translate}}: {{ incidencia.CLIENTE }} 
+                 | {{ 'abc.get.issues.priority' | translate}}: {{ incidencia.PRIORIDAD }}
+                 | {{ 'abc.get.issues.customer' | translate}}: {{ incidencia.CLIENTE }}
                  | {{ 'abc.get.issues.user' | translate}}: {{ incidencia.USUARIO }}</p>
             </div>
             <div class="col-auto"></div>
