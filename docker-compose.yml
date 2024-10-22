@@ -1,0 +1,8 @@
+version: "3.7"
+
+services:
+  abcall_web:
+    container_name: cabcall_web
+    build: ./
+    ports:
+      - 4201:80
