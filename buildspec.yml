@@ -22,12 +22,9 @@ phases:
       - docker push 682033469251.dkr.ecr.us-east-1.amazonaws.com/abcallweb:latest
       - echo Writing Image Definitions file...
       - printf '[{"name":"Container-app-abcall-forntend","682033469251.dkr.ecr.us-east-1.amazonaws.com/abcallweb:latest"}]' > imagedefinitions.json
-      - echo moviendo el archivo imagedefinitions.json ...
-      - mv imagedefinitions.json ../imagedefinitions.json
       - printf '{"ImageURI":"682033469251.dkr.ecr.us-east-1.amazonaws.com/abcallweb:latest"}' > imageDetail.json
-      - echo moviendo el archivo imageDetail.json ...
-      - mv imageDetail.json ../imageDetail.json
-      - cat ../imagedefinitions.json
+      - cat imageDetail.json
+      - cat imagedefinitions.json
 artifacts:
   files:
     - '**/*'
