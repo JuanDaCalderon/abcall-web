@@ -4,6 +4,7 @@ import {Incidente} from '../../models/incidentes';
 import {NgFor, NgIf} from '@angular/common';
 import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {Subject, takeUntil} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-list-incidencias',
@@ -19,7 +20,11 @@ export class ListIncidenciasComponent implements OnInit {
   translate: TranslateService = inject(TranslateService);
   private destroy$ = new Subject<void>();
 
-  constructor(private incidenciasService: IncidenciasService) {}
+  constructor(
+    private incidenciasService: IncidenciasService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.getIncidencias();
@@ -44,5 +49,10 @@ export class ListIncidenciasComponent implements OnInit {
   changeLang(lang: string): void {
     this.language = lang;
     this.translate.use(lang);
+  }
+
+  OnSelect(id: number): void {
+    console.log('Incidencia seleccionada:', id);
+    this.router.navigate(['/view-incidencia', id]);
   }
 }

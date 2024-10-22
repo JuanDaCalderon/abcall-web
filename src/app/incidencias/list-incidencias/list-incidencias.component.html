@@ -24,7 +24,7 @@
   </div>
   <div class="row row-cols-1 row-cols-md-1">
     <div class="col-auto mb-3" *ngFor="let incidencia of incidencias">
-      <div class="card">
+      <div class="card" >
         <div class="card-body">
           <div class="row">
             <div class="col-10">
@@ -37,7 +37,7 @@
             </div>
             <div class="col-auto"></div>
             <div class="col align-content-end">
-              <button class="btn btn-purple m-2">{{ 'abc.get.issues.button.view.edit' | translate}}</button>
+              <button class="btn btn-purple m-2" (click) = "OnSelect(1)">{{ 'abc.get.issues.button.view.edit' | translate}}</button>
               <button class="btn btn-secondary m-2">{{ 'abc.get.issues.button.close' | translate}}</button>
             </div>
           </div>

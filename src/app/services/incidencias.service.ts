@@ -15,4 +15,8 @@ export class IncidenciasService {
   getIncidencias(): Observable<Incidente[]> {
     return this._http.get<Incidente[]>(this.apiUrl + '/incidentes');
   }
+
+  getIncidencia(id: number): Observable<Incidente> {
+    return this._http.get<Incidente>(`${this.apiUrl}/incidentes/id/${id}`);
+  }
 }
