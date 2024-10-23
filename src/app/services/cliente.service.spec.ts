@@ -25,7 +25,7 @@ describe('ClienteService', () => {
     it('makes expected calls', () => {
       const httpTestingController = TestBed.inject(HttpTestingController);
       const clienteStub: UsuarioInterface = {
-        id: 1,
+        id: '1',
         nombres: 'pepito',
         email: 'pepito@perez.com',
         telefono: '888888888',
@@ -38,7 +38,7 @@ describe('ClienteService', () => {
       } as UsuarioInterface;
 
       const clienteResponseStub: Usuario = {
-        id: 1,
+        id: '1',
         nombres: 'pepito',
         email: 'pepito@perez.com',
         telefono: '888888888',

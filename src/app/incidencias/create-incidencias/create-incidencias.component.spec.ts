@@ -8,6 +8,7 @@ import {CrearIncidenteService} from '../../services/crear-incidente.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {CrearClienteComponent} from '../../configuracion/crear-cliente/crear-cliente.component';
 import {Incidente} from '../../models/incidentes';
+import {Usuario} from '../../models/usuario';
 
 describe('CreateIncidenciasComponent', () => {
   let component: CreateIncidenciasComponent;
@@ -77,6 +78,7 @@ describe('CreateIncidenciasComponent', () => {
   });
 
   it('should reset the form and flags after successful submission', () => {
+    component.usuario = {id: '123', nombres: 'Test User'} as Usuario;
     crearIncidenteService.crearIncidente.and.returnValue(of(mockIncidente));
     component.onSubmit();
     expect(component.crearIncidenteFlag).toBe('');
@@ -86,6 +88,7 @@ describe('CreateIncidenciasComponent', () => {
   it('should handle error during incident creation', () => {
     const CrearIncidenteServiceStub: CrearIncidenteService = fixture.debugElement.injector.get(CrearIncidenteService);
     const errorResponse = {error: {message: 'Incidente no creado'}};
+    component.usuario = {id: '123', nombres: 'Test User'} as Usuario;
     spyOn(CrearIncidenteServiceStub, 'crearIncidente').and.returnValue(throwError(errorResponse));
 
     component.onSubmit();
@@ -103,6 +106,7 @@ describe('CreateIncidenciasComponent', () => {
 
   it('should handle success during incident creation', () => {
     const CrearIncidenteServiceStub: CrearIncidenteService = fixture.debugElement.injector.get(CrearIncidenteService);
+    component.usuario = {id: '123', nombres: 'Test User'} as Usuario;
     spyOn(CrearIncidenteServiceStub, 'crearIncidente').and.returnValue(of(mockIncidente));
 
     component.onSubmit();

@@ -6,6 +6,9 @@ import {CrearIncidenteService} from '../../services/crear-incidente.service';
 import {Router} from '@angular/router';
 import {NavbarComponent} from '../../components/navbar/navbar.component';
 import {ToastrService} from 'ngx-toastr';
+import {Usuario} from '../../models/usuario';
+import {Role} from '../../models/role';
+import {AuthService} from '../../services/auth.service';
 
 @Component({
   selector: 'app-create-incidencias',
@@ -20,18 +23,20 @@ export class CreateIncidenciasComponent {
   crearIncidenteFlag = '';
   escalarIncidenteFlag = '';
   apiUrl = environment.urlApi + environment.portCrearIncidentes;
+  public usuario: Usuario = new Usuario('', '', '', '', '', '', '', '', '', '', new Role(0, '', []));
 
   constructor(
     private formBuilder: FormBuilder,
     private crearIncidenteService: CrearIncidenteService,
     //private router: Router,
     //private route: ActivatedRoute,
+    private authService: AuthService,
     private toastr: ToastrService
   ) {
     this.incidentForm = this.formBuilder.group({
       cliente: ['', Validators.required],
       fecha: [new Date().toISOString().substring(0, 16), Validators.required],
-      nombreUsuario: ['', Validators.required],
+      nombreUsuario: [''],
       telefonoUsuario: [''],
       correoUsuario: ['', Validators.email],
       direccionUsuario: [''],
@@ -50,13 +55,15 @@ export class CreateIncidenciasComponent {
     this.incidentForm.get('fecha')?.disable();
     this.incidentForm.get('canalIngreso')?.disable();
     this.incidentForm.get('respuestaIA')?.disable();
+
+    this.usuario = this.authService.getUsuario();
   }
 
   onSubmit(): void {
     const newIncident = {
       cliente: this.incidentForm.get('cliente')?.value,
       fecha: this.incidentForm.get('fecha')?.value,
-      nombreUsuario: this.incidentForm.get('nombreUsuario')?.value,
+      nombreUsuario: this.usuario.id,
       correoUsuario: this.incidentForm.get('correoUsuario')?.value,
       direccionUsuario: this.incidentForm.get('direccionUsuario')?.value,
       telefonoUsuario: this.incidentForm.get('telefonoUsuario')?.value,

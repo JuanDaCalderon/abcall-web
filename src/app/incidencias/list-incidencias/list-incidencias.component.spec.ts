@@ -5,14 +5,17 @@ import {ListIncidenciasComponent} from './list-incidencias.component';
 import {IncidenciasService} from '../../services/incidencias.service';
 import {of, throwError} from 'rxjs';
 import {Incidente} from '../../models/incidentes';
+import {AuthService} from '../../services/auth.service';
+import {Usuario} from '../../models/usuario';
 
 describe('ListIncidenciasComponent', () => {
   let component: ListIncidenciasComponent;
   let fixture: ComponentFixture<ListIncidenciasComponent>;
-  let incidenciaServiceStub = jasmine.createSpyObj('IncidenciasService', ['getIncidencias']);
-
+  let incidenciaServiceStub = jasmine.createSpyObj('IncidenciasService', ['getIncidencias', 'getAllincidenciaByCliente']);
+  let userServiceStub = jasmine.createSpyObj('AuthService', ['getAllUsers']);
   beforeEach(async () => {
-    incidenciaServiceStub = jasmine.createSpyObj('IncidenciasService', ['getIncidencias']);
+    incidenciaServiceStub = jasmine.createSpyObj('IncidenciasService', ['getIncidencias', 'getAllincidenciaByCliente']);
+    userServiceStub = jasmine.createSpyObj('AuthService', ['getAllUsers']);
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -24,7 +27,10 @@ describe('ListIncidenciasComponent', () => {
         }),
         ListIncidenciasComponent
       ],
-      providers: [{provide: IncidenciasService, useFactory: incidenciaServiceStub}]
+      providers: [
+        {provide: IncidenciasService, useFactory: incidenciaServiceStub},
+        {provide: AuthService, useFactory: userServiceStub}
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(ListIncidenciasComponent);
@@ -57,6 +63,26 @@ describe('ListIncidenciasComponent', () => {
         USUARIO: 'Usuario Test'
       }
     ];
+    const mockUsers: Usuario[] = [
+      {
+        id: '1',
+        email: 'Incidencia 1',
+        username: 'Abierto',
+        password: 'Alta',
+        nombres: 'Cliente 1',
+        apellidos: 'Usuario 1',
+        telefono: '',
+        direccion: '',
+        gestortier: '',
+        token: '',
+        rol: {
+          id: 1,
+          nombre: '',
+          permisos: []
+        }
+      }
+    ];
+    userServiceStub.getAllUsers.and.returnValues(of(mockUsers));
     incidenciaServiceStub.getIncidencias.and.returnValues(of(mockIncidencias));
     fixture.detectChanges();
   });
@@ -67,6 +93,26 @@ describe('ListIncidenciasComponent', () => {
 
   it('should load incidencias on init', () => {
     component.getIncidencias();
+
+    expect(component.incidencias.length).toBe(0);
+  });
+
+  it('should load users on init', () => {
+    component.getAllUsers();
+
+    expect(component.usuarios.length).toBe(0);
+  });
+
+  it('should load incidencias cliente', () => {
+    const mockEvent = {target: {value: '1'}} as unknown as Event;
+    component.getAllIncidenciasByCliente(mockEvent);
+
+    expect(component.incidencias.length).toBe(0);
+  });
+
+  it('should load incidencias usuarios', () => {
+    const mockEvent = {target: {value: '1'}} as unknown as Event;
+    component.getAllIncidenciasByUserId(mockEvent);
 
     expect(component.incidencias.length).toBe(0);
   });
@@ -106,6 +152,150 @@ describe('ListIncidenciasComponent', () => {
     expect(incidenciaServiceStub.getIncidencias).toHaveBeenCalled();
   });
 
+  it('should load incidencias on init by usuario', () => {
+    const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
+    const mockIncidencias: Incidente[] = [
+      {
+        ID: 1,
+        DESCRIPCION: 'Test Incidente',
+        CLIENTE: 'Cliente Test',
+        COMENTARIOS: 'Comentarios Test',
+        CORREO: 'CorreoTest@correotest.com',
+        DIRECCION: 'Dirección Test',
+        ESTADO: 'Abierto',
+        FECHACREACION: '19-10-2024 11:39:00',
+        PRIORIDAD: 'Alta',
+        TELEFONO: '111111111',
+        USUARIO: 'Usuario Test'
+      },
+      {
+        ID: 1,
+        DESCRIPCION: 'Test Incidente',
+        CLIENTE: 'Cliente Test',
+        COMENTARIOS: 'Comentarios Test',
+        CORREO: 'CorreoTest@correotest.com',
+        DIRECCION: 'Dirección Test',
+        ESTADO: 'Abierto',
+        FECHACREACION: '19-10-2024 11:39:00',
+        PRIORIDAD: 'Alta',
+        TELEFONO: '111111111',
+        USUARIO: 'Usuario Test'
+      }
+    ];
+    const mockEvent = {target: {value: 'Usuario Test'}} as unknown as Event;
+    spyOn(incidenciaServiceStub, 'getAllincidenciaByUserId').and.returnValues(of(mockIncidencias));
+    component.getAllIncidenciasByUserId(mockEvent);
+    expect(incidenciaServiceStub.getAllincidenciaByUserId).toHaveBeenCalled();
+  });
+
+  it('should load incidencias on init by user vacio', () => {
+    const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
+    const mockIncidencias: Incidente[] = [
+      {
+        ID: 1,
+        DESCRIPCION: 'Test Incidente',
+        CLIENTE: 'Cliente Test',
+        COMENTARIOS: 'Comentarios Test',
+        CORREO: 'CorreoTest@correotest.com',
+        DIRECCION: 'Dirección Test',
+        ESTADO: 'Abierto',
+        FECHACREACION: '19-10-2024 11:39:00',
+        PRIORIDAD: 'Alta',
+        TELEFONO: '111111111',
+        USUARIO: 'Usuario Test'
+      },
+      {
+        ID: 1,
+        DESCRIPCION: 'Test Incidente',
+        CLIENTE: 'Cliente Test',
+        COMENTARIOS: 'Comentarios Test',
+        CORREO: 'CorreoTest@correotest.com',
+        DIRECCION: 'Dirección Test',
+        ESTADO: 'Abierto',
+        FECHACREACION: '19-10-2024 11:39:00',
+        PRIORIDAD: 'Alta',
+        TELEFONO: '111111111',
+        USUARIO: 'Usuario Test'
+      }
+    ];
+    const mockEvent = {target: {value: ''}} as unknown as Event;
+    spyOn(incidenciaServiceStub, 'getIncidencias').and.returnValues(of(mockIncidencias));
+    component.getAllIncidenciasByUserId(mockEvent);
+    expect(incidenciaServiceStub.getIncidencias).toHaveBeenCalled();
+  });
+
+  it('should load incidencias on init by cliente', () => {
+    const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
+    const mockIncidencias: Incidente[] = [
+      {
+        ID: 1,
+        DESCRIPCION: 'Test Incidente',
+        CLIENTE: 'Cliente Test',
+        COMENTARIOS: 'Comentarios Test',
+        CORREO: 'CorreoTest@correotest.com',
+        DIRECCION: 'Dirección Test',
+        ESTADO: 'Abierto',
+        FECHACREACION: '19-10-2024 11:39:00',
+        PRIORIDAD: 'Alta',
+        TELEFONO: '111111111',
+        USUARIO: 'Usuario Test'
+      },
+      {
+        ID: 1,
+        DESCRIPCION: 'Test Incidente',
+        CLIENTE: 'Cliente Test',
+        COMENTARIOS: 'Comentarios Test',
+        CORREO: 'CorreoTest@correotest.com',
+        DIRECCION: 'Dirección Test',
+        ESTADO: 'Abierto',
+        FECHACREACION: '19-10-2024 11:39:00',
+        PRIORIDAD: 'Alta',
+        TELEFONO: '111111111',
+        USUARIO: 'Usuario Test'
+      }
+    ];
+    const mockEvent = {target: {value: 'Usuario Test'}} as unknown as Event;
+    spyOn(incidenciaServiceStub, 'getAllincidenciaByCliente').and.returnValues(of(mockIncidencias));
+    component.getAllIncidenciasByCliente(mockEvent);
+    expect(incidenciaServiceStub.getAllincidenciaByCliente).toHaveBeenCalled();
+  });
+
+  it('should load incidencias on init by cliente vacio', () => {
+    const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
+    const mockIncidencias: Incidente[] = [
+      {
+        ID: 1,
+        DESCRIPCION: 'Test Incidente',
+        CLIENTE: 'Cliente Test',
+        COMENTARIOS: 'Comentarios Test',
+        CORREO: 'CorreoTest@correotest.com',
+        DIRECCION: 'Dirección Test',
+        ESTADO: 'Abierto',
+        FECHACREACION: '19-10-2024 11:39:00',
+        PRIORIDAD: 'Alta',
+        TELEFONO: '111111111',
+        USUARIO: 'Usuario Test'
+      },
+      {
+        ID: 1,
+        DESCRIPCION: 'Test Incidente',
+        CLIENTE: 'Cliente Test',
+        COMENTARIOS: 'Comentarios Test',
+        CORREO: 'CorreoTest@correotest.com',
+        DIRECCION: 'Dirección Test',
+        ESTADO: 'Abierto',
+        FECHACREACION: '19-10-2024 11:39:00',
+        PRIORIDAD: 'Alta',
+        TELEFONO: '111111111',
+        USUARIO: 'Usuario Test'
+      }
+    ];
+    const mockEvent = {target: {value: ''}} as unknown as Event;
+    spyOn(incidenciaServiceStub, 'getIncidencias').and.returnValues(of(mockIncidencias));
+    component.getAllIncidenciasByCliente(mockEvent);
+    expect(incidenciaServiceStub.getIncidencias).toHaveBeenCalled();
+  });
+
   it('should reload incidencias', () => {
     const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
     const mockIncidencias: Incidente[] = [
@@ -128,6 +318,13 @@ describe('ListIncidenciasComponent', () => {
     expect(incidenciaServiceStub.getIncidencias).toHaveBeenCalled();
   });
 
+  it('should load all users', () => {
+    const userServiceStub: AuthService = fixture.debugElement.injector.get(AuthService);
+    spyOn(userServiceStub, 'getAllUsers').and.returnValues(of([]));
+    component.getAllUsers();
+    expect(userServiceStub.getAllUsers).toHaveBeenCalled();
+  });
+
   it('should change language', () => {
     spyOn(component.translate, 'use');
 
@@ -143,5 +340,31 @@ describe('ListIncidenciasComponent', () => {
     spyOn(incidenciaServiceStub, 'getIncidencias').and.returnValue(throwError(errorResponse));
     component.getIncidencias();
     expect(incidenciaServiceStub.getIncidencias).toHaveBeenCalledWith();
+  });
+
+  it('getIncidencias fetches incidencias error by cliente', () => {
+    const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
+    const errorResponse = {status: 404, message: 'Not found'};
+    const mockEvent = {target: {value: '1'}} as unknown as Event;
+    spyOn(incidenciaServiceStub, 'getAllincidenciaByCliente').and.returnValue(throwError(errorResponse));
+    component.getAllIncidenciasByCliente(mockEvent);
+    expect(incidenciaServiceStub.getAllincidenciaByCliente).toHaveBeenCalledWith('1');
+  });
+
+  it('getIncidencias fetches incidencias error by usuarios', () => {
+    const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
+    const errorResponse = {status: 404, message: 'Not found'};
+    const mockEvent = {target: {value: '1'}} as unknown as Event;
+    spyOn(incidenciaServiceStub, 'getAllincidenciaByUserId').and.returnValue(throwError(errorResponse));
+    component.getAllIncidenciasByUserId(mockEvent);
+    expect(incidenciaServiceStub.getAllincidenciaByUserId).toHaveBeenCalledWith('1');
+  });
+
+  it('getusers fetches usuarios error', () => {
+    const userServiceStub: AuthService = fixture.debugElement.injector.get(AuthService);
+    const errorResponse = {status: 404, message: 'Not found'};
+    spyOn(userServiceStub, 'getAllUsers').and.returnValue(throwError(errorResponse));
+    component.getAllUsers();
+    expect(userServiceStub.getAllUsers).toHaveBeenCalledWith();
   });
 });

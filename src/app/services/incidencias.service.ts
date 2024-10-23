@@ -15,4 +15,12 @@ export class IncidenciasService {
   getIncidencias(): Observable<Incidente[]> {
     return this._http.get<Incidente[]>(this.apiUrl + '/incidentes');
   }
+
+  getAllincidenciaByUserId(userId: string): Observable<Incidente[]> {
+    return this._http.get<Incidente[]>(`${this.apiUrl}/incidentes/?usuario=${userId}`);
+  }
+
+  getAllincidenciaByCliente(cliente: string): Observable<Incidente[]> {
+    return this._http.get<Incidente[]>(`${this.apiUrl}/incidentes/?cliente=${cliente}`);
+  }
 }

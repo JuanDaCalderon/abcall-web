@@ -10,7 +10,7 @@ import {Role} from '../models/role';
 export class AuthService {
   /** API url */
   private apiUrl = environment.urlApi + environment.portUsuario;
-  private usuario: Usuario = new Usuario(0, '', '', '', '', '', '', '', '', '', new Role(0, '', []));
+  private usuario: Usuario = new Usuario('', '', '', '', '', '', '', '', '', '', new Role(0, '', []));
   constructor(private http: HttpClient) {}
 
   /**
@@ -36,5 +36,9 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('usuario');
+  }
+
+  getAllUsers(): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.apiUrl}/usuarios`);
   }
 }

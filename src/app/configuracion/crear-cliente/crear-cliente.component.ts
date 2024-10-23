@@ -26,7 +26,7 @@ export class CrearClienteComponent {
   onSubmit(): void {
     if (this.clientForm.valid) {
       const newClient = {
-        id: 0,
+        id: '0',
         username: this.clientForm.value.nombres + this.clientForm.value.apellidos,
         password: '123456789',
         nombres: this.clientForm.value.nombres,

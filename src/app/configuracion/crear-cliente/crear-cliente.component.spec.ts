@@ -20,7 +20,7 @@ describe('CrearClienteComponent', () => {
     fixture = TestBed.createComponent(CrearClienteComponent);
     component = fixture.componentInstance;
     const mockCliente: UsuarioInterface = {
-      id: 1,
+      id: '1',
       nombres: 'pepito',
       email: 'pepito@perez.com',
       telefono: '888888888',
