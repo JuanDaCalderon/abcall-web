@@ -4,9 +4,8 @@
       <div class="col-md-6 mb-3">
         <label for="cliente" class="form-label">Cliente</label>
         <select id="cliente" formControlName="cliente" class="form-select" >
-          <option>Bavaria</option>
-          <option>Bancolombia</option>
-          <option>EEB</option>
+          <option></option>
+          <option *ngFor="let userol of usuariosRol" value="{{userol.id}}">{{userol.nombres}} {{userol.apellidos}}</option>
         </select>
         <div class="alert-text" *ngIf="incidentForm.get('cliente')!.touched && incidentForm.get('cliente')!.hasError('required')">
           Cliente requerido

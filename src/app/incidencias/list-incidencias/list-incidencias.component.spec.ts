@@ -37,30 +37,94 @@ describe('ListIncidenciasComponent', () => {
     component = fixture.componentInstance;
     const mockIncidencias: Incidente[] = [
       {
-        ID: 1,
-        DESCRIPCION: 'Test Incidente',
-        CLIENTE: 'Cliente Test',
-        COMENTARIOS: 'Comentarios Test',
-        CORREO: 'CorreoTest@correotest.com',
-        DIRECCION: 'Dirección Test',
-        ESTADO: 'Abierto',
-        FECHACREACION: '19-10-2024 11:39:00',
-        PRIORIDAD: 'Alta',
-        TELEFONO: '111111111',
-        USUARIO: 'Usuario Test'
+        id: 1,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       },
       {
-        ID: 1,
-        DESCRIPCION: 'Test Incidente',
-        CLIENTE: 'Cliente Test',
-        COMENTARIOS: 'Comentarios Test',
-        CORREO: 'CorreoTest@correotest.com',
-        DIRECCION: 'Dirección Test',
-        ESTADO: 'Abierto',
-        FECHACREACION: '19-10-2024 11:39:00',
-        PRIORIDAD: 'Alta',
-        TELEFONO: '111111111',
-        USUARIO: 'Usuario Test'
+        id: 2,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       }
     ];
     const mockUsers: Usuario[] = [
@@ -121,30 +185,94 @@ describe('ListIncidenciasComponent', () => {
     const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
     const mockIncidencias: Incidente[] = [
       {
-        ID: 1,
-        DESCRIPCION: 'Test Incidente',
-        CLIENTE: 'Cliente Test',
-        COMENTARIOS: 'Comentarios Test',
-        CORREO: 'CorreoTest@correotest.com',
-        DIRECCION: 'Dirección Test',
-        ESTADO: 'Abierto',
-        FECHACREACION: '19-10-2024 11:39:00',
-        PRIORIDAD: 'Alta',
-        TELEFONO: '111111111',
-        USUARIO: 'Usuario Test'
+        id: 1,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       },
       {
-        ID: 1,
-        DESCRIPCION: 'Test Incidente',
-        CLIENTE: 'Cliente Test',
-        COMENTARIOS: 'Comentarios Test',
-        CORREO: 'CorreoTest@correotest.com',
-        DIRECCION: 'Dirección Test',
-        ESTADO: 'Abierto',
-        FECHACREACION: '19-10-2024 11:39:00',
-        PRIORIDAD: 'Alta',
-        TELEFONO: '111111111',
-        USUARIO: 'Usuario Test'
+        id: 2,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       }
     ];
     spyOn(incidenciaServiceStub, 'getIncidencias').and.returnValues(of(mockIncidencias));
@@ -156,30 +284,94 @@ describe('ListIncidenciasComponent', () => {
     const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
     const mockIncidencias: Incidente[] = [
       {
-        ID: 1,
-        DESCRIPCION: 'Test Incidente',
-        CLIENTE: 'Cliente Test',
-        COMENTARIOS: 'Comentarios Test',
-        CORREO: 'CorreoTest@correotest.com',
-        DIRECCION: 'Dirección Test',
-        ESTADO: 'Abierto',
-        FECHACREACION: '19-10-2024 11:39:00',
-        PRIORIDAD: 'Alta',
-        TELEFONO: '111111111',
-        USUARIO: 'Usuario Test'
+        id: 1,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       },
       {
-        ID: 1,
-        DESCRIPCION: 'Test Incidente',
-        CLIENTE: 'Cliente Test',
-        COMENTARIOS: 'Comentarios Test',
-        CORREO: 'CorreoTest@correotest.com',
-        DIRECCION: 'Dirección Test',
-        ESTADO: 'Abierto',
-        FECHACREACION: '19-10-2024 11:39:00',
-        PRIORIDAD: 'Alta',
-        TELEFONO: '111111111',
-        USUARIO: 'Usuario Test'
+        id: 2,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       }
     ];
     const mockEvent = {target: {value: 'Usuario Test'}} as unknown as Event;
@@ -192,30 +384,94 @@ describe('ListIncidenciasComponent', () => {
     const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
     const mockIncidencias: Incidente[] = [
       {
-        ID: 1,
-        DESCRIPCION: 'Test Incidente',
-        CLIENTE: 'Cliente Test',
-        COMENTARIOS: 'Comentarios Test',
-        CORREO: 'CorreoTest@correotest.com',
-        DIRECCION: 'Dirección Test',
-        ESTADO: 'Abierto',
-        FECHACREACION: '19-10-2024 11:39:00',
-        PRIORIDAD: 'Alta',
-        TELEFONO: '111111111',
-        USUARIO: 'Usuario Test'
+        id: 1,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       },
       {
-        ID: 1,
-        DESCRIPCION: 'Test Incidente',
-        CLIENTE: 'Cliente Test',
-        COMENTARIOS: 'Comentarios Test',
-        CORREO: 'CorreoTest@correotest.com',
-        DIRECCION: 'Dirección Test',
-        ESTADO: 'Abierto',
-        FECHACREACION: '19-10-2024 11:39:00',
-        PRIORIDAD: 'Alta',
-        TELEFONO: '111111111',
-        USUARIO: 'Usuario Test'
+        id: 2,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       }
     ];
     const mockEvent = {target: {value: ''}} as unknown as Event;
@@ -228,30 +484,94 @@ describe('ListIncidenciasComponent', () => {
     const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
     const mockIncidencias: Incidente[] = [
       {
-        ID: 1,
-        DESCRIPCION: 'Test Incidente',
-        CLIENTE: 'Cliente Test',
-        COMENTARIOS: 'Comentarios Test',
-        CORREO: 'CorreoTest@correotest.com',
-        DIRECCION: 'Dirección Test',
-        ESTADO: 'Abierto',
-        FECHACREACION: '19-10-2024 11:39:00',
-        PRIORIDAD: 'Alta',
-        TELEFONO: '111111111',
-        USUARIO: 'Usuario Test'
+        id: 1,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       },
       {
-        ID: 1,
-        DESCRIPCION: 'Test Incidente',
-        CLIENTE: 'Cliente Test',
-        COMENTARIOS: 'Comentarios Test',
-        CORREO: 'CorreoTest@correotest.com',
-        DIRECCION: 'Dirección Test',
-        ESTADO: 'Abierto',
-        FECHACREACION: '19-10-2024 11:39:00',
-        PRIORIDAD: 'Alta',
-        TELEFONO: '111111111',
-        USUARIO: 'Usuario Test'
+        id: 2,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       }
     ];
     const mockEvent = {target: {value: 'Usuario Test'}} as unknown as Event;
@@ -264,30 +584,94 @@ describe('ListIncidenciasComponent', () => {
     const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
     const mockIncidencias: Incidente[] = [
       {
-        ID: 1,
-        DESCRIPCION: 'Test Incidente',
-        CLIENTE: 'Cliente Test',
-        COMENTARIOS: 'Comentarios Test',
-        CORREO: 'CorreoTest@correotest.com',
-        DIRECCION: 'Dirección Test',
-        ESTADO: 'Abierto',
-        FECHACREACION: '19-10-2024 11:39:00',
-        PRIORIDAD: 'Alta',
-        TELEFONO: '111111111',
-        USUARIO: 'Usuario Test'
+        id: 1,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       },
       {
-        ID: 1,
-        DESCRIPCION: 'Test Incidente',
-        CLIENTE: 'Cliente Test',
-        COMENTARIOS: 'Comentarios Test',
-        CORREO: 'CorreoTest@correotest.com',
-        DIRECCION: 'Dirección Test',
-        ESTADO: 'Abierto',
-        FECHACREACION: '19-10-2024 11:39:00',
-        PRIORIDAD: 'Alta',
-        TELEFONO: '111111111',
-        USUARIO: 'Usuario Test'
+        id: 2,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       }
     ];
     const mockEvent = {target: {value: ''}} as unknown as Event;
@@ -300,17 +684,49 @@ describe('ListIncidenciasComponent', () => {
     const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
     const mockIncidencias: Incidente[] = [
       {
-        ID: 1,
-        DESCRIPCION: 'Incidencia 1',
-        ESTADO: 'Abierto',
-        PRIORIDAD: 'Alta',
-        CLIENTE: 'Cliente 1',
-        USUARIO: 'Usuario 1',
-        COMENTARIOS: '',
-        CORREO: '',
-        DIRECCION: '',
-        FECHACREACION: '',
-        TELEFONO: ''
+        id: 1,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       }
     ];
     spyOn(incidenciaServiceStub, 'getIncidencias').and.returnValues(of(mockIncidencias));

@@ -41,9 +41,7 @@
       <label for="cliente" class="form-label">{{'abc.get.issues.select.cliente' | translate}}</label>
       <select  class="form-select" aria-label="user select" (change)="getAllIncidenciasByCliente($event)"  >
         <option selected></option>
-        <option value="bavaria">Bavaria</option>
-        <option value="bancolombia">Bancolombia</option>
-        <option value="eeb">EEB</option>
+        <option *ngFor="let userol of usuariosRol" value="{{userol.id}}">{{userol.nombres}}{{userol.apellidos}}</option>
       </select>
     </div>
   </div>
@@ -53,12 +51,12 @@
         <div class="card-body">
           <div class="row">
             <div class="col-10">
-              <h5 class="card-title">{{ 'abc.get.issues.issue' | translate}} # {{ incidencia.ID }}</h5>
+              <h5 class="card-title">{{ 'abc.get.issues.issue' | translate}} # {{ incidencia.id }}</h5>
               <p class="card-text">
-                {{ 'abc.get.issues.status' | translate}}: {{ incidencia.ESTADO }}
-                 | {{ 'abc.get.issues.priority' | translate}}: {{ incidencia.PRIORIDAD }}
-                 | {{ 'abc.get.issues.customer' | translate}}: {{ incidencia.CLIENTE }}
-                 | {{ 'abc.get.issues.user' | translate}}: {{ incidencia.USUARIO }}</p>
+                {{ 'abc.get.issues.status' | translate}}: {{ incidencia.estado }}
+                 | {{ 'abc.get.issues.priority' | translate}}: {{ incidencia.prioridad }}
+                 | {{ 'abc.get.issues.customer' | translate}}: {{ incidencia.cliente.nombres }} {{ incidencia.cliente.apellidos }}
+                 | {{ 'abc.get.issues.user' | translate}}: {{incidencia.usuario.nombres}} {{incidencia.usuario.apellidos}}</p>
             </div>
             <div class="col-auto"></div>
             <div class="col align-content-end">

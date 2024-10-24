@@ -22,6 +22,7 @@ export class CreateIncidenciasComponent {
   incidentForm!: FormGroup;
   crearIncidenteFlag = '';
   escalarIncidenteFlag = '';
+  usuariosRol: Usuario[] = [];
   apiUrl = environment.urlApi + environment.portCrearIncidentes;
   public usuario: Usuario = new Usuario('', '', '', '', '', '', '', '', '', '', new Role(0, '', []));
 
@@ -57,6 +58,18 @@ export class CreateIncidenciasComponent {
     this.incidentForm.get('respuestaIA')?.disable();
 
     this.usuario = this.authService.getUsuario();
+    this.getAllUsersByRole();
+  }
+
+  getAllUsersByRole(): void {
+    this.authService.getAllUsersByRole(4).subscribe(
+      (data: Usuario[]) => {
+        this.usuariosRol = data;
+      },
+      (error) => {
+        console.error('Error al obtener la lista de usuarios', error);
+      }
+    );
   }
 
   onSubmit(): void {
@@ -89,7 +102,7 @@ export class CreateIncidenciasComponent {
       .subscribe(
         (response) => {
           localStorage.setItem('incidente', JSON.stringify(response));
-          this.toastr.success('Numero de caso: ' + String(response.ID), 'Incidente creado correctamente ', {
+          this.toastr.success('Numero de caso: ' + String(response.id), 'Incidente creado correctamente ', {
             closeButton: true,
             timeOut: 10000,
             positionClass: 'toast-bottom-center'
@@ -142,7 +155,7 @@ export class CreateIncidenciasComponent {
       .subscribe(
         (response) => {
           localStorage.setItem('incidente', JSON.stringify(response));
-          this.toastr.success('Numero de caso: ' + String(response.ID), 'Incidente escalado correctamente ', {
+          this.toastr.success('Numero de caso: ' + String(response.id), 'Incidente escalado correctamente ', {
             closeButton: true,
             timeOut: 10000,
             positionClass: 'toast-bottom-center'

@@ -28,30 +28,94 @@ describe('IncidenciasService', () => {
   it('should fetch incidencias', () => {
     const mockIncidencias: Incidente[] = [
       {
-        ID: 1,
-        DESCRIPCION: 'Incidencia 1',
-        ESTADO: 'Abierto',
-        PRIORIDAD: 'Alta',
-        CLIENTE: 'Cliente 1',
-        USUARIO: 'Usuario 1',
-        COMENTARIOS: '',
-        CORREO: '',
-        DIRECCION: '',
-        FECHACREACION: '',
-        TELEFONO: ''
+        id: 1,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       },
       {
-        ID: 2,
-        DESCRIPCION: 'Incidencia 2',
-        ESTADO: 'Cerrado',
-        PRIORIDAD: 'Baja',
-        CLIENTE: 'Cliente 2',
-        USUARIO: 'Usuario 2',
-        COMENTARIOS: '',
-        CORREO: '',
-        DIRECCION: '',
-        FECHACREACION: '',
-        TELEFONO: ''
+        id: 2,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: '',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       }
     ];
 

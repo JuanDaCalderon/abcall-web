@@ -41,4 +41,8 @@ export class AuthService {
   getAllUsers(): Observable<Usuario[]> {
     return this.http.get<Usuario[]>(`${this.apiUrl}/usuarios`);
   }
+
+  getAllUsersByRole(id: number): Observable<Usuario[]> {
+    return this.http.get<Usuario[]>(`${this.apiUrl}/usuarios/${id}`);
+  }
 }

@@ -20,6 +20,7 @@ import {Usuario} from '../../models/usuario';
 export class ListClientAndUserComponent implements OnInit {
   incidencias: Incidente[] = [];
   usuarios: Usuario[] = [];
+  usuariosRol: Usuario[] = [];
   language = 'es';
   translate: TranslateService = inject(TranslateService);
   private destroy$ = new Subject<void>();
@@ -32,6 +33,7 @@ export class ListClientAndUserComponent implements OnInit {
   ngOnInit(): void {
     this.getIncidencias();
     this.getAllUsers();
+    this.getAllUsersByRole();
   }
 
   getIncidencias() {
@@ -59,6 +61,17 @@ export class ListClientAndUserComponent implements OnInit {
     this.authService.getAllUsers().subscribe(
       (data: Usuario[]) => {
         this.usuarios = data;
+      },
+      (error) => {
+        console.error('Error al obtener la lista de usuarios', error);
+      }
+    );
+  }
+
+  getAllUsersByRole(): void {
+    this.authService.getAllUsersByRole(4).subscribe(
+      (data: Usuario[]) => {
+        this.usuariosRol = data;
       },
       (error) => {
         console.error('Error al obtener la lista de usuarios', error);

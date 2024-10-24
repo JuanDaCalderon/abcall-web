@@ -11,30 +11,94 @@ describe('FiltroIncidenciasPipe', () => {
     const pipe = new FiltroIncidenciasPipe();
     const incidencias: Incidente[] = [
       {
-        USUARIO: 'user1',
-        CLIENTE: 'cliente1',
-        COMENTARIOS: '',
-        CORREO: '',
-        DESCRIPCION: '',
-        DIRECCION: '',
-        ESTADO: '',
-        FECHACREACION: '',
-        ID: 0,
-        PRIORIDAD: '',
-        TELEFONO: ''
+        id: 1,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: 'cliente1',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: 'user1',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       },
       {
-        USUARIO: 'user2',
-        CLIENTE: 'cliente2',
-        COMENTARIOS: '',
-        CORREO: '',
-        DESCRIPCION: '',
-        DIRECCION: '',
-        ESTADO: '',
-        FECHACREACION: '',
-        ID: 0,
-        PRIORIDAD: '',
-        TELEFONO: ''
+        id: 2,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: 'cliente2',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: 'user2',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       }
     ];
     const value = '';
@@ -45,30 +109,94 @@ describe('FiltroIncidenciasPipe', () => {
     const pipe = new FiltroIncidenciasPipe();
     const incidencias: Incidente[] = [
       {
-        USUARIO: 'user1',
-        CLIENTE: 'cliente1',
-        COMENTARIOS: '',
-        CORREO: '',
-        DESCRIPCION: '',
-        DIRECCION: '',
-        ESTADO: '',
-        FECHACREACION: '',
-        ID: 0,
-        PRIORIDAD: '',
-        TELEFONO: ''
+        id: 1,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: 'cliente1',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: 'user1',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       },
       {
-        USUARIO: 'user2',
-        CLIENTE: 'cliente2',
-        COMENTARIOS: '',
-        CORREO: '',
-        DESCRIPCION: '',
-        DIRECCION: '',
-        ESTADO: '',
-        FECHACREACION: '',
-        ID: 0,
-        PRIORIDAD: '',
-        TELEFONO: ''
+        id: 2,
+        cliente: {
+          id: '1',
+          email: '',
+          username: '',
+          password: '',
+          nombres: 'cliente2',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 4,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        fechacreacion: '2023-10-01',
+        usuario: {
+          id: '2',
+          email: '',
+          username: '',
+          password: '',
+          nombres: 'user2',
+          apellidos: '',
+          telefono: '',
+          direccion: '',
+          gestortier: '',
+          token: '',
+          rol: {
+            id: 2,
+            nombre: 'cliente',
+            permisos: []
+          }
+        },
+        correo: 'prueba@prueba.com',
+        direccion: 'Test address',
+        telefono: '123456789',
+        descripcion: 'Test description',
+        prioridad: 'High',
+        estado: 'Open',
+        comentarios: 'Test comments'
       }
     ];
     const value = 'user2';
