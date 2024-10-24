@@ -46,13 +46,14 @@ export class ListIncidenciasComponent implements OnInit {
   reloadIncidencias(): void {
     this.getIncidencias();
   }
+
   changeLang(lang: string): void {
     this.language = lang;
     this.translate.use(lang);
   }
 
-  OnSelect(id: number): void {
+  OnSelect(id: string): void {
     console.log('Incidencia seleccionada:', id);
-    this.router.navigate(['/view-incidencia', id]);
+    this.router.navigate(['home/view-incidencia', id]);
   }
 }

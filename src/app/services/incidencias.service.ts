@@ -16,7 +16,7 @@ export class IncidenciasService {
     return this._http.get<Incidente[]>(this.apiUrl + '/incidentes');
   }
 
-  getIncidencia(id: number): Observable<Incidente> {
+  getIncidencia(id: string): Observable<Incidente> {
     return this._http.get<Incidente>(`${this.apiUrl}/incidentes/id/${id}`);
   }
 }
