@@ -7,7 +7,8 @@ import {CreateIncidenciasComponent} from './create-incidencias.component';
 import {CrearIncidenteService} from '../../services/crear-incidente.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {CrearClienteComponent} from '../../configuracion/crear-cliente/crear-cliente.component';
-import {Incidente} from '../../models/incidente';
+import {Incidente} from '../../models/incidentes';
+import {Usuario} from '../../models/usuario';
 
 describe('CreateIncidenciasComponent', () => {
   let component: CreateIncidenciasComponent;
@@ -16,17 +17,49 @@ describe('CreateIncidenciasComponent', () => {
   //let toastrService: jasmine.SpyObj<ToastrService>;
 
   const mockIncidente: Incidente = {
-    ID: 1,
-    CLIENTE: 'Test Client',
-    FECHACREACION: '2023-10-01',
-    USUARIO: 'Test User',
-    CORREO: 'prueba@prueba.com',
-    DIRECCION: 'Test address',
-    TELEFONO: '123456789',
-    DESCRIPCION: 'Test description',
-    PRIORIDAD: 'High',
-    ESTADO: 'Open',
-    COMENTARIOS: 'Test comments'
+    id: 1,
+    cliente: {
+      id: '1',
+      email: '',
+      username: '',
+      password: '',
+      nombres: '',
+      apellidos: '',
+      telefono: '',
+      direccion: '',
+      gestortier: '',
+      token: '',
+      rol: {
+        id: 4,
+        nombre: 'cliente',
+        permisos: []
+      }
+    },
+    fechacreacion: '2023-10-01',
+    usuario: {
+      id: '2',
+      email: '',
+      username: '',
+      password: '',
+      nombres: '',
+      apellidos: '',
+      telefono: '',
+      direccion: '',
+      gestortier: '',
+      token: '',
+      rol: {
+        id: 2,
+        nombre: 'cliente',
+        permisos: []
+      }
+    },
+    correo: 'prueba@prueba.com',
+    direccion: 'Test address',
+    telefono: '123456789',
+    descripcion: 'Test description',
+    prioridad: 'High',
+    estado: 'Open',
+    comentarios: 'Test comments'
   };
 
   beforeEach(async () => {
@@ -46,6 +79,7 @@ describe('CreateIncidenciasComponent', () => {
     component = fixture.componentInstance;
     crearIncidenteService = TestBed.inject(CrearIncidenteService) as jasmine.SpyObj<CrearIncidenteService>;
     //toastrService = TestBed.inject(ToastrService) as jasmine.SpyObj<ToastrService>;
+
     fixture.detectChanges();
   });
 
@@ -77,6 +111,7 @@ describe('CreateIncidenciasComponent', () => {
   });
 
   it('should reset the form and flags after successful submission', () => {
+    component.usuario = {id: '123', nombres: 'Test User'} as Usuario;
     crearIncidenteService.crearIncidente.and.returnValue(of(mockIncidente));
     component.onSubmit();
     expect(component.crearIncidenteFlag).toBe('');
@@ -86,6 +121,7 @@ describe('CreateIncidenciasComponent', () => {
   it('should handle error during incident creation', () => {
     const CrearIncidenteServiceStub: CrearIncidenteService = fixture.debugElement.injector.get(CrearIncidenteService);
     const errorResponse = {error: {message: 'Incidente no creado'}};
+    component.usuario = {id: '123', nombres: 'Test User'} as Usuario;
     spyOn(CrearIncidenteServiceStub, 'crearIncidente').and.returnValue(throwError(errorResponse));
 
     component.onSubmit();
@@ -103,6 +139,7 @@ describe('CreateIncidenciasComponent', () => {
 
   it('should handle success during incident creation', () => {
     const CrearIncidenteServiceStub: CrearIncidenteService = fixture.debugElement.injector.get(CrearIncidenteService);
+    component.usuario = {id: '123', nombres: 'Test User'} as Usuario;
     spyOn(CrearIncidenteServiceStub, 'crearIncidente').and.returnValue(of(mockIncidente));
 
     component.onSubmit();

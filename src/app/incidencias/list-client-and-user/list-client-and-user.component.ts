@@ -10,16 +10,17 @@ import {AuthService} from '../../services/auth.service';
 import {Usuario} from '../../models/usuario';
 
 @Component({
-  selector: 'app-list-incidencias',
+  selector: 'app-list-client-and-user',
+  templateUrl: './list-client-and-user.component.html',
+  styleUrl: './list-client-and-user.component.css',
   standalone: true,
   imports: [NgFor, NgIf, TranslateModule, FiltroIncidenciasPipe, FormsModule],
-  providers: [IncidenciasService, AuthService],
-  templateUrl: './list-incidencias.component.html',
-  styleUrl: './list-incidencias.component.scss'
+  providers: [IncidenciasService, AuthService]
 })
-export class ListIncidenciasComponent implements OnInit {
+export class ListClientAndUserComponent implements OnInit {
   incidencias: Incidente[] = [];
   usuarios: Usuario[] = [];
+  usuariosRol: Usuario[] = [];
   language = 'es';
   translate: TranslateService = inject(TranslateService);
   private destroy$ = new Subject<void>();
@@ -32,6 +33,7 @@ export class ListIncidenciasComponent implements OnInit {
   ngOnInit(): void {
     this.getIncidencias();
     this.getAllUsers();
+    this.getAllUsersByRole();
   }
 
   getIncidencias() {
@@ -59,6 +61,17 @@ export class ListIncidenciasComponent implements OnInit {
     this.authService.getAllUsers().subscribe(
       (data: Usuario[]) => {
         this.usuarios = data;
+      },
+      (error) => {
+        console.error('Error al obtener la lista de usuarios', error);
+      }
+    );
+  }
+
+  getAllUsersByRole(): void {
+    this.authService.getAllUsersByRole(4).subscribe(
+      (data: Usuario[]) => {
+        this.usuariosRol = data;
       },
       (error) => {
         console.error('Error al obtener la lista de usuarios', error);

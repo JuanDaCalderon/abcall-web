@@ -24,9 +24,25 @@
   </div>
   <div class="row">
     <div class="col-3 mb-3">
+      <label for="criterio" class="form-label">{{'abc.get.issues.buscar' | translate}}</label>
       <form class="d-flex" role="search">
+
         <input class="form-control me-2" id="criterioBusqueda" [(ngModel)]="criterioBusqueda"  name="criterioBusqueda" type="search" placeholder="Usuario" aria-label="Search">
       </form>
+    </div>
+    <div class="col-3 mb-3">
+      <label for="usuario" class="form-label">{{'abc.get.issues.select.usuario' | translate}}</label>
+      <select class="form-select" aria-label="user select" (change)="getAllIncidenciasByUserId($event)">
+        <option selected></option>
+        <option *ngFor="let user of usuarios" value="{{user.id}}">{{user.nombres}}{{user.apellidos}}</option>
+      </select>
+    </div>
+    <div class="col-3 mb-3">
+      <label for="cliente" class="form-label">{{'abc.get.issues.select.cliente' | translate}}</label>
+      <select  class="form-select" aria-label="user select" (change)="getAllIncidenciasByCliente($event)"  >
+        <option selected></option>
+        <option *ngFor="let userol of usuariosRol" value="{{userol.id}}">{{userol.nombres}}{{userol.apellidos}}</option>
+      </select>
     </div>
   </div>
   <div class="row row-cols-1 row-cols-md-1">
@@ -53,4 +69,3 @@
     </div>
   </div>
 </div>
-

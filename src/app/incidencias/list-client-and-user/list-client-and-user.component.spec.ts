@@ -1,21 +1,21 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {TranslateModule, TranslateLoader, TranslateFakeLoader} from '@ngx-translate/core';
-import {ListIncidenciasComponent} from './list-incidencias.component';
 import {IncidenciasService} from '../../services/incidencias.service';
 import {of, throwError} from 'rxjs';
 import {Incidente} from '../../models/incidentes';
 import {AuthService} from '../../services/auth.service';
 import {Usuario} from '../../models/usuario';
+import {ListClientAndUserComponent} from './list-client-and-user.component';
 
-describe('ListIncidenciasComponent', () => {
-  let component: ListIncidenciasComponent;
-  let fixture: ComponentFixture<ListIncidenciasComponent>;
+describe('ListClientAndUserComponent', () => {
+  let component: ListClientAndUserComponent;
+  let fixture: ComponentFixture<ListClientAndUserComponent>;
   let incidenciaServiceStub = jasmine.createSpyObj('IncidenciasService', ['getIncidencias', 'getAllincidenciaByCliente']);
-  let userServiceStub = jasmine.createSpyObj('AuthService', ['getAllUsers']);
+  let userServiceStub = jasmine.createSpyObj('AuthService', ['getAllUsers', 'getAllUsersByRole']);
   beforeEach(async () => {
     incidenciaServiceStub = jasmine.createSpyObj('IncidenciasService', ['getIncidencias', 'getAllincidenciaByCliente']);
-    userServiceStub = jasmine.createSpyObj('AuthService', ['getAllUsers']);
+    userServiceStub = jasmine.createSpyObj('AuthService', ['getAllUsers', 'getAllUsersByRole']);
     await TestBed.configureTestingModule({
       imports: [
         HttpClientTestingModule,
@@ -25,7 +25,7 @@ describe('ListIncidenciasComponent', () => {
             useClass: TranslateFakeLoader
           }
         }),
-        ListIncidenciasComponent
+        ListClientAndUserComponent
       ],
       providers: [
         {provide: IncidenciasService, useFactory: incidenciaServiceStub},
@@ -33,7 +33,7 @@ describe('ListIncidenciasComponent', () => {
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(ListIncidenciasComponent);
+    fixture = TestBed.createComponent(ListClientAndUserComponent);
     component = fixture.componentInstance;
     const mockIncidencias: Incidente[] = [
       {
@@ -163,6 +163,12 @@ describe('ListIncidenciasComponent', () => {
 
   it('should load users on init', () => {
     component.getAllUsers();
+
+    expect(component.usuarios.length).toBe(0);
+  });
+
+  it('should load users on init', () => {
+    component.getAllUsersByRole();
 
     expect(component.usuarios.length).toBe(0);
   });
@@ -741,11 +747,16 @@ describe('ListIncidenciasComponent', () => {
     expect(userServiceStub.getAllUsers).toHaveBeenCalled();
   });
 
+  it('should load all users by role', () => {
+    const userServiceStub: AuthService = fixture.debugElement.injector.get(AuthService);
+    spyOn(userServiceStub, 'getAllUsersByRole').and.returnValues(of([]));
+    component.getAllUsersByRole();
+    expect(userServiceStub.getAllUsersByRole).toHaveBeenCalled();
+  });
+
   it('should change language', () => {
     spyOn(component.translate, 'use');
-
     component.changeLang('en');
-
     expect(component.language).toBe('en');
     expect(component.translate.use).toHaveBeenCalledWith('en');
   });
@@ -782,5 +793,13 @@ describe('ListIncidenciasComponent', () => {
     spyOn(userServiceStub, 'getAllUsers').and.returnValue(throwError(errorResponse));
     component.getAllUsers();
     expect(userServiceStub.getAllUsers).toHaveBeenCalledWith();
+  });
+
+  it('getusers fetches usuarios by role error', () => {
+    const userServiceStub: AuthService = fixture.debugElement.injector.get(AuthService);
+    const errorResponse = {status: 404, message: 'Not found'};
+    spyOn(userServiceStub, 'getAllUsersByRole').and.returnValue(throwError(errorResponse));
+    component.getAllUsersByRole();
+    expect(userServiceStub.getAllUsersByRole).toHaveBeenCalledWith(4);
   });
 });
