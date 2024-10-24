@@ -35,7 +35,7 @@ export class CrearClienteComponent {
         telefono: this.clientForm.value.telefono,
         direccion: this.clientForm.value.direccion,
         gestortier: '',
-        rol: 2
+        rol: 4
       };
 
       this.clienteService.createCliente(newClient).subscribe(
