@@ -12,10 +12,10 @@ export class FiltroIncidenciasPipe implements PipeTransform {
     }
     return incidencias.filter(
       (incidencia) =>
-        incidencia.usuario.nombres.toLowerCase().includes(criterio.toLowerCase()) ||
-        incidencia.usuario.apellidos.toLowerCase().includes(criterio.toLowerCase()) ||
-        incidencia.cliente.nombres.toLowerCase().includes(criterio.toLowerCase()) ||
-        incidencia.cliente.apellidos.toLowerCase().includes(criterio.toLowerCase())
+        incidencia.usuario?.nombres?.toLowerCase().includes(criterio.toLowerCase()) ||
+        incidencia.usuario?.apellidos?.toLowerCase().includes(criterio.toLowerCase()) ||
+        incidencia.cliente?.nombres?.toLowerCase().includes(criterio.toLowerCase()) ||
+        incidencia.cliente?.apellidos?.toLowerCase().includes(criterio.toLowerCase())
     );
   }
 }
