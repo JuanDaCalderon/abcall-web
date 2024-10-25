@@ -133,6 +133,7 @@ describe('CreateIncidenciasComponent', () => {
   it('should handle error during incident escalation', () => {
     const CrearIncidenteServiceStub: CrearIncidenteService = fixture.debugElement.injector.get(CrearIncidenteService);
     const errorResponse = {error: {message: 'Incidente no creado'}};
+    component.usuario = {id: '123', nombres: 'Test User'} as Usuario;
     spyOn(CrearIncidenteServiceStub, 'crearIncidente').and.returnValue(throwError(errorResponse));
 
     component.onEscalar();
@@ -150,6 +151,7 @@ describe('CreateIncidenciasComponent', () => {
 
   it('should handle success during incident escalate', () => {
     const CrearIncidenteServiceStub: CrearIncidenteService = fixture.debugElement.injector.get(CrearIncidenteService);
+    component.usuario = {id: '123', nombres: 'Test User'} as Usuario;
     spyOn(CrearIncidenteServiceStub, 'crearIncidente').and.returnValue(of(mockIncidente));
 
     component.onEscalar();
