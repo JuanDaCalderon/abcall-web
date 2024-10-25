@@ -36,11 +36,12 @@
           <div class="row">
             <div class="col-10">
               <h5 class="card-title">{{ 'abc.get.issues.issue' | translate}} # {{ incidencia.id }}</h5>
-              <p class="card-text">
+              <div class="card-text">
                 {{ 'abc.get.issues.status' | translate}}: {{ incidencia.estado }}
-                 | {{ 'abc.get.issues.priority' | translate}}: {{ incidencia.prioridad }}
-                 | {{ 'abc.get.issues.customer' | translate}}: {{ incidencia.cliente.nombres }} {{ incidencia.cliente.apellidos }}
-                 | {{ 'abc.get.issues.user' | translate}}: {{incidencia.usuario.nombres}} {{incidencia.usuario.apellidos}}</p>
+                | {{ 'abc.get.issues.priority' | translate}}: {{ incidencia.prioridad }}
+                | {{ 'abc.get.issues.customer' | translate}}: {{incidencia.cliente.nombres || ''}} {{ incidencia.cliente.apellidos}}
+                | {{ 'abc.get.issues.user' | translate}}: {{incidencia.usuario.nombres}} {{incidencia.usuario.apellidos}}
+              </div>
             </div>
             <div class="col-auto"></div>
             <div class="col align-content-end">
