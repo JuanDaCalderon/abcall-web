@@ -79,7 +79,9 @@ describe('ListClientAndUserComponent', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       },
       {
         id: 2,
@@ -124,7 +126,9 @@ describe('ListClientAndUserComponent', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       }
     ];
     const mockUsers: Usuario[] = [
@@ -233,7 +237,9 @@ describe('ListClientAndUserComponent', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       },
       {
         id: 2,
@@ -278,7 +284,9 @@ describe('ListClientAndUserComponent', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       }
     ];
     spyOn(incidenciaServiceStub, 'getIncidencias').and.returnValues(of(mockIncidencias));
@@ -332,7 +340,9 @@ describe('ListClientAndUserComponent', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       },
       {
         id: 2,
@@ -377,7 +387,9 @@ describe('ListClientAndUserComponent', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       }
     ];
     const mockEvent = {target: {value: 'Usuario Test'}} as unknown as Event;
@@ -432,7 +444,9 @@ describe('ListClientAndUserComponent', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       },
       {
         id: 2,
@@ -477,7 +491,9 @@ describe('ListClientAndUserComponent', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       }
     ];
     const mockEvent = {target: {value: ''}} as unknown as Event;
@@ -532,7 +548,9 @@ describe('ListClientAndUserComponent', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       },
       {
         id: 2,
@@ -577,7 +595,9 @@ describe('ListClientAndUserComponent', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       }
     ];
     const mockEvent = {target: {value: 'Usuario Test'}} as unknown as Event;
@@ -632,7 +652,9 @@ describe('ListClientAndUserComponent', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       },
       {
         id: 2,
@@ -677,7 +699,9 @@ describe('ListClientAndUserComponent', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       }
     ];
     const mockEvent = {target: {value: ''}} as unknown as Event;
@@ -732,7 +756,9 @@ describe('ListClientAndUserComponent', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       }
     ];
     spyOn(incidenciaServiceStub, 'getIncidencias').and.returnValues(of(mockIncidencias));

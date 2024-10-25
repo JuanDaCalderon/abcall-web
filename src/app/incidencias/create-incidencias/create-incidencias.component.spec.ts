@@ -59,7 +59,9 @@ describe('CreateIncidenciasComponent', () => {
     descripcion: 'Test description',
     prioridad: 'High',
     estado: 'Open',
-    comentarios: 'Test comments'
+    comentarios: 'Test comments',
+    canal: 'web',
+    tipo: 'icidencia'
   };
 
   beforeEach(async () => {

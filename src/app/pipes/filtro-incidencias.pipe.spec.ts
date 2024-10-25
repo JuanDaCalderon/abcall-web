@@ -53,7 +53,9 @@ describe('FiltroIncidenciasPipe', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       },
       {
         id: 2,
@@ -98,7 +100,9 @@ describe('FiltroIncidenciasPipe', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       }
     ];
     const value = '';
@@ -151,7 +155,9 @@ describe('FiltroIncidenciasPipe', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       },
       {
         id: 2,
@@ -196,7 +202,9 @@ describe('FiltroIncidenciasPipe', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       }
     ];
     const value = 'user2';

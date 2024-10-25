@@ -72,7 +72,9 @@ describe('Service: CrearIncidente', () => {
       descripcion: 'Test description',
       prioridad: 'High',
       estado: 'Open',
-      comentarios: 'Test comments'
+      comentarios: 'Test comments',
+      canal: 'web',
+      tipo: 'icidencia'
     };
 
     subscriptions.push(
@@ -87,7 +89,9 @@ describe('Service: CrearIncidente', () => {
           mockIncidente.descripcion,
           mockIncidente.prioridad,
           mockIncidente.estado,
-          mockIncidente.comentarios
+          mockIncidente.comentarios,
+          mockIncidente.canal,
+          mockIncidente.tipo
         )
         .subscribe((incidente) => {
           expect(incidente).toEqual(mockIncidente);
