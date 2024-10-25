@@ -46,8 +46,8 @@
           </div>
         </div>
 
-        <div class="button-group">
-          <button data-cy="submit-button" id="guardar" type="submit" [disabled]="!loginForm.valid">{{ 'abc.btn.login' | translate}}</button>
+        <div class="d-grid gap-2 col-md-12 mx-auto">
+            <button data-cy="submit-button" class="btn btn-lg btn-purple" id="guardar" type="submit" [disabled]="!loginForm.valid">{{ 'abc.btn.login' | translate}}</button>
         </div>
         <div class="alert-text" id="authFlagError" *ngIf='authFlag === "Datos de usuario incorrectos"'>
           {{ 'abc.toast.incorrect.message' | translate}}

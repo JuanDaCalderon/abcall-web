@@ -42,7 +42,6 @@ export class LoginComponent {
       this.authService.login(newlogin.email, newlogin.password).subscribe(
         (response) => {
           console.log('Has iniciado sesión correctamente:', response);
-          //localStorage.setItem('usuario', JSON.stringify(response));
           this.authFlag = 'Has iniciado sesión correctamente';
           this.loginForm.reset();
           this.authService.setUsuario(response);

@@ -35,8 +35,6 @@ export class ViewIncidenciaComponent implements OnInit {
       telefonoUsuario: ['', Validators.required],
       direccionUsuario: ['', Validators.required],
       descripcionProblema: ['', Validators.required],
-      prioridad: ['', Validators.required],
-      estado: ['', Validators.required],
       respuestaIA: [{value: '', disabled: true}]
     });
   }
@@ -46,6 +44,8 @@ export class ViewIncidenciaComponent implements OnInit {
       const id = params['id'];
       this.loadIncident(id);
     });
+    this.incidentForm.get('canalIngreso')?.disable();
+    this.incidentForm.get('fecha')?.disable();
   }
 
   onSubmit(): void {

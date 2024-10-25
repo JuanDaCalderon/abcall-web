@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
 import {environment} from '../../../environments/environment';
 import {CrearIncidenteService} from '../../services/crear-incidente.service';
@@ -15,7 +15,7 @@ import {ToastrService} from 'ngx-toastr';
   providers: [CrearIncidenteService, Router],
   standalone: true
 })
-export class CreateIncidenciasComponent {
+export class CreateIncidenciasComponent implements OnInit {
   incidentForm!: FormGroup;
   crearIncidenteFlag = '';
   escalarIncidenteFlag = '';
@@ -24,10 +24,10 @@ export class CreateIncidenciasComponent {
   constructor(
     private formBuilder: FormBuilder,
     private crearIncidenteService: CrearIncidenteService,
-    //private router: Router,
-    //private route: ActivatedRoute,
     private toastr: ToastrService
-  ) {
+  ) {}
+
+  ngOnInit(): void {
     this.incidentForm = this.formBuilder.group({
       cliente: ['', Validators.required],
       fecha: [new Date().toISOString().substring(0, 16), Validators.required],
@@ -161,13 +161,9 @@ export class CreateIncidenciasComponent {
   onDescripcionProblemaChange(): void {
     const value = this.incidentForm.get('descripcionProblema')?.value;
     if (value && value.trim != '') {
-      this.incidentForm.get('respuestaIA')?.enable();
       this.incidentForm.get('respuestaIA')?.setValue('Respuesta generdada por IA');
-      this.incidentForm.get('respuestaIA')?.disable();
     } else {
-      this.incidentForm.get('respuestaIA')?.enable();
       this.incidentForm.get('respuestaIA')?.setValue('');
-      this.incidentForm.get('respuestaIA')?.disable();
     }
   }
 

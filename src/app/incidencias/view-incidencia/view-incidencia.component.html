@@ -1,5 +1,5 @@
 <div class="container top align-content-center">
-    <h1 class="text-md-center">Crear nueva incidencia</h1>
+    <h1 class="text-md-center">Incidencia # </h1>
     <form [formGroup]="incidentForm" (ngSubmit)="onSubmit()" class="row g-2">
         <div class="col-md-6 mb-3">
           <label for="cliente" class="form-label">Cliente</label>
@@ -15,7 +15,7 @@
         </div>
   
         <div class="col-md-6 mb-3">
-          <label for="fecha" class="form-label">Fecha y hora</label>
+          <label for="fecha" class="form-label">Fecha y hora de creacion</label>
           <input class="form-control" type="text" id="fecha" formControlName="fecha">
         </div>
   
@@ -88,19 +88,31 @@
           </select>
         </div>
   
+        <div class="col-md-6 mb-3">
+          <label for="estado" class="form-label">Comentarios</label>
+          <textarea class="form-control" id="estado" formControlName="comentarios"></textarea>
+        </div>
+  
+        <div class="col-md-6 mb-3">
+          <label for="estado" class="form-label">Nuevo comentario</label>
+          <textarea class="form-control" id="estado" formControlName="comentarios"></textarea>
+        </div>
+
         <!-- Campo que debe ocupar toda la fila -->
-        <div class="col-md-12 mb-3">
+        <!--<div class="col-md-12 mb-3">
           <label for="respuestaIA" class="form-label">Respuesta sugerida por IA</label>
           <textarea class="form-control"  id="respuestaIA" formControlName="respuestaIA" rows="2"></textarea>
-        </div>
+        </div> -->
   
         <div class="row">
           <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="submit" id="guardar" class="btn btn-lg btn-purple" [ngClass]="{'btn-disabled': !incidentForm.valid}">Guardar</button>
+            <button type="submit" id="guardar" class="btn btn-lg btn-purple">Guardar</button>
           </div>
-          <div class="col-2"></div>
           <div class="d-grid gap-2 col-4 mx-auto">
             <button type="button" id="escalar" class="btn btn-lg btn-secondary" [ngClass]="{'btn-disabled': !incidentForm.valid}" (click)="onEscalar()">Escalar</button>
+          </div>
+          <div class="d-grid gap-2 col-4 mx-auto">
+            <button type="button" id="cerrar" class="btn btn-lg btn-secondary" [ngClass]="{'btn-disabled': !incidentForm.valid}" (click)="onEscalar()">Cerrar</button>
           </div>
         </div>
     </form>

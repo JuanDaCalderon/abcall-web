@@ -87,19 +87,30 @@
         </select>
       </div>
 
+      <div class="col-md-6 mb-3">
+        <label for="estado" class="form-label">Comentarios</label>
+        <textarea class="form-control" id="estado" formControlName="comentarios"></textarea>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="estado" class="form-label">Nuevo comentario</label>
+        <textarea class="form-control" id="estado" formControlName="comentarios"></textarea>
+      </div>
+
+
       <!-- Campo que debe ocupar toda la fila -->
       <div class="col-md-12 mb-3">
-        <label for="respuestaIA" class="form-label">Respuesta sugerida por IA</label>
+        <label for="respuestaIA" class="form-label" aria-disabled="true">Respuesta sugerida por IA</label>
         <textarea class="form-control"  id="respuestaIA" formControlName="respuestaIA" rows="2"></textarea>
       </div>
 
       <div class="row">
         <div class="d-grid gap-2 col-4 mx-auto">
-          <button type="submit" id="guardar" class="btn btn-lg btn-purple" [ngClass]="{'btn-disabled': !incidentForm.valid}">Guardar</button>
+          <button type="submit" id="guardar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" >Guardar</button>
         </div>
         <div class="col-2"></div>
         <div class="d-grid gap-2 col-4 mx-auto">
-          <button type="button" id="escalar" class="btn btn-lg btn-secondary" [ngClass]="{'btn-disabled': !incidentForm.valid}" (click)="onEscalar()">Escalar</button>
+          <button type="button" id="escalar" class="btn btn-lg btn-secondary" [disabled]="!incidentForm.valid" (click)="onEscalar()">Escalar</button>
         </div>
       </div>
   </form>
