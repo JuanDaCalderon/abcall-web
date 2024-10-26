@@ -5,7 +5,6 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {NavbarComponent} from '../../components/navbar/navbar.component';
 import {IncidenciasService} from '../../services/incidencias.service';
 import {ActivatedRoute} from '@angular/router';
-import {CrearIncidenteService} from '../../services/crear-incidente.service';
 import {Usuario} from '../../models/usuario';
 import {ClienteService} from '../../services/cliente.service';
 import {ToastrService} from 'ngx-toastr';
@@ -22,10 +21,11 @@ export class ViewIncidenciaComponent implements OnInit {
   clientes: Usuario[] = [];
   usuarios: Usuario[] = [];
   incidentForm!: FormGroup;
+  issueId = '';
 
   constructor(
     private formBuilder: FormBuilder,
-    private crearIncidenteService: CrearIncidenteService,
+    //private crearIncidenteService: CrearIncidenteService,
     private incidenciasService: IncidenciasService,
     private toastr: ToastrService,
     private clienteService: ClienteService,
@@ -40,7 +40,7 @@ export class ViewIncidenciaComponent implements OnInit {
       cliente: ['', Validators.required],
       fecha: [''],
       nombreUsuario: ['', Validators.required],
-      telefonoUsuario: [''],
+      telefonoUsuario: ['123123'],
       correoUsuario: ['', Validators.email],
       direccionUsuario: [''],
       descripcionProblema: ['', Validators.required],
@@ -59,6 +59,7 @@ export class ViewIncidenciaComponent implements OnInit {
 
     this.route.params.subscribe((params) => {
       const id = params['id'];
+      this.issueId = id;
       this.loadIncident(id);
     });
     this.incidentForm.get('canalIngreso')?.disable();
@@ -132,6 +133,7 @@ export class ViewIncidenciaComponent implements OnInit {
     }
   }
 
+  /*
   afterReset(): void {
     this.incidentForm.get('tipoIncidencia')?.setValue('Incidencia');
     this.incidentForm.get('canalIngreso')?.setValue('Web');
@@ -146,13 +148,14 @@ export class ViewIncidenciaComponent implements OnInit {
     this.incidentForm.patchValue({
       fecha: new Date(colombiaTimeWithSeconds).toISOString().replace('T', ' ').substring(0, 19)
     });
-  }
+  }*/
 
   generateTime(): string {
     const colombiaTimeWithSeconds = new Date().toLocaleString('en-US', {timeZone: 'America/Bogota'});
     return new Date(colombiaTimeWithSeconds).toISOString().replace('T', ' ').substring(0, 19);
   }
 
+  /*
   updateGestor(current: string): string {
     const match = current.match(/(\d+)$/);
     if (match) {
@@ -161,7 +164,7 @@ export class ViewIncidenciaComponent implements OnInit {
       return current.replace(/(\d+)$/, incrementedNumber.toString());
     }
     return current;
-  }
+  }*/
 
   async loadIncident(id: string): Promise<void> {
     this.incidenciasService.getIncidencia(id).subscribe(
