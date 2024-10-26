@@ -70,7 +70,9 @@ describe('IncidenciasService', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       },
       {
         id: 2,
@@ -115,7 +117,9 @@ describe('IncidenciasService', () => {
         descripcion: 'Test description',
         prioridad: 'High',
         estado: 'Open',
-        comentarios: 'Test comments'
+        comentarios: 'Test comments',
+        canal: 'web',
+        tipo: 'icidencia'
       }
     ];
 

@@ -84,6 +84,8 @@ export class CreateIncidenciasComponent {
       prioridad: this.incidentForm.get('prioridad')?.value,
       estado: this.incidentForm.get('estado')?.value,
       respuestaIA: this.incidentForm.get('respuestaIA')?.value,
+      canal: 'web',
+      tipo: this.incidentForm.get('tipoIncidencia')?.value,
       gestor: 'gestorNivel1'
     };
     this.crearIncidenteService
@@ -97,7 +99,9 @@ export class CreateIncidenciasComponent {
         newIncident.descripcionProblema,
         newIncident.prioridad,
         newIncident.estado,
-        newIncident.respuestaIA
+        newIncident.respuestaIA,
+        newIncident.canal,
+        newIncident.tipo
       )
       .subscribe(
         (response) => {
@@ -129,7 +133,7 @@ export class CreateIncidenciasComponent {
     const newIncident = {
       cliente: this.incidentForm.get('cliente')?.value,
       fecha: this.incidentForm.get('fecha')?.value,
-      nombreUsuario: this.incidentForm.get('nombreUsuario')?.value,
+      nombreUsuario: this.usuario.id,
       correoUsuario: this.incidentForm.get('correoUsuario')?.value,
       direccionUsuario: this.incidentForm.get('direccionUsuario')?.value,
       telefonoUsuario: this.incidentForm.get('telefonoUsuario')?.value,
@@ -137,6 +141,8 @@ export class CreateIncidenciasComponent {
       prioridad: this.incidentForm.get('prioridad')?.value,
       estado: this.incidentForm.get('estado')?.value,
       respuestaIA: this.incidentForm.get('respuestaIA')?.value,
+      canal: 'web',
+      tipo: this.incidentForm.get('tipoIncidencia')?.value,
       gestor: 'gestorNivel1'
     };
     this.crearIncidenteService
@@ -150,7 +156,9 @@ export class CreateIncidenciasComponent {
         newIncident.descripcionProblema,
         newIncident.prioridad,
         newIncident.estado,
-        newIncident.respuestaIA
+        newIncident.respuestaIA,
+        newIncident.canal,
+        newIncident.tipo
       )
       .subscribe(
         (response) => {

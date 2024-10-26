@@ -12,6 +12,8 @@ export class Incidente {
     public id: number,
     public prioridad: string,
     public telefono: string,
-    public usuario: Usuario
+    public usuario: Usuario,
+    public canal: string,
+    public tipo: string
   ) {}
 }
