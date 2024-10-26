@@ -38,7 +38,9 @@ export class CrearIncidenteService {
     descripcion: string,
     prioridad: string,
     estado: string,
-    comentarios: string
+    comentarios: string,
+    canal: string,
+    tipo: string
   ): Observable<Incidente> {
     return this.http.post<Incidente>(`${this.apiUrl}/incidentes`, {
       cliente,
@@ -50,7 +52,9 @@ export class CrearIncidenteService {
       descripcion,
       prioridad,
       estado,
-      comentarios
+      comentarios,
+      canal,
+      tipo
     });
   }
 }

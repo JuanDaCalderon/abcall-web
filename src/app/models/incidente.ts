@@ -1,39 +1,45 @@
 export class Incidente {
   id: number;
-  CLIENTE: string;
-  FECHACREACION: string;
-  USUARIO: string;
-  CORREO: string;
-  DIRECCION: string;
-  TELEFONO: string;
-  DESCRIPCION: string;
-  PRIORIDAD: string;
-  ESTADO: string;
-  COMENTARIOS: string;
+  cliente: string;
+  fechacreacion: string;
+  usuario: string;
+  correo: string;
+  direccion: string;
+  telefono: string;
+  descripcion: string;
+  prioridad: string;
+  estado: string;
+  comentarios: string;
+  canal: string;
+  tipo: string;
 
   constructor(
     id: number,
-    CLIENTE: string,
-    FECHACREACION: string,
-    USUARIO: string,
-    CORREO: string,
-    DIRECCION: string,
-    TELEFONO: string,
-    DESCRIPCION: string,
-    PRIORIDAD: string,
-    ESTADO: string,
-    COMENTARIOS: string
+    cliente: string,
+    fechacreacion: string,
+    usuario: string,
+    correo: string,
+    direccion: string,
+    telefono: string,
+    descripcion: string,
+    prioridad: string,
+    estado: string,
+    comentarios: string,
+    canal: string,
+    tipo: string
   ) {
     this.id = id;
-    this.CLIENTE = CLIENTE;
-    this.FECHACREACION = FECHACREACION;
-    this.USUARIO = USUARIO;
-    this.CORREO = CORREO;
-    this.DIRECCION = DIRECCION;
-    this.TELEFONO = TELEFONO;
-    this.DESCRIPCION = DESCRIPCION;
-    this.PRIORIDAD = PRIORIDAD;
-    this.ESTADO = ESTADO;
-    this.COMENTARIOS = COMENTARIOS;
+    this.cliente = cliente;
+    this.fechacreacion = fechacreacion;
+    this.usuario = usuario;
+    this.correo = correo;
+    this.direccion = direccion;
+    this.telefono = telefono;
+    this.descripcion = descripcion;
+    this.prioridad = prioridad;
+    this.estado = estado;
+    this.comentarios = comentarios;
+    this.canal = canal;
+    this.tipo = tipo;
   }
 }

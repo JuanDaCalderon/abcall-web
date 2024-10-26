@@ -1,7 +1,6 @@
 import {CommonModule} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators, ReactiveFormsModule} from '@angular/forms';
-import {environment} from '../../../environments/environment';
 import {CrearIncidenteService} from '../../services/crear-incidente.service';
 import {Router} from '@angular/router';
 import {NavbarComponent} from '../../components/navbar/navbar.component';
@@ -21,9 +20,6 @@ export class CreateIncidenciasComponent implements OnInit {
   clientes: Usuario[] = [];
   usuarios: Usuario[] = [];
   incidentForm!: FormGroup;
-  crearIncidenteFlag = '';
-  escalarIncidenteFlag = '';
-  apiUrl = environment.urlApi + environment.portCrearIncidentes;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -70,6 +66,8 @@ export class CreateIncidenciasComponent implements OnInit {
       prioridad: this.incidentForm.get('prioridad')?.value,
       estado: this.incidentForm.get('estado')?.value,
       respuestaIA: this.incidentForm.get('respuestaIA')?.value,
+      canal: 'web',
+      tipo: this.incidentForm.get('tipoIncidencia')?.value,
       gestor: gestor
     };
     this.crearIncidenteService
@@ -83,7 +81,9 @@ export class CreateIncidenciasComponent implements OnInit {
         newIncident.descripcionProblema,
         newIncident.prioridad,
         newIncident.estado,
-        newIncident.respuestaIA
+        newIncident.respuestaIA,
+        newIncident.canal,
+        newIncident.tipo
       )
       .subscribe(
         (response) => {
@@ -95,7 +95,6 @@ export class CreateIncidenciasComponent implements OnInit {
           });
           this.incidentForm.reset();
           this.afterReset();
-          this.escalarIncidenteFlag = 'Incidente' + accion;
         },
         (error) => {
           this.toastr.error(error, 'Incidente no ' + accion, {
@@ -117,9 +116,6 @@ export class CreateIncidenciasComponent implements OnInit {
   }
 
   afterReset(): void {
-    this.crearIncidenteFlag = '';
-    this.escalarIncidenteFlag = '';
-
     this.incidentForm.get('tipoIncidencia')?.setValue('Incidencia');
     this.incidentForm.get('canalIngreso')?.setValue('Web');
     this.incidentForm.get('prioridad')?.setValue('Baja');
@@ -162,12 +158,9 @@ export class CreateIncidenciasComponent implements OnInit {
     const match = current.match(/(\d+)$/);
     if (match) {
       const number = parseInt(match[0], 10);
-      // Incrementar el número
       const incrementedNumber = number + 1;
-      // Reemplazar el número en la cadena original con el número incrementado
       return current.replace(/(\d+)$/, incrementedNumber.toString());
     }
-    // Si no hay número al final, devolver la cadena original
     return current;
   }
 }

@@ -1,15 +1,17 @@
 export class Incidente {
   constructor(
-    public CLIENTE: string,
-    public COMENTARIOS: string,
-    public CORREO: string,
-    public DESCRIPCION: string,
-    public DIRECCION: string,
-    public ESTADO: string,
-    public FECHACREACION: string,
-    public ID: string,
-    public PRIORIDAD: string,
-    public TELEFONO: string,
-    public USUARIO: string
+    public cliente: string,
+    public comentarios: string,
+    public correo: string,
+    public descripcion: string,
+    public direccion: string,
+    public estado: string,
+    public fechacreacion: string,
+    public id: string,
+    public prioridad: string,
+    public telefono: string,
+    public usuario: string,
+    public tipo: string,
+    public canal: string
   ) {}
 }

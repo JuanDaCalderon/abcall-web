@@ -1,13 +1,10 @@
 <div class="container top align-content-center">
     <h1 class="text-md-center">Incidencia # </h1>
-    <form [formGroup]="incidentForm" (ngSubmit)="onSubmit()" class="row g-2">
+    <form [formGroup]="incidentForm" (ngSubmit)="onSubmit('creado')" class="row g-2">
         <div class="col-md-6 mb-3">
           <label for="cliente" class="form-label">Cliente</label>
           <select id="cliente" formControlName="cliente" class="form-select" >
-            <option>Bavaria</option>
-            <option>Bancolombia</option>
-            <option>EEB</option>
-            <option>ccb</option>
+            <option *ngFor="let cliente of clientes" [value]="cliente.id">{{ cliente.nombres }} {{ cliente.apellidos }}</option>
           </select>
           <div class="text-danger" *ngIf="incidentForm.get('cliente')!.touched && incidentForm.get('cliente')!.hasError('required')">
             Cliente requerido
@@ -21,7 +18,9 @@
   
         <div class="col-md-6 mb-3">
           <label for="nombreUsuario" class="form-label">Nombre usuario</label>
-          <input class="form-control" type="text" id="nombreUsuario" formControlName="nombreUsuario" placeholder="Nombre usuario">
+          <select id="nombreUsuario" formControlName="nombreUsuario" placeholder="Nombre usuario" class="form-select">
+            <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{ usuario.nombres }} {{ usuario.apellidos }}</option>
+          </select>
           <div class="text-danger" id ="usuarioRequiredError" *ngIf="incidentForm.get('nombreUsuario')!.touched && incidentForm.get('nombreUsuario')!.hasError('required')">
               Nombre usuario requerido
           </div>
@@ -57,45 +56,45 @@
         <div class="col-md-6 mb-3">
           <label for="tipoIncidencia" class="form-label">Tipo de incidencia</label>
           <select id="tipoIncidencia" formControlName="tipoIncidencia" class="form-select">
-            <option>Incidencia</option>
-            <option>PQRS</option>
+            <option>incidencia</option>
+            <option>pqrs</option>
           </select>
         </div>
   
         <div class="col-md-6 mb-3">
           <label for="canalIngreso" class="form-label">Canal de ingreso</label>
           <select id="canalIngreso" formControlName="canalIngreso" class="form-select">
-            <option>Web</option>
+            <option>web</option>
           </select>
         </div>
   
         <div class="col-md-6 mb-3">
           <label for="prioridad" class="form-label">Prioridad</label>
           <select id="prioridad" formControlName="prioridad" class="form-select">
-            <option>Baja</option>
-            <option>Media</option>
-            <option>Alta</option>
+            <option>baja</option>
+            <option>media</option>
+            <option>alta</option>
           </select>
         </div>
   
         <div class="col-md-6 mb-3">
           <label for="estado" class="form-label">Estado</label>
           <select id="estado" formControlName="estado" class="form-select">
-            <option>Abierto</option>
-            <option>En proceso</option>
-            <option>A espera de respuesta usuario</option>
-            <option>Cerrado</option>
+            <option>abierto</option>
+            <option>e|n proceso</option>
+            <option>a espera de respuesta usuario</option>
+            <option>cerrado</option>
           </select>
         </div>
   
         <div class="col-md-6 mb-3">
           <label for="estado" class="form-label">Comentarios</label>
-          <textarea class="form-control" id="estado" formControlName="comentarios"></textarea>
+          <textarea class="form-control" id="comentarios" formControlName="comentarios"></textarea>
         </div>
   
         <div class="col-md-6 mb-3">
           <label for="estado" class="form-label">Nuevo comentario</label>
-          <textarea class="form-control" id="estado" formControlName="comentarios"></textarea>
+          <textarea class="form-control" id="nuevoComentario" formControlName="nuevoComentario"></textarea>
         </div>
 
         <!-- Campo que debe ocupar toda la fila -->
@@ -106,13 +105,13 @@
   
         <div class="row">
           <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="submit" id="guardar" class="btn btn-lg btn-purple">Guardar</button>
+            <button type="button" id="guardar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit('creado')">Guardar</button>
           </div>
           <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="button" id="escalar" class="btn btn-lg btn-secondary" [ngClass]="{'btn-disabled': !incidentForm.valid}" (click)="onEscalar()">Escalar</button>
+            <button type="button" id="escalar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit('escalado')">Escalar</button>
           </div>
           <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="button" id="cerrar" class="btn btn-lg btn-secondary" [ngClass]="{'btn-disabled': !incidentForm.valid}" (click)="onEscalar()">Cerrar</button>
+            <button type="button" id="cerrar" class="btn btn-lg btn-secondary" [disabled]="!incidentForm.valid" (click)="onSubmit('escalado')">Cerrar</button>
           </div>
         </div>
     </form>
