@@ -65,10 +65,9 @@ export class ViewIncidenciaComponent implements OnInit {
     this.incidentForm.get('comentarios')?.disable();
   }
 
-  onSubmit(accion: string): void {
-    const gestor = accion === 'escalado' ? this.updateGestor('GestorNivel1') : 'GestorNivel1';
-
-    const newIncident = {
+  onSubmit(): void {
+    //const gestor = accion === 'escalado' ? this.updateGestor('GestorNivel1') : 'GestorNivel1';
+    /*const newIncident = {
       cliente: this.incidentForm.get('cliente')?.value,
       fecha: this.generateTime(),
       nombreUsuario: this.incidentForm.get('nombreUsuario')?.value,
@@ -82,7 +81,7 @@ export class ViewIncidenciaComponent implements OnInit {
       canal: 'web',
       tipo: this.incidentForm.get('tipoIncidencia')?.value,
       gestor: gestor
-    };
+    }; 
     this.crearIncidenteService
       .crearIncidente(
         newIncident.cliente,
@@ -116,7 +115,7 @@ export class ViewIncidenciaComponent implements OnInit {
             positionClass: 'toast-bottom-center'
           });
         }
-      );
+      );*/
   }
 
   onDescripcionProblemaChange(): void {
