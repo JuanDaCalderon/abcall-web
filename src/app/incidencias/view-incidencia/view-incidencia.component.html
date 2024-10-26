@@ -1,6 +1,6 @@
 <div class="container top align-content-center">
     <h1 class="text-md-center">Incidencia # </h1>
-    <form [formGroup]="incidentForm" (ngSubmit)="onSubmit('creado')" class="row g-2">
+    <form [formGroup]="incidentForm" (ngSubmit)="onSubmit()" class="row g-2">
         <div class="col-md-6 mb-3">
           <label for="cliente" class="form-label">Cliente</label>
           <select id="cliente" formControlName="cliente" class="form-select" >
@@ -88,12 +88,12 @@
         </div>
   
         <div class="col-md-6 mb-3">
-          <label for="estado" class="form-label">Comentarios</label>
+          <label for="comentarios" class="form-label">Comentarios</label>
           <textarea class="form-control" id="comentarios" formControlName="comentarios"></textarea>
         </div>
   
         <div class="col-md-6 mb-3">
-          <label for="estado" class="form-label">Nuevo comentario</label>
+          <label for="nuevoComentario" class="form-label">Nuevo comentario</label>
           <textarea class="form-control" id="nuevoComentario" formControlName="nuevoComentario"></textarea>
         </div>
 
@@ -105,13 +105,13 @@
   
         <div class="row">
           <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="button" id="guardar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit('creado')">Guardar</button>
+            <button type="button" id="guardar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit()">Guardar</button>
           </div>
           <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="button" id="escalar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit('escalado')">Escalar</button>
+            <button type="button" id="escalar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit()">Escalar</button>
           </div>
           <div class="d-grid gap-2 col-4 mx-auto">
-            <button type="button" id="cerrar" class="btn btn-lg btn-secondary" [disabled]="!incidentForm.valid" (click)="onSubmit('escalado')">Cerrar</button>
+            <button type="button" id="cerrar" class="btn btn-lg btn-secondary" [disabled]="!incidentForm.valid" (click)="onSubmit()">Cerrar</button>
           </div>
         </div>
     </form>

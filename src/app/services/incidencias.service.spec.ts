@@ -28,30 +28,34 @@ describe('IncidenciasService', () => {
   it('should fetch incidencias', () => {
     const mockIncidencias: Incidente[] = [
       {
-        ID: '1',
-        DESCRIPCION: 'Incidencia 1',
-        ESTADO: 'Abierto',
-        PRIORIDAD: 'Alta',
-        CLIENTE: 'Cliente 1',
-        USUARIO: 'Usuario 1',
-        COMENTARIOS: '',
-        CORREO: '',
-        DIRECCION: '',
-        FECHACREACION: '',
-        TELEFONO: ''
+        id: '1',
+        descripcion: 'Incidencia 1',
+        estado: 'Abierto',
+        prioridad: 'Alta',
+        cliente: 'Cliente 1',
+        usuario: 'Usuario 1',
+        comentarios: 'Comentario prueba 1',
+        correo: 'prueba@prueba.com',
+        direccion: 'Calle 1 # 2 -3',
+        fechacreacion: '2024-01-01 10:00:00',
+        telefono: '300123456789',
+        tipo: 'incidencia',
+        canal: 'web'
       },
       {
-        ID: '2',
-        DESCRIPCION: 'Incidencia 2',
-        ESTADO: 'Cerrado',
-        PRIORIDAD: 'Baja',
-        CLIENTE: 'Cliente 2',
-        USUARIO: 'Usuario 2',
-        COMENTARIOS: '',
-        CORREO: '',
-        DIRECCION: '',
-        FECHACREACION: '',
-        TELEFONO: ''
+        id: '2',
+        descripcion: 'Incidencia 2',
+        estado: 'Cerrado',
+        prioridad: 'Baja',
+        cliente: 'Cliente 2',
+        usuario: 'Usuario 2',
+        comentarios: '',
+        correo: '',
+        direccion: '',
+        fechacreacion: '',
+        telefono: '',
+        tipo: 'incidencia',
+        canal: 'web'
       }
     ];
 

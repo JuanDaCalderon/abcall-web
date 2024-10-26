@@ -49,7 +49,8 @@ export class ViewIncidenciaComponent implements OnInit {
       prioridad: [''],
       estado: [''],
       respuestaIA: ['', Validators.required],
-      comentarios: ['']
+      comentarios: [''],
+      nuevoComentario: ['']
     });
 
     this.incidentForm.get('fecha')?.disable();

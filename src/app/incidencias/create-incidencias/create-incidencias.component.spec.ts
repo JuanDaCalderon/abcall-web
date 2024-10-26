@@ -8,26 +8,58 @@ import {CrearIncidenteService} from '../../services/crear-incidente.service';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {CrearClienteComponent} from '../../configuracion/crear-cliente/crear-cliente.component';
 import {Incidente} from '../../models/incidente';
+import {ClienteService} from '../../services/cliente.service';
+import {Usuario} from '../../models/usuario';
 
 describe('CreateIncidenciasComponent', () => {
   let component: CreateIncidenciasComponent;
   let fixture: ComponentFixture<CreateIncidenciasComponent>;
-  let crearIncidenteService: jasmine.SpyObj<CrearIncidenteService>;
-  //let toastrService: jasmine.SpyObj<ToastrService>;
+  let toastrService: jasmine.SpyObj<ToastrService>;
 
   const mockIncidente: Incidente = {
-    ID: 1,
-    CLIENTE: 'Test Client',
-    FECHACREACION: '2023-10-01',
-    USUARIO: 'Test User',
-    CORREO: 'prueba@prueba.com',
-    DIRECCION: 'Test address',
-    TELEFONO: '123456789',
-    DESCRIPCION: 'Test description',
-    PRIORIDAD: 'High',
-    ESTADO: 'Open',
-    COMENTARIOS: 'Test comments'
+    id: 1,
+    cliente: 'Test Client',
+    fechacreacion: '2023-10-01',
+    usuario: 'Test User',
+    correo: 'prueba@prueba.com',
+    direccion: 'Test address',
+    telefono: '123456789',
+    descripcion: 'Test description',
+    prioridad: 'baja',
+    estado: 'abierto',
+    comentarios: 'Test comments',
+    canal: 'web',
+    tipo: 'incidencia'
   };
+
+  const mockUsers: Usuario[] = [
+    {
+      id: '1',
+      nombres: 'User 1',
+      email: 'user1@example.com',
+      telefono: '1234567890',
+      direccion: 'Address 1',
+      username: 'user1',
+      password: 'password1',
+      apellidos: 'Lastname 1',
+      gestortier: '',
+      token: 'token',
+      rol: {id: 4, nombre: 'cliente', permisos: []}
+    },
+    {
+      id: '2',
+      nombres: 'User 2',
+      email: 'user2@example.com',
+      telefono: '0987654321',
+      direccion: 'Address 2',
+      username: 'user2',
+      password: 'password2',
+      apellidos: 'Lastname 2',
+      gestortier: '',
+      token: 'token',
+      rol: {id: 4, nombre: 'cliente', permisos: []}
+    }
+  ];
 
   beforeEach(async () => {
     const crearIncidenteServiceSpy = jasmine.createSpyObj('CrearIncidenteService', ['crearIncidente']);
@@ -44,8 +76,7 @@ describe('CreateIncidenciasComponent', () => {
 
     fixture = TestBed.createComponent(CreateIncidenciasComponent);
     component = fixture.componentInstance;
-    crearIncidenteService = TestBed.inject(CrearIncidenteService) as jasmine.SpyObj<CrearIncidenteService>;
-    //toastrService = TestBed.inject(ToastrService) as jasmine.SpyObj<ToastrService>;
+    toastrService = TestBed.inject(ToastrService) as jasmine.SpyObj<ToastrService>;
     fixture.detectChanges();
   });
 
@@ -62,10 +93,10 @@ describe('CreateIncidenciasComponent', () => {
     expect(form.get('correoUsuario')?.value).toBe('');
     expect(form.get('direccionUsuario')?.value).toBe('');
     expect(form.get('descripcionProblema')?.value).toBe('');
-    expect(form.get('tipoIncidencia')?.value).toBe('Incidencia');
-    expect(form.get('canalIngreso')?.value).toBe('Web');
-    expect(form.get('prioridad')?.value).toBe('Baja');
-    expect(form.get('estado')?.value).toBe('Abierto');
+    expect(form.get('tipoIncidencia')?.value).toBe('incidencia');
+    expect(form.get('canalIngreso')?.value).toBe('web');
+    expect(form.get('prioridad')?.value).toBe('baja');
+    expect(form.get('estado')?.value).toBe('abierto');
     expect(form.get('respuestaIA')?.value).toBe('');
   });
 
@@ -76,55 +107,46 @@ describe('CreateIncidenciasComponent', () => {
     expect(form.get('respuestaIA')?.disabled).toBeTrue();
   });
 
-  it('should reset the form and flags after successful submission', () => {
-    crearIncidenteService.crearIncidente.and.returnValue(of(mockIncidente));
-    component.onSubmit();
-    expect(component.crearIncidenteFlag).toBe('');
-    expect(component.escalarIncidenteFlag).toBe('');
-  });
-
   it('should handle error during incident creation', () => {
     const CrearIncidenteServiceStub: CrearIncidenteService = fixture.debugElement.injector.get(CrearIncidenteService);
     const errorResponse = {error: {message: 'Incidente no creado'}};
     spyOn(CrearIncidenteServiceStub, 'crearIncidente').and.returnValue(throwError(errorResponse));
+    component.onSubmit('creado');
 
-    component.onSubmit();
-    expect(component.crearIncidenteFlag).toBe('Incidente no creado');
+    expect(toastrService.error).toHaveBeenCalled();
+  });
+
+  it('should handle success during incident creation', () => {
+    const CrearIncidenteServiceStub: CrearIncidenteService = fixture.debugElement.injector.get(CrearIncidenteService);
+    spyOn(CrearIncidenteServiceStub, 'crearIncidente').and.returnValue(of(mockIncidente));
+    component.onSubmit('creado');
+
+    expect(toastrService.success).toHaveBeenCalled();
   });
 
   it('should handle error during incident escalation', () => {
     const CrearIncidenteServiceStub: CrearIncidenteService = fixture.debugElement.injector.get(CrearIncidenteService);
     const errorResponse = {error: {message: 'Incidente no creado'}};
     spyOn(CrearIncidenteServiceStub, 'crearIncidente').and.returnValue(throwError(errorResponse));
+    component.onSubmit('escalado');
 
-    component.onEscalar();
-    expect(component.escalarIncidenteFlag).toBe('Incidente no escalado');
+    expect(toastrService.error).toHaveBeenCalled();
   });
 
   it('should handle success during incident creation', () => {
     const CrearIncidenteServiceStub: CrearIncidenteService = fixture.debugElement.injector.get(CrearIncidenteService);
     spyOn(CrearIncidenteServiceStub, 'crearIncidente').and.returnValue(of(mockIncidente));
+    component.onSubmit('escalado');
 
-    component.onSubmit();
-    expect(component.crearIncidenteFlag).toBe('Incidente creado');
+    expect(toastrService.success).toHaveBeenCalled();
   });
 
-  it('should handle success during incident escalate', () => {
-    const CrearIncidenteServiceStub: CrearIncidenteService = fixture.debugElement.injector.get(CrearIncidenteService);
-    spyOn(CrearIncidenteServiceStub, 'crearIncidente').and.returnValue(of(mockIncidente));
-
-    component.onEscalar();
-    expect(component.escalarIncidenteFlag).toBe('Incidente escalado');
-  });
-
-  it('should reset form and flags on afterReset', () => {
+  it('should reset form on afterReset', () => {
     component.afterReset();
-    expect(component.crearIncidenteFlag).toBe('');
-    expect(component.escalarIncidenteFlag).toBe('');
-    expect(component.incidentForm.get('tipoIncidencia')?.value).toBe('Incidencia');
-    expect(component.incidentForm.get('canalIngreso')?.value).toBe('Web');
-    expect(component.incidentForm.get('prioridad')?.value).toBe('Baja');
-    expect(component.incidentForm.get('estado')?.value).toBe('Abierto');
+    expect(component.incidentForm.get('tipoIncidencia')?.value).toBe('incidencia');
+    expect(component.incidentForm.get('canalIngreso')?.value).toBe('web');
+    expect(component.incidentForm.get('prioridad')?.value).toBe('baja');
+    expect(component.incidentForm.get('estado')?.value).toBe('abierto');
   });
 
   it('should enable and set respuestaIA when descripcionProblema changes', () => {
@@ -139,5 +161,55 @@ describe('CreateIncidenciasComponent', () => {
     component.onDescripcionProblemaChange();
     expect(component.incidentForm.get('respuestaIA')?.value).toBe('');
     expect(component.incidentForm.get('respuestaIA')?.disabled).toBeTrue();
+  });
+
+  it('should load users by role 4 and set clientes', () => {
+    const clienteServiceStub = fixture.debugElement.injector.get(ClienteService);
+    spyOn(clienteServiceStub, 'getUsers').and.returnValue(of(mockUsers));
+
+    component.loadUsersByRol('4');
+
+    expect(clienteServiceStub.getUsers).toHaveBeenCalledWith('4');
+    expect(component.clientes).toEqual(mockUsers);
+  });
+
+  it('should load users by role 5 and set usuarios', () => {
+    const clienteServiceStub = fixture.debugElement.injector.get(ClienteService);
+    spyOn(clienteServiceStub, 'getUsers').and.returnValue(of(mockUsers));
+
+    component.loadUsersByRol('5');
+
+    expect(clienteServiceStub.getUsers).toHaveBeenCalledWith('5');
+    expect(component.usuarios).toEqual(mockUsers);
+  });
+
+  it('should handle error when loading users by role 4', () => {
+    const errorResponse = {error: {message: 'Error al cargar clientes'}};
+    const clienteServiceStub = fixture.debugElement.injector.get(ClienteService);
+    spyOn(clienteServiceStub, 'getUsers').and.returnValue(throwError(errorResponse));
+
+    component.loadUsersByRol('4');
+
+    expect(clienteServiceStub.getUsers).toHaveBeenCalledWith('4');
+    expect(toastrService.error).toHaveBeenCalledWith('Error al cargar clientes', 'Error', {
+      closeButton: true,
+      timeOut: 3000,
+      positionClass: 'toast-bottom-center'
+    });
+  });
+
+  it('should handle error when loading users by role 5', () => {
+    const errorResponse = {error: {message: 'Error al cargar usuarios'}};
+    const clienteServiceStub = fixture.debugElement.injector.get(ClienteService);
+    spyOn(clienteServiceStub, 'getUsers').and.returnValue(throwError(errorResponse));
+
+    component.loadUsersByRol('5');
+
+    expect(clienteServiceStub.getUsers).toHaveBeenCalledWith('5');
+    expect(toastrService.error).toHaveBeenCalledWith('Error al cargar usuarios', 'Error', {
+      closeButton: true,
+      timeOut: 3000,
+      positionClass: 'toast-bottom-center'
+    });
   });
 });

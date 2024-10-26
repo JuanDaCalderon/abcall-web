@@ -38,18 +38,19 @@ describe('ClienteService', () => {
       } as UsuarioInterface;
 
       const clienteResponseStub: Usuario = {
-        id: 1,
-        nombres: 'pepito',
+        id: 'ee16b59d-0032-4de0-87e5-f3db43be7616',
         email: 'pepito@perez.com',
+        username: '123456789',
+        password: '123456789',
+        nombres: 'pepito',
+        apellidos: 'perez',
         telefono: '888888888',
         direccion: 'calle 1',
-        username: 'pepitoperex',
-        password: '123456789',
-        apellidos: 'perez',
-        gestortier: '',
-        token: '',
+        gestortier: 'Nivel1',
+        token: 'eyJhbG',
         rol: {nombre: 'administrador'}
       } as Usuario;
+
       service.createCliente(clienteStub).subscribe((res) => {
         expect(res).toEqual(clienteResponseStub);
       });

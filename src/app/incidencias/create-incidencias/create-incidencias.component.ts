@@ -37,10 +37,10 @@ export class CreateIncidenciasComponent implements OnInit {
       correoUsuario: ['', Validators.email],
       direccionUsuario: [''],
       descripcionProblema: ['', Validators.required],
-      tipoIncidencia: ['Incidencia'],
-      canalIngreso: ['Web'],
-      prioridad: ['Baja'],
-      estado: ['Abierto'],
+      tipoIncidencia: ['incidencia'],
+      canalIngreso: ['web'],
+      prioridad: ['baja'],
+      estado: ['abierto'],
       respuestaIA: ['', Validators.required]
     });
 
@@ -88,20 +88,12 @@ export class CreateIncidenciasComponent implements OnInit {
       .subscribe(
         (response) => {
           localStorage.setItem('incidente', JSON.stringify(response));
-          this.toastr.success('Numero de caso: ' + String(response.id), 'Incidente ' + accion + ' correctamente', {
-            closeButton: true,
-            timeOut: 10000,
-            positionClass: 'toast-bottom-center'
-          });
+          this.showToast('Numero de caso: ' + String(response.id), 'Incidente ' + accion + ' correctamente', 'success');
           this.incidentForm.reset();
           this.afterReset();
         },
         (error) => {
-          this.toastr.error(error, 'Incidente no ' + accion, {
-            closeButton: true,
-            timeOut: 3000,
-            positionClass: 'toast-bottom-center'
-          });
+          this.showToast(error, 'Incidente no' + accion + ' correctamente', 'error');
         }
       );
   }
@@ -116,19 +108,14 @@ export class CreateIncidenciasComponent implements OnInit {
   }
 
   afterReset(): void {
-    this.incidentForm.get('tipoIncidencia')?.setValue('Incidencia');
-    this.incidentForm.get('canalIngreso')?.setValue('Web');
-    this.incidentForm.get('prioridad')?.setValue('Baja');
-    this.incidentForm.get('estado')?.setValue('Abierto');
+    this.incidentForm.get('tipoIncidencia')?.setValue('incidencia');
+    this.incidentForm.get('canalIngreso')?.setValue('web');
+    this.incidentForm.get('prioridad')?.setValue('baja');
+    this.incidentForm.get('estado')?.setValue('abierto');
 
     this.incidentForm.get('fecha')?.disable();
     this.incidentForm.get('canalIngreso')?.disable();
     this.incidentForm.get('respuestaIA')?.disable();
-
-    const colombiaTimeWithSeconds = new Date().toLocaleString('en-US', {timeZone: 'America/Bogota'});
-    this.incidentForm.patchValue({
-      fecha: new Date(colombiaTimeWithSeconds).toISOString().replace('T', ' ').substring(0, 19)
-    });
   }
 
   loadUsersByRol(rol: string): void {
@@ -162,5 +149,19 @@ export class CreateIncidenciasComponent implements OnInit {
       return current.replace(/(\d+)$/, incrementedNumber.toString());
     }
     return current;
+  }
+
+  showToast(message1: string, message2: string, type: 'success' | 'error') {
+    const configToast = {
+      closeButton: true,
+      timeOut: 3000,
+      positionClass: 'toast-bottom-center'
+    };
+
+    if (type === 'error') {
+      this.toastr.error(message1, message2, configToast);
+    } else {
+      this.toastr.success(message1, message2, configToast);
+    }
   }
 }

@@ -30,32 +30,36 @@ describe('Service: CrearIncidente', () => {
 
   it('should create an incident', () => {
     const mockIncidente: Incidente = {
-      ID: 1,
-      CLIENTE: 'Test Client',
-      FECHACREACION: '2023-10-01',
-      USUARIO: 'Test User',
-      CORREO: 'prueba@prueba.com',
-      DIRECCION: 'Test address',
-      TELEFONO: '123456789',
-      DESCRIPCION: 'Test description',
-      PRIORIDAD: 'High',
-      ESTADO: 'Open',
-      COMENTARIOS: 'Test comments'
+      id: 1,
+      cliente: 'Test Client',
+      fechacreacion: '2023-10-01',
+      usuario: 'Test User',
+      correo: 'prueba@prueba.com',
+      direccion: 'Test address',
+      telefono: '123456789',
+      descripcion: 'Test description',
+      prioridad: 'High',
+      estado: 'Open',
+      comentarios: 'Test comments',
+      tipo: 'Incidencia',
+      canal: 'Web'
     };
 
     subscriptions.push(
       service
         .crearIncidente(
-          mockIncidente.CLIENTE,
-          mockIncidente.FECHACREACION,
-          mockIncidente.USUARIO,
-          mockIncidente.CORREO,
-          mockIncidente.DIRECCION,
-          mockIncidente.TELEFONO,
-          mockIncidente.DESCRIPCION,
-          mockIncidente.PRIORIDAD,
-          mockIncidente.ESTADO,
-          mockIncidente.COMENTARIOS
+          mockIncidente.cliente,
+          mockIncidente.fechacreacion,
+          mockIncidente.usuario,
+          mockIncidente.correo,
+          mockIncidente.direccion,
+          mockIncidente.telefono,
+          mockIncidente.descripcion,
+          mockIncidente.prioridad,
+          mockIncidente.estado,
+          mockIncidente.comentarios,
+          mockIncidente.tipo,
+          mockIncidente.canal
         )
         .subscribe((incidente) => {
           expect(incidente).toEqual(mockIncidente);
