@@ -1,5 +1,5 @@
 export class Incidente {
-  ID: number;
+  id: number;
   CLIENTE: string;
   FECHACREACION: string;
   USUARIO: string;
@@ -12,7 +12,7 @@ export class Incidente {
   COMENTARIOS: string;
 
   constructor(
-    ID: number,
+    id: number,
     CLIENTE: string,
     FECHACREACION: string,
     USUARIO: string,
@@ -24,7 +24,7 @@ export class Incidente {
     ESTADO: string,
     COMENTARIOS: string
   ) {
-    this.ID = ID;
+    this.id = id;
     this.CLIENTE = CLIENTE;
     this.FECHACREACION = FECHACREACION;
     this.USUARIO = USUARIO;

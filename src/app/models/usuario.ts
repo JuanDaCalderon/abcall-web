@@ -1,7 +1,7 @@
 import {Role} from './role';
 
 export class Usuario {
-  id: number;
+  id: string;
   email: string;
   username: string;
   password: string;
@@ -14,7 +14,7 @@ export class Usuario {
   rol: Role;
 
   constructor(
-    id: number,
+    id: string,
     email: string,
     username: string,
     password: string,

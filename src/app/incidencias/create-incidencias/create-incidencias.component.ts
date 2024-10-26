@@ -6,6 +6,8 @@ import {CrearIncidenteService} from '../../services/crear-incidente.service';
 import {Router} from '@angular/router';
 import {NavbarComponent} from '../../components/navbar/navbar.component';
 import {ToastrService} from 'ngx-toastr';
+import {ClienteService} from '../../services/cliente.service';
+import {Usuario} from '../../models/usuario';
 
 @Component({
   selector: 'app-create-incidencias',
@@ -16,6 +18,8 @@ import {ToastrService} from 'ngx-toastr';
   standalone: true
 })
 export class CreateIncidenciasComponent implements OnInit {
+  clientes: Usuario[] = [];
+  usuarios: Usuario[] = [];
   incidentForm!: FormGroup;
   crearIncidenteFlag = '';
   escalarIncidenteFlag = '';
@@ -24,13 +28,14 @@ export class CreateIncidenciasComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private crearIncidenteService: CrearIncidenteService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private clienteService: ClienteService
   ) {}
 
   ngOnInit(): void {
     this.incidentForm = this.formBuilder.group({
       cliente: ['', Validators.required],
-      fecha: [new Date().toISOString().substring(0, 16), Validators.required],
+      fecha: [''],
       nombreUsuario: ['', Validators.required],
       telefonoUsuario: [''],
       correoUsuario: ['', Validators.email],
@@ -43,19 +48,20 @@ export class CreateIncidenciasComponent implements OnInit {
       respuestaIA: ['', Validators.required]
     });
 
-    const colombiaTimeWithSeconds = new Date().toLocaleString('en-US', {timeZone: 'America/Bogota'});
-    this.incidentForm.patchValue({
-      fecha: new Date(colombiaTimeWithSeconds).toISOString().replace('T', ' ').substring(0, 19)
-    });
     this.incidentForm.get('fecha')?.disable();
     this.incidentForm.get('canalIngreso')?.disable();
     this.incidentForm.get('respuestaIA')?.disable();
+
+    this.loadUsersByRol('4');
+    this.loadUsersByRol('5');
   }
 
-  onSubmit(): void {
+  onSubmit(accion: string): void {
+    const gestor = accion === 'escalado' ? this.updateGestor('GestorNivel1') : 'GestorNivel1';
+
     const newIncident = {
       cliente: this.incidentForm.get('cliente')?.value,
-      fecha: this.incidentForm.get('fecha')?.value,
+      fecha: this.generateTime(),
       nombreUsuario: this.incidentForm.get('nombreUsuario')?.value,
       correoUsuario: this.incidentForm.get('correoUsuario')?.value,
       direccionUsuario: this.incidentForm.get('direccionUsuario')?.value,
@@ -64,7 +70,7 @@ export class CreateIncidenciasComponent implements OnInit {
       prioridad: this.incidentForm.get('prioridad')?.value,
       estado: this.incidentForm.get('estado')?.value,
       respuestaIA: this.incidentForm.get('respuestaIA')?.value,
-      gestor: 'gestorNivel1'
+      gestor: gestor
     };
     this.crearIncidenteService
       .crearIncidente(
@@ -82,74 +88,17 @@ export class CreateIncidenciasComponent implements OnInit {
       .subscribe(
         (response) => {
           localStorage.setItem('incidente', JSON.stringify(response));
-          this.toastr.success('Numero de caso: ' + String(response.ID), 'Incidente creado correctamente ', {
+          this.toastr.success('Numero de caso: ' + String(response.id), 'Incidente ' + accion + ' correctamente', {
             closeButton: true,
             timeOut: 10000,
             positionClass: 'toast-bottom-center'
           });
           this.incidentForm.reset();
           this.afterReset();
-          //this.router.navigate(['/home']);
-          this.crearIncidenteFlag = 'Incidente creado';
+          this.escalarIncidenteFlag = 'Incidente' + accion;
         },
         (error) => {
-          console.error('Error al crear incidente:', error);
-          this.escalarIncidenteFlag = '';
-          this.crearIncidenteFlag = 'Incidente no creado';
-          this.toastr.error('Error al crear el incidente', 'Error', {
-            closeButton: true,
-            timeOut: 3000,
-            positionClass: 'toast-bottom-center'
-          });
-        }
-      );
-  }
-
-  onEscalar(): void {
-    const newIncident = {
-      cliente: this.incidentForm.get('cliente')?.value,
-      fecha: this.incidentForm.get('fecha')?.value,
-      nombreUsuario: this.incidentForm.get('nombreUsuario')?.value,
-      correoUsuario: this.incidentForm.get('correoUsuario')?.value,
-      direccionUsuario: this.incidentForm.get('direccionUsuario')?.value,
-      telefonoUsuario: this.incidentForm.get('telefonoUsuario')?.value,
-      descripcionProblema: this.incidentForm.get('descripcionProblema')?.value,
-      prioridad: this.incidentForm.get('prioridad')?.value,
-      estado: this.incidentForm.get('estado')?.value,
-      respuestaIA: this.incidentForm.get('respuestaIA')?.value,
-      gestor: 'gestorNivel1'
-    };
-    this.crearIncidenteService
-      .crearIncidente(
-        newIncident.cliente,
-        newIncident.fecha,
-        newIncident.nombreUsuario,
-        newIncident.correoUsuario,
-        newIncident.direccionUsuario,
-        newIncident.telefonoUsuario,
-        newIncident.descripcionProblema,
-        newIncident.prioridad,
-        newIncident.estado,
-        newIncident.respuestaIA
-      )
-      .subscribe(
-        (response) => {
-          localStorage.setItem('incidente', JSON.stringify(response));
-          this.toastr.success('Numero de caso: ' + String(response.ID), 'Incidente escalado correctamente ', {
-            closeButton: true,
-            timeOut: 10000,
-            positionClass: 'toast-bottom-center'
-          });
-          this.incidentForm.reset();
-          this.afterReset();
-          //this.router.navigate(['/home']);
-          this.escalarIncidenteFlag = 'Incidente escalado';
-        },
-        (error) => {
-          console.error('Error al crear incidente:', error);
-          this.crearIncidenteFlag = '';
-          this.escalarIncidenteFlag = 'Incidente no escalado';
-          this.toastr.error('Error al escalar el incidente', 'Error', {
+          this.toastr.error(error, 'Incidente no ' + accion, {
             closeButton: true,
             timeOut: 3000,
             positionClass: 'toast-bottom-center'
@@ -184,5 +133,41 @@ export class CreateIncidenciasComponent implements OnInit {
     this.incidentForm.patchValue({
       fecha: new Date(colombiaTimeWithSeconds).toISOString().replace('T', ' ').substring(0, 19)
     });
+  }
+
+  loadUsersByRol(rol: string): void {
+    this.clienteService.getUsers(rol).subscribe(
+      (usuarios) => {
+        if (rol === '4') this.clientes = usuarios;
+        else this.usuarios = usuarios;
+      },
+      (error) => {
+        const errorMsg = rol === '4' ? 'Error al cargar clientes' : 'Error al cargar usuarios';
+        console.error('error:', error);
+        this.toastr.error(errorMsg, 'Error', {
+          closeButton: true,
+          timeOut: 3000,
+          positionClass: 'toast-bottom-center'
+        });
+      }
+    );
+  }
+
+  generateTime(): string {
+    const colombiaTimeWithSeconds = new Date().toLocaleString('en-US', {timeZone: 'America/Bogota'});
+    return new Date(colombiaTimeWithSeconds).toISOString().replace('T', ' ').substring(0, 19);
+  }
+
+  updateGestor(current: string): string {
+    const match = current.match(/(\d+)$/);
+    if (match) {
+      const number = parseInt(match[0], 10);
+      // Incrementar el número
+      const incrementedNumber = number + 1;
+      // Reemplazar el número en la cadena original con el número incrementado
+      return current.replace(/(\d+)$/, incrementedNumber.toString());
+    }
+    // Si no hay número al final, devolver la cadena original
+    return current;
   }
 }

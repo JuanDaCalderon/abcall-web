@@ -10,7 +10,7 @@ import {Role} from '../models/role';
 export class AuthService {
   /** API url */
   private apiUrl = environment.urlApi + environment.portUsuario;
-  private usuario: Usuario = new Usuario(0, '', '', '', '', '', '', '', '', '', new Role(0, '', []));
+  private usuario: Usuario = new Usuario('jkh', '', '', '', '', '', '', '', '', '', new Role(0, '', []));
   constructor(private http: HttpClient) {}
 
   /**
