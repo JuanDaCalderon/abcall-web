@@ -23,4 +23,8 @@ export class IncidenciasService {
   getAllincidenciaByCliente(cliente: string): Observable<Incidente[]> {
     return this._http.get<Incidente[]>(`${this.apiUrl}/incidentes/?cliente=${cliente}`);
   }
+
+  getIncidenciaById(id: string): Observable<Incidente> {
+    return this._http.get<Incidente>(`${this.apiUrl}/incidente/${id}`);
+  }
 }

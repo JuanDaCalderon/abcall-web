@@ -8,6 +8,7 @@ import {FiltroIncidenciasPipe} from '../../pipes/filtro-incidencias.pipe';
 import {FormsModule} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 import {Usuario} from '../../models/usuario';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-list-incidencias',
@@ -26,7 +27,9 @@ export class ListIncidenciasComponent implements OnInit {
   criterioBusqueda = '';
   constructor(
     private incidenciasService: IncidenciasService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
+    //private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -100,5 +103,10 @@ export class ListIncidenciasComponent implements OnInit {
     } else {
       this.getIncidencias();
     }
+  }
+
+  OnSelect(id: number): void {
+    console.log('Incidencia seleccionada:', id);
+    this.router.navigate(['home/view-incidencia', id]);
   }
 }
