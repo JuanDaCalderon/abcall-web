@@ -27,4 +27,8 @@ export class IncidenciasService {
   getIncidenciaById(id: string): Observable<Incidente> {
     return this._http.get<Incidente>(`${this.apiUrl}/incidente/${id}`);
   }
+
+  updateIncidenciaById(id: string, incidencia: Incidente): Observable<Incidente> {
+    return this._http.put<Incidente>(`${this.apiUrl}/incidentes/${id}`, incidencia);
+  }
 }

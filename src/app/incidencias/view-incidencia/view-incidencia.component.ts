@@ -25,7 +25,6 @@ export class ViewIncidenciaComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    //private crearIncidenteService: CrearIncidenteService,
     private incidenciasService: IncidenciasService,
     private toastr: ToastrService,
     private clienteService: ClienteService,
