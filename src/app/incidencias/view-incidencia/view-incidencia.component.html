@@ -1,0 +1,120 @@
+
+<div class="container top align-content-center">
+    <h1 class="text-md-center">Incidencia # {{issueId}}</h1>
+    <form [formGroup]="incidentForm" (ngSubmit)="onSubmit()" class="row g-2">
+        <div class="col-md-6 mb-3">
+          <label for="cliente" class="form-label">Cliente</label>
+          <select id="cliente" formControlName="cliente" class="form-select" >
+            <option *ngFor="let cliente of clientes" [value]="cliente.id">{{cliente.nombres}} {{cliente.apellidos}}</option>
+          </select>
+          <div class="text-danger" *ngIf="incidentForm.get('cliente')!.touched && incidentForm.get('cliente')!.hasError('required')">
+            Cliente requerido
+          </div>
+        </div>
+  
+        <div class="col-md-6 mb-3">
+          <label for="fecha" class="form-label">Fecha y hora de creacion</label>
+          <input class="form-control" type="text" id="fecha" formControlName="fecha">
+        </div>
+  
+        <div class="col-md-6 mb-3">
+          <label for="nombreUsuario" class="form-label">Nombre usuario</label>
+          <select id="nombreUsuario" formControlName="nombreUsuario" placeholder="Nombre usuario" class="form-select">
+            <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{usuario.nombres}} {{usuario.apellidos}}</option>
+          </select>
+          <div class="text-danger" id ="usuarioRequiredError" *ngIf="incidentForm.get('nombreUsuario')!.touched && incidentForm.get('nombreUsuario')!.hasError('required')">
+              Nombre usuario requerido
+          </div>
+      </div>
+  
+        <div class="col-md-6 mb-3">
+          <label for="correoUsuario" class="form-label">Correo usuario</label>
+          <input class="form-control" type="email" id="correoUsuario" formControlName="correoUsuario" placeholder="Correo usuario">
+          <div class="text-danger" id="mailFormatError" *ngIf="incidentForm.get('correoUsuario')!.touched && incidentForm.get('correoUsuario')!.hasError('email')">
+            Formato de correo inválido
+          </div>
+        </div>
+  
+        <div class="col-md-6 mb-3">
+          <label for="telefonoUsuario" class="form-label">Teléfono usuario</label>
+          <input class="form-control" type="tel" id="telefonoUsuario" formControlName="telefonoUsuario" placeholder="Teléfono usuario">
+        </div>
+  
+        <div class="col-md-6 mb-3">
+          <label for="direccionUsuario" class="form-label">Dirección usuario</label>
+          <input class="form-control" type="text" id="direccionUsuario" formControlName="direccionUsuario" placeholder="Dirección usuario">
+        </div>
+  
+        <!-- Campo que debe ocupar toda la fila -->
+        <div class="col-md-12 mb-3">
+          <label for="descripcionProblema" class="form-label">Descripción del problema</label>
+          <textarea class="form-control" id="descripcionProblema" formControlName="descripcionProblema" rows="4" placeholder="Descripción del problema" (input)="onDescripcionProblemaChange()"></textarea>
+          <div class="text-danger" id="descripcionRequiredError" *ngIf="incidentForm.get('descripcionProblema')!.touched && incidentForm.get('descripcionProblema')!.hasError('required')">
+              Descripción del problema requerido
+          </div>
+      </div>
+  
+        <div class="col-md-6 mb-3">
+          <label for="tipoIncidencia" class="form-label">Tipo de incidencia</label>
+          <select id="tipoIncidencia" formControlName="tipoIncidencia" class="form-select">
+            <option>incidencia</option>
+            <option>pqrs</option>
+          </select>
+        </div>
+  
+        <div class="col-md-6 mb-3">
+          <label for="canalIngreso" class="form-label">Canal de ingreso</label>
+          <select id="canalIngreso" formControlName="canalIngreso" class="form-select">
+            <option>web</option>
+          </select>
+        </div>
+  
+        <div class="col-md-6 mb-3">
+          <label for="prioridad" class="form-label">Prioridad</label>
+          <select id="prioridad" formControlName="prioridad" class="form-select">
+            <option>baja</option>
+            <option>media</option>
+            <option>alta</option>
+          </select>
+        </div>
+  
+        <div class="col-md-6 mb-3">
+          <label for="estado" class="form-label">Estado</label>
+          <select id="estado" formControlName="estado" class="form-select">
+            <option>abierto</option>
+            <option>e|n proceso</option>
+            <option>a espera de respuesta usuario</option>
+            <option>cerrado</option>
+          </select>
+        </div>
+  
+        <div class="col-md-6 mb-3">
+          <label for="comentarios" class="form-label">Comentarios</label>
+          <textarea class="form-control" id="comentarios" formControlName="comentarios"></textarea>
+        </div>
+  
+        <div class="col-md-6 mb-3">
+          <label for="nuevoComentario" class="form-label">Nuevo comentario</label>
+          <textarea class="form-control" id="nuevoComentario" formControlName="nuevoComentario"></textarea>
+        </div>
+
+        <!-- Campo que debe ocupar toda la fila -->
+        <!--<div class="col-md-12 mb-3">
+          <label for="respuestaIA" class="form-label">Respuesta sugerida por IA</label>
+          <textarea class="form-control"  id="respuestaIA" formControlName="respuestaIA" rows="2"></textarea>
+        </div> -->
+  
+        <div class="row">
+          <div class="d-grid gap-2 col-4 mx-auto">
+            <button type="button" id="guardar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit()">Guardar</button>
+          </div>
+          <div class="d-grid gap-2 col-4 mx-auto">
+            <button type="button" id="escalar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit()">Escalar</button>
+          </div>
+          <div class="d-grid gap-2 col-4 mx-auto">
+            <button type="button" id="cerrar" class="btn btn-lg btn-secondary" [disabled]="!incidentForm.valid" (click)="onSubmit()">Cerrar</button>
+          </div>
+        </div>
+    </form>
+  </div>
+  
