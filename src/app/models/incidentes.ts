@@ -14,6 +14,25 @@ export class Incidente {
     public telefono: string,
     public usuario: Usuario,
     public canal: string,
-    public tipo: string
+    public tipo: string,
+    public gestor: string
+  ) {}
+}
+
+export class NewUpdatedIncidencia {
+  constructor(
+    public cliente: Usuario,
+    public comentarios: string,
+    public correo: string,
+    public descripcion: string,
+    public direccion: string,
+    public estado: string,
+    public fechacreacion: string,
+    public prioridad: string,
+    public telefono: string,
+    public usuario: Usuario,
+    public canal: string,
+    public tipo: string,
+    public gestor: string
   ) {}
 }
