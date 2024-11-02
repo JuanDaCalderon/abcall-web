@@ -142,68 +142,41 @@ export class ViewIncidenciaComponent implements OnInit {
   }
 
   async loadIncident(id: string): Promise<void> {
-    this.incidenciasService.getIncidenciaById(id).subscribe(
-      (data: Incidente) => {
-        this.incidentForm.patchValue({
-          cliente: data.cliente.id,
-          fecha: data.fechacreacion,
-          nombreUsuario: data.usuario.id,
-          correoUsuario: data.correo,
-          telefonoUsuario: data.telefono,
-          direccionUsuario: data.direccion,
-          descripcionProblema: data.descripcion,
-          tipoIncidencia: data.tipo,
-          canalIngreso: data.canal,
-          prioridad: data.prioridad,
-          estado: data.estado,
-          comentarios: data.comentarios
-          //respuestaIA: 'Respuesta IA'
-        });
-        this.currentGestorId = data.gestor.id;
-        this.currentGestorObj = data.gestor;
-        console.log('Incidencia:', data);
-      },
-      (error) => {
-        console.error('Error al obtener la incidencia', error);
-      }
-    );
+    this.incidenciasService.getIncidenciaById(id).subscribe((data: Incidente) => {
+      this.incidentForm.patchValue({
+        cliente: data.cliente.id,
+        fecha: data.fechacreacion,
+        nombreUsuario: data.usuario.id,
+        correoUsuario: data.correo,
+        telefonoUsuario: data.telefono,
+        direccionUsuario: data.direccion,
+        descripcionProblema: data.descripcion,
+        tipoIncidencia: data.tipo,
+        canalIngreso: data.canal,
+        prioridad: data.prioridad,
+        estado: data.estado,
+        comentarios: data.comentarios
+        //respuestaIA: 'Respuesta IA'
+      });
+      this.currentGestorId = data.gestor.id;
+      this.currentGestorObj = data.gestor;
+    });
   }
 
   async loadUsersByRol(rol: string): Promise<void> {
-    this.clienteService.getUsers(rol).subscribe(
-      (usuarios) => {
-        if (rol === '3') this.gestores = usuarios;
-        else if (rol === '4') this.clientes = usuarios;
-        else if (rol === '5') this.usuarios = usuarios;
-      },
-      (error) => {
-        const errorMsg = rol === '4' ? 'Error al cargar clientes' : 'Error al cargar usuarios';
-        console.error('error:', error);
-        this.toastr.error(errorMsg, 'Error', {
-          closeButton: true,
-          timeOut: 3000,
-          positionClass: 'toast-bottom-center'
-        });
-      }
-    );
+    this.clienteService.getUsers(rol).subscribe((usuarios) => {
+      if (rol === '3') this.gestores = usuarios;
+      else if (rol === '4') this.clientes = usuarios;
+      else if (rol === '5') this.usuarios = usuarios;
+    });
   }
 
   async updateIncident(id: string, updatedIncidencia: NewUpdatedIncidencia): Promise<void> {
     console.log('Incidencia actualizada:', updatedIncidencia);
-    this.incidenciasService.updateIncidencia(id, updatedIncidencia).subscribe(
-      (response) => {
-        this.showToast('Incidencia actualizada correctamente', 'Actualización exitosa' + response, 'success');
-        this.router.navigate(['home']);
-      },
-      (error) => {
-        console.error('Error al actualizar la incidencia', error);
-        this.toastr.error('Error al actualizar la incidencia', 'Error', {
-          closeButton: true,
-          timeOut: 3000,
-          positionClass: 'toast-bottom-center'
-        });
-      }
-    );
+    this.incidenciasService.updateIncidencia(id, updatedIncidencia).subscribe((response) => {
+      this.showToast('Incidencia actualizada correctamente', 'Actualización exitosa' + response, 'success');
+      this.router.navigate(['home']);
+    });
   }
 
   showToast(message1: string, message2: string, type: 'success' | 'error') {
