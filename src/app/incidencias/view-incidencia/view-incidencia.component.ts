@@ -21,6 +21,8 @@ export class ViewIncidenciaComponent implements OnInit {
   clientes: Usuario[] = [];
   usuarios: Usuario[] = [];
   gestores: Usuario[] = [];
+  currentGestorId = '';
+  currentGestorObj: Usuario | undefined;
   incidentForm!: FormGroup;
   issueId = '';
 
@@ -69,27 +71,55 @@ export class ViewIncidenciaComponent implements OnInit {
     this.incidentForm.get('comentarios')?.disable();
   }
 
-  onSubmit(): void {
-    //const gestor = accion === 'escalado' ? this.updateGestor('GestorNivel1') : 'GestorNivel1';
+  onSubmit(accion: string): void {
+    let gestor = this.currentGestorId;
+    let gestorUsername = this.currentGestorObj?.username;
+    let newEstado = this.incidentForm.get('estado')?.value;
+
+    if (accion === 'escalado') {
+      const newGestor = this.getNewGestor(gestor);
+      if (newGestor[0] === 'No hay más niveles') {
+        this.showToast('No hay más niveles de escalado', 'Error', 'error');
+        return;
+      } else if (newGestor[0] === '') {
+        this.showToast('Error al obtener el nuevo gestor', 'Error', 'error');
+        return;
+      } else {
+        gestor = newGestor[0];
+        gestorUsername = newGestor[1];
+      }
+    }
+
+    if (accion === 'cerrar') {
+      newEstado = 'cerrado';
+    }
 
     const newLine = '\n------------------------------------\n' + this.generateTime() + '\n';
 
     const updatedIncident: NewUpdatedIncidencia = {
       cliente: this.incidentForm.get('cliente')?.value,
-      fechacreacion: this.incidentForm.get('fecha')?.value,
+      //fechacreacion: this.incidentForm.get('fecha')?.value,
       usuario: this.incidentForm.get('nombreUsuario')?.value,
       correo: this.incidentForm.get('correoUsuario')?.value,
       direccion: this.incidentForm.get('direccionUsuario')?.value,
       telefono: this.incidentForm.get('telefonoUsuario')?.value,
       descripcion: this.incidentForm.get('descripcionProblema')?.value,
       prioridad: this.incidentForm.get('prioridad')?.value,
-      estado: this.incidentForm.get('estado')?.value,
-      comentarios: this.incidentForm.get('comentarios')?.value + newLine + 'Comentario: ' + this.incidentForm.get('nuevoComentario')?.value,
-      tipo: this.incidentForm.get('tipoIncidencia')?.value,
+      estado: newEstado,
       canal: 'web',
-      gestor: '04b9602d-d0d8-4bad-9ae2-4fe216b0b5c6'
+      tipo: this.incidentForm.get('tipoIncidencia')?.value,
+      comentarios:
+        this.incidentForm.get('comentarios')?.value +
+        newLine +
+        'Comentario: ' +
+        this.incidentForm.get('nuevoComentario')?.value +
+        '\n' +
+        'Gestor asignado: ' +
+        gestorUsername,
+      gestor: gestor
     };
 
+    this.showToast('Incidencia actualizada correctamente', updatedIncident.gestor, 'success');
     this.updateIncident(this.issueId, updatedIncident);
   }
 
@@ -111,17 +141,6 @@ export class ViewIncidenciaComponent implements OnInit {
     return new Date(colombiaTimeWithSeconds).toISOString().replace('T', ' ').substring(0, 19);
   }
 
-  /*
-  updateGestor(current: string): string {
-    const match = current.match(/(\d+)$/);
-    if (match) {
-      const number = parseInt(match[0], 10);
-      const incrementedNumber = number + 1;
-      return current.replace(/(\d+)$/, incrementedNumber.toString());
-    }
-    return current;
-  }*/
-
   async loadIncident(id: string): Promise<void> {
     this.incidenciasService.getIncidenciaById(id).subscribe(
       (data: Incidente) => {
@@ -140,6 +159,8 @@ export class ViewIncidenciaComponent implements OnInit {
           comentarios: data.comentarios
           //respuestaIA: 'Respuesta IA'
         });
+        this.currentGestorId = data.gestor.id;
+        this.currentGestorObj = data.gestor;
         console.log('Incidencia:', data);
       },
       (error) => {
@@ -168,6 +189,7 @@ export class ViewIncidenciaComponent implements OnInit {
   }
 
   async updateIncident(id: string, updatedIncidencia: NewUpdatedIncidencia): Promise<void> {
+    console.log('Incidencia actualizada:', updatedIncidencia);
     this.incidenciasService.updateIncidencia(id, updatedIncidencia).subscribe(
       (response) => {
         this.showToast('Incidencia actualizada correctamente', 'Actualización exitosa' + response, 'success');
@@ -196,5 +218,48 @@ export class ViewIncidenciaComponent implements OnInit {
     } else {
       this.toastr.success(message1, message2, configToast);
     }
+  }
+
+  getNewGestor(idCurrectGestor: string): string[] {
+    const currentGestorLevel = this.getCurrentGestorLevel(idCurrectGestor);
+    const newGestor = ['', ''];
+    let newLevel = 'gestorjunior';
+    if (currentGestorLevel === 'junior') {
+      newLevel = 'mid';
+    } else if (currentGestorLevel === 'mid') {
+      newLevel = 'senior';
+    } else if (currentGestorLevel === 'senior') {
+      newLevel = 'lead';
+    } else if (currentGestorLevel === 'lead') {
+      newLevel = 'manager';
+    } else if (currentGestorLevel === 'manager') {
+      newLevel = 'No hay más niveles';
+    }
+
+    if (newLevel !== 'No hay más niveles') {
+      this.loadUsersByRol('3');
+      this.gestores.forEach((gestor) => {
+        if (gestor.gestortier === newLevel) {
+          newGestor[0] = gestor.id;
+          newGestor[1] = gestor.username;
+        }
+      });
+    } else {
+      newGestor[0] = newLevel;
+      newGestor[1] = newLevel;
+    }
+    return newGestor;
+  }
+
+  getCurrentGestorLevel(idCurrectGestor: string): string {
+    let gestorLevel = '';
+    //this.loadUsersByRol('3');
+    this.gestores.forEach((gestor) => {
+      if (gestor.id === idCurrectGestor) {
+        gestorLevel = gestor.gestortier;
+      }
+    });
+    console.log(gestorLevel);
+    return gestorLevel;
   }
 }

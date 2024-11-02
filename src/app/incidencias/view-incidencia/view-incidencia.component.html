@@ -1,7 +1,7 @@
 
 <div class="container top align-content-center">
   <h1 class="text-md-center">Incidencia # {{issueId}}</h1>
-  <form [formGroup]="incidentForm" (ngSubmit)="onSubmit()" class="row g-2">
+  <form [formGroup]="incidentForm" (ngSubmit)="onSubmit('creado')" class="row g-2">
       <div class="col-md-6 mb-3">
         <label for="cliente" class="form-label">Cliente</label>
         <select id="cliente" formControlName="cliente" class="form-select" >
@@ -106,13 +106,13 @@
 
       <div class="row">
         <div class="d-grid gap-2 col-4 mx-auto">
-          <button type="button" id="guardar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit()">Guardar</button>
+          <button type="button" id="guardar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit('cerrado')">Guardar</button>
         </div>
         <div class="d-grid gap-2 col-4 mx-auto">
-          <button type="button" id="escalar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit()">Escalar</button>
+          <button type="button" id="escalar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit('escalado')">Escalar</button>
         </div>
         <div class="d-grid gap-2 col-4 mx-auto">
-          <button type="button" id="cerrar" class="btn btn-lg btn-secondary" [disabled]="!incidentForm.valid" (click)="onSubmit()">Cerrar</button>
+          <button type="button" id="cerrar" class="btn btn-lg btn-secondary" [disabled]="!incidentForm.valid" (click)="onSubmit('creado')">Cerrar</button>
         </div>
       </div>
   </form>
