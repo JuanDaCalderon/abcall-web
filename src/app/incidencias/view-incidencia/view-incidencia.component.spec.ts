@@ -17,20 +17,6 @@ describe('ViewIncidenciaComponent', () => {
   let clienteService: jasmine.SpyObj<ClienteService>;
   let toastrService: jasmine.SpyObj<ToastrService>;
 
-  /*const mockCliente: Usuario = {
-    id: '1',
-    email: 'cliente1@prueba.com',
-    username: 'cliente1',
-    password: '123456789',
-    nombres: 'cliente',
-    apellidos: 'uno',
-    telefono: '300123456789',
-    direccion: 'calle 123',
-    gestortier: '',
-    token: 'token',
-    rol: {id: 4, nombre: 'cliente', permisos: []}
-  };*/
-
   const mockUsuarios: Usuario[] = [
     {
       id: '1',
