@@ -52,9 +52,6 @@ export class CreateIncidenciasComponent implements OnInit {
     this.loadUsersByRol('4');
     this.loadUsersByRol('5');
     this.loadUsersByRol('3');
-
-    console.log(this.clientes);
-    console.log(this.usuarios);
   }
 
   async onSubmit(accion: string): Promise<void> {
@@ -87,17 +84,12 @@ export class CreateIncidenciasComponent implements OnInit {
         gestor[1],
       gestor: gestor[0]
     };
-    this.crearIncidenteService.createIncidencia(newIncident).subscribe(
-      (response) => {
-        localStorage.setItem('incidente', JSON.stringify(response));
-        this.showToast('Numero de caso: ' + String(response.id), 'Incidente ' + accion + ' correctamente', 'success');
-        this.incidentForm.reset();
-        this.afterReset();
-      },
-      (error) => {
-        this.showToast(error, 'Incidente no' + accion + ' correctamente', 'error');
-      }
-    );
+    this.crearIncidenteService.createIncidencia(newIncident).subscribe((response) => {
+      localStorage.setItem('incidente', JSON.stringify(response));
+      this.showToast('Numero de caso: ' + String(response.id), 'Incidente ' + accion + ' correctamente', 'success');
+      this.incidentForm.reset();
+      this.afterReset();
+    });
   }
 
   onDescripcionProblemaChange(): void {
@@ -125,16 +117,6 @@ export class CreateIncidenciasComponent implements OnInit {
     return new Date(colombiaTimeWithSeconds).toISOString().replace('T', ' ').substring(0, 19);
   }
 
-  updateGestor(current: string): string {
-    const match = current.match(/(\d+)$/);
-    if (match) {
-      const number = parseInt(match[0], 10);
-      const incrementedNumber = number + 1;
-      return current.replace(/(\d+)$/, incrementedNumber.toString());
-    }
-    return current;
-  }
-
   getGestor(accion: string): string[] {
     const nivel = accion === 'creado' ? 'gestorjunior' : 'gestormid';
     const idGestor = ['', ''];
@@ -145,7 +127,6 @@ export class CreateIncidenciasComponent implements OnInit {
         idGestor[1] = gestor.username;
       }
     });
-    console.log(idGestor);
     return idGestor;
   }
 
@@ -164,21 +145,10 @@ export class CreateIncidenciasComponent implements OnInit {
   }
 
   async loadUsersByRol(rol: string): Promise<void> {
-    this.clienteService.getUsers(rol).subscribe(
-      (usuarios) => {
-        if (rol === '3') this.gestores = usuarios;
-        else if (rol === '4') this.clientes = usuarios;
-        else if (rol === '5') this.usuarios = usuarios;
-      },
-      (error) => {
-        const errorMsg = rol === '4' ? 'Error al cargar clientes' : 'Error al cargar usuarios';
-        console.error('error:', error);
-        this.toastr.error(errorMsg, 'Error', {
-          closeButton: true,
-          timeOut: 3000,
-          positionClass: 'toast-bottom-center'
-        });
-      }
-    );
+    this.clienteService.getUsers(rol).subscribe((usuarios) => {
+      if (rol === '3') this.gestores = usuarios;
+      else if (rol === '4') this.clientes = usuarios;
+      else if (rol === '5') this.usuarios = usuarios;
+    });
   }
 }

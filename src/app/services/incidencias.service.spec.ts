@@ -72,7 +72,20 @@ describe('IncidenciasService', () => {
         estado: 'Open',
         comentarios: 'Test comments',
         canal: 'web',
-        tipo: 'icidencia'
+        tipo: 'incidencia',
+        gestor: {
+          id: '3',
+          email: 'gestorjunior@gmail.com',
+          username: 'gestorjunior',
+          telefono: '6666666666',
+          password: '123456789',
+          nombres: 'gestorjunior',
+          apellidos: 'gestorjunior',
+          direccion: 'Cll 38c No.72j - 55',
+          gestortier: 'junior',
+          token: 'token',
+          rol: {id: 3, nombre: 'gestor', permisos: []}
+        }
       },
       {
         id: 2,
@@ -119,7 +132,20 @@ describe('IncidenciasService', () => {
         estado: 'Open',
         comentarios: 'Test comments',
         canal: 'web',
-        tipo: 'icidencia'
+        tipo: 'incidencia',
+        gestor: {
+          id: '4',
+          email: 'gestormid@gmail.com',
+          username: 'gestormid',
+          telefono: '77777777',
+          password: '123456789',
+          nombres: 'gestormid',
+          apellidos: 'gestormid',
+          direccion: 'Cll 38c No.72j - 55',
+          gestortier: 'mid',
+          token: 'token',
+          rol: {id: 3, nombre: 'gestor', permisos: []}
+        }
       }
     ];
 

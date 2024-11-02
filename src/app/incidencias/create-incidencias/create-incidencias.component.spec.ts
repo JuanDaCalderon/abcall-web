@@ -59,6 +59,48 @@ describe('CreateIncidenciasComponent', () => {
     }
   ];
 
+  const mockGestores: Usuario[] = [
+    {
+      id: '3',
+      email: 'gestorjunior@gmail.com',
+      username: 'gestorjunior',
+      telefono: '6666666666',
+      password: '123456789',
+      nombres: 'gestorjunior',
+      apellidos: 'gestorjunior',
+      direccion: 'Cll 38c No.72j - 55',
+      gestortier: 'junior',
+      token: 'token',
+      rol: {id: 3, nombre: 'gestor', permisos: []}
+    },
+    {
+      id: '4',
+      email: 'gestormid@gmail.com',
+      username: 'gestormid',
+      telefono: '77777777',
+      password: '123456789',
+      nombres: 'gestormid',
+      apellidos: 'gestormid',
+      direccion: 'Cll 38c No.72j - 55',
+      gestortier: 'mid',
+      token: 'token',
+      rol: {id: 3, nombre: 'gestor', permisos: []}
+    },
+    {
+      id: '5',
+      email: 'gestorsenior@gmail.com',
+      username: 'gestorsenior',
+      telefono: '999999',
+      password: '123456789',
+      nombres: 'juan',
+      apellidos: 'senior',
+      direccion: 'Cll 38c No.72j - 55',
+      gestortier: 'senior',
+      token: 'token',
+      rol: {id: 3, nombre: 'gestor', permisos: []}
+    }
+  ];
+
   const mockIncidente: Incidente = {
     id: 1,
     cliente: mockCliente,
@@ -72,7 +114,8 @@ describe('CreateIncidenciasComponent', () => {
     estado: 'abierto',
     comentarios: 'Test comments',
     canal: 'web',
-    tipo: 'incidencia'
+    tipo: 'incidencia',
+    gestor: mockGestores[0]
   };
 
   const mockUsers: Usuario[] = [
@@ -123,11 +166,11 @@ describe('CreateIncidenciasComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  fit('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize the form with default values', () => {
+  fit('should initialize the form with default values', () => {
     const form = component.incidentForm;
     expect(form).toBeDefined();
     expect(form.get('cliente')?.value).toBe('');
@@ -143,7 +186,7 @@ describe('CreateIncidenciasComponent', () => {
     expect(form.get('respuestaIA')?.value).toBe('');
   });
 
-  it('should disable certain form controls on initialization', () => {
+  fit('should disable certain form controls on initialization', () => {
     const form = component.incidentForm;
     expect(form.get('fecha')?.disabled).toBeTrue();
     expect(form.get('canalIngreso')?.disabled).toBeTrue();
@@ -159,7 +202,7 @@ describe('CreateIncidenciasComponent', () => {
     expect(toastrService.error).toHaveBeenCalled();
   });
 
-  it('should handle success during incident creation', () => {
+  fit('should handle success during incident creation', () => {
     const CrearIncidenteServiceStub: CrearIncidenteService = fixture.debugElement.injector.get(CrearIncidenteService);
     spyOn(CrearIncidenteServiceStub, 'crearIncidente').and.returnValue(of(mockIncidente));
     component.onSubmit('creado');

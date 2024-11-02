@@ -31,7 +31,6 @@ export class NewUpdatedIncidencia {
     public prioridad: string,
     public estado: string,
     public comentarios: string,
-    //public fechacreacion: string,
     public canal: string,
     public tipo: string
   ) {}
