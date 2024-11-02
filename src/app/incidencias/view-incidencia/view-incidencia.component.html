@@ -106,13 +106,13 @@
 
       <div class="row">
         <div class="d-grid gap-2 col-4 mx-auto">
-          <button type="button" id="guardar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit('cerrado')">Guardar</button>
+          <button type="button" id="guardar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit('creado')">Guardar</button>
         </div>
         <div class="d-grid gap-2 col-4 mx-auto">
           <button type="button" id="escalar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit('escalado')">Escalar</button>
         </div>
         <div class="d-grid gap-2 col-4 mx-auto">
-          <button type="button" id="cerrar" class="btn btn-lg btn-secondary" [disabled]="!incidentForm.valid" (click)="onSubmit('creado')">Cerrar</button>
+          <button type="button" id="cerrar" class="btn btn-lg btn-secondary" [disabled]="!incidentForm.valid" (click)="onSubmit('cerrado')">Cerrar</button>
         </div>
       </div>
   </form>

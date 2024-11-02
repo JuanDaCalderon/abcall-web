@@ -90,15 +90,12 @@ export class ViewIncidenciaComponent implements OnInit {
       }
     }
 
-    if (accion === 'cerrar') {
+    if (accion === 'cerrado') {
       newEstado = 'cerrado';
     }
 
-    const newLine = '\n------------------------------------\n' + this.generateTime() + '\n';
-
     const updatedIncident: NewUpdatedIncidencia = {
       cliente: this.incidentForm.get('cliente')?.value,
-      //fechacreacion: this.incidentForm.get('fecha')?.value,
       usuario: this.incidentForm.get('nombreUsuario')?.value,
       correo: this.incidentForm.get('correoUsuario')?.value,
       direccion: this.incidentForm.get('direccionUsuario')?.value,
@@ -109,17 +106,20 @@ export class ViewIncidenciaComponent implements OnInit {
       canal: 'web',
       tipo: this.incidentForm.get('tipoIncidencia')?.value,
       comentarios:
-        this.incidentForm.get('comentarios')?.value +
-        newLine +
+        this.generateTime() +
+        '\n' +
         'Comentario: ' +
         this.incidentForm.get('nuevoComentario')?.value +
         '\n' +
         'Gestor asignado: ' +
-        gestorUsername,
+        gestorUsername +
+        '\n' +
+        '------------------------------------\n' +
+        this.incidentForm.get('comentarios')?.value,
       gestor: gestor
     };
 
-    this.showToast('Incidencia actualizada correctamente', updatedIncident.gestor, 'success');
+    this.showToast('Incidencia actualizada correctamente', 'Incidencia ' + this.issueId, 'success');
     this.updateIncident(this.issueId, updatedIncident);
   }
 
