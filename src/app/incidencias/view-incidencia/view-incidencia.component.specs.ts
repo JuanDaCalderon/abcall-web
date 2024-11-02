@@ -150,7 +150,7 @@ describe('ViewIncidenciaComponent', () => {
     toastrService = TestBed.inject(ToastrService) as jasmine.SpyObj<ToastrService>;
   });
 
-  it('should create', () => {
+  fit('should create', () => {
     expect(component).toBeTruthy();
   });
 
