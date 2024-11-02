@@ -118,11 +118,11 @@ export class CreateIncidenciasComponent implements OnInit {
   }
 
   getGestor(accion: string): string[] {
-    const nivel = accion === 'creado' ? 'gestorjunior' : 'gestormid';
+    const nivel = accion === 'creado' ? 'junior' : 'mid';
     const idGestor = ['', ''];
     this.loadUsersByRol('3');
     this.gestores.forEach((gestor) => {
-      if (gestor.username === nivel) {
+      if (gestor.gestortier === nivel) {
         idGestor[0] = gestor.id;
         idGestor[1] = gestor.username;
       }
