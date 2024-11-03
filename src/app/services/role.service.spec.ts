@@ -74,7 +74,7 @@ describe('RoleService', () => {
     });
   });
 
-  describe('associatePermisoToRole', () => {
+  describe('actualizarPermisos', () => {
     it('makes expected calls', () => {
       const httpTestingController = TestBed.inject(HttpTestingController);
       const roleStub: Role = {id: 1, nombre: 'Admin', permisos: []} as Role;
@@ -82,7 +82,7 @@ describe('RoleService', () => {
         {id: 1, nombre: 'crear', ESTADO: true},
         {id: 2, nombre: 'actualizar', ESTADO: true}
       ] as unknown as [Permiso];
-      service.associatePermisoToRole(1, permisoStub).subscribe((res) => {
+      service.actualizarPermisos(1, permisoStub).subscribe((res) => {
         console.log(res);
         expect(res).toEqual(roleStub);
       });
