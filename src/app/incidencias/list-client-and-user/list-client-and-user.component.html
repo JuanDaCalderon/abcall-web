@@ -1,0 +1,71 @@
+<div class="container-fluid top">
+
+  <div class="row align-items-center">
+    <div class="col mb-3">
+      <h2>{{ 'abc.get.issues.my.issues' | translate}}</h2>
+    </div>
+    <div class = "flag col mb-3" *ngIf="language === 'es'">
+      <img src="./assets/img/en.jpg" id="languageButton" class="icon-flag" alt="Icono bandera Reino Unido"
+       (click)="changeLang('en')"
+       (keydown.enter)="changeLang('en')"
+       tabindex="0">
+     </div>
+     <div class = "flag col mb-3" *ngIf="language === 'en'">
+       <img src="./assets/img/es.jpg" class="icon-flag" alt="Icono bandera Colombia"
+       (click)="changeLang('es')"
+       (keydown.enter)="changeLang('es')"
+       tabindex="0">
+     </div>
+    <div class="col-auto mb-3">
+      <button class="btn btn-outline-secondary" (click)="reloadIncidencias()">
+        <i class="fas fa-sync-alt"></i>
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-3 mb-3">
+      <label for="criterio" class="form-label">{{'abc.get.issues.buscar' | translate}}</label>
+      <form class="d-flex" role="search">
+
+        <input class="form-control me-2" id="criterioBusqueda" [(ngModel)]="criterioBusqueda"  name="criterioBusqueda" type="search" placeholder="Usuario" aria-label="Search">
+      </form>
+    </div>
+    <div class="col-3 mb-3">
+      <label for="usuario" class="form-label">{{'abc.get.issues.select.usuario' | translate}}</label>
+      <select class="form-select" aria-label="user select" (change)="getAllIncidenciasByUserId($event)">
+        <option selected></option>
+        <option *ngFor="let user of usuarios" value="{{user.id}}">{{user.nombres}}{{user.apellidos}}</option>
+      </select>
+    </div>
+    <div class="col-3 mb-3">
+      <label for="cliente" class="form-label">{{'abc.get.issues.select.cliente' | translate}}</label>
+      <select  class="form-select" aria-label="user select" (change)="getAllIncidenciasByCliente($event)"  >
+        <option selected></option>
+        <option *ngFor="let userol of usuariosRol" value="{{userol.id}}">{{userol.nombres}}{{userol.apellidos}}</option>
+      </select>
+    </div>
+  </div>
+  <div class="row row-cols-1 row-cols-md-1">
+    <div class="col-auto mb-3" *ngFor="let incidencia of incidencias | filtroIncidencias: criterioBusqueda">
+      <div class="card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-10">
+              <h5 class="card-title">{{ 'abc.get.issues.issue' | translate}} # {{ incidencia.id }}</h5>
+              <p class="card-text">
+                {{ 'abc.get.issues.status' | translate}}: {{ incidencia.estado }}
+                 | {{ 'abc.get.issues.priority' | translate}}: {{ incidencia.prioridad }}
+                 | {{ 'abc.get.issues.customer' | translate}}: {{ incidencia.cliente.nombres }} {{ incidencia.cliente.apellidos }}
+                 | {{ 'abc.get.issues.user' | translate}}: {{incidencia.usuario.nombres}} {{incidencia.usuario.apellidos}}</p>
+            </div>
+            <div class="col-auto"></div>
+            <div class="col align-content-end">
+              <button class="btn btn-purple m-2">{{ 'abc.get.issues.button.view.edit' | translate}}</button>
+              <button class="btn btn-secondary m-2">{{ 'abc.get.issues.button.close' | translate}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

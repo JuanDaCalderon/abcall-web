@@ -18,6 +18,9 @@
     "abc.get.issues.my.issues": "Issues list",
     "abc.get.issues.button.view.edit": "View / Edit",
     "abc.get.issues.button.close": "Close",
+    "abc.get.issues.buscar": "Search for Customer/User",
+    "abc.get.issues.select.usuario": "User",
+    "abc.get.issues.select.cliente": "Customer",
     "hello": "Hello",
     "abc.crear-incidencia.crear.success.message": "Incident created successfully",
     "abc.crear-incidencia.escalar.success.message": "Incident escalated successfully"

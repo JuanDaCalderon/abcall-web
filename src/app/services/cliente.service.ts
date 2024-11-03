@@ -11,7 +11,12 @@ import {Usuario} from '../models/usuario';
 export class ClienteService {
   private url = environment.urlApi + environment.portUsuario + '/';
   constructor(private _http: HttpClient) {}
+
   createCliente(client: UsuarioInterface): Observable<Usuario> {
     return this._http.post<Usuario>(this.url + 'usuario/register', client);
+  }
+
+  getUsers(rol: string): Observable<Usuario[]> {
+    return this._http.get<Usuario[]>(this.url + 'usuarios/' + rol);
   }
 }

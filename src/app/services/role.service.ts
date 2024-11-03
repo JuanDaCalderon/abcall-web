@@ -28,7 +28,7 @@ export class RoleService {
     return this._http.post<Permiso>(this.url + 'permiso', permiso);
   }
 
-  associatePermisoToRole(role_id: number, permisos: [Permiso]): Observable<Role> {
-    return this._http.post<Role>(this.url + `role/${role_id}/permiso`, permisos);
+  actualizarPermisos(role_id: number, permisos: Permiso[]): Observable<Role> {
+    return this._http.post<Role>(this.url + `role/${role_id}/permiso`, {permisos});
   }
 }

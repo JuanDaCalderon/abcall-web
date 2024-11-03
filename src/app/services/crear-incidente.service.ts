@@ -2,14 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from '../../environments/environment';
-import {Incidente} from '../models/incidente';
+import {Incidente} from '../models/incidentes';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CrearIncidenteService {
   /** API url */
-  private apiUrl = environment.urlApi + environment.portCrearIncidentes;
+  private apiUrl = environment.urlApi + environment.portCrearEditarIncidentes;
   constructor(private http: HttpClient) {}
 
   /**
@@ -26,6 +26,8 @@ export class CrearIncidenteService {
    * @param {string} prioridad
    * @param {string} estado
    * @param {string} comentarios
+   * @param {string} canal
+   * @param {string} tipo
    * @returns {Observable<string>}
    */
   public crearIncidente(
@@ -38,7 +40,9 @@ export class CrearIncidenteService {
     descripcion: string,
     prioridad: string,
     estado: string,
-    comentarios: string
+    comentarios: string,
+    canal: string,
+    tipo: string
   ): Observable<Incidente> {
     return this.http.post<Incidente>(`${this.apiUrl}/incidentes`, {
       cliente,
@@ -50,7 +54,9 @@ export class CrearIncidenteService {
       descripcion,
       prioridad,
       estado,
-      comentarios
+      comentarios,
+      canal,
+      tipo
     });
   }
 }

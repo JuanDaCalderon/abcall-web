@@ -7,6 +7,9 @@ import {CrearGestorComponent} from './configuracion/crear-gestor/crear-gestor.co
 import {LoginComponent} from './login/login.component';
 import {CreateIncidenciasComponent} from './incidencias/create-incidencias/create-incidencias.component';
 import {AuthGuard} from './guards/auth.guard';
+import {ListClientAndUserComponent} from './incidencias/list-client-and-user/list-client-and-user.component';
+import {ViewIncidenciaComponent} from './incidencias/view-incidencia/view-incidencia.component';
+import {TableroComponent} from './tableros/tablero/tablero.component';
 
 export const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -19,7 +22,10 @@ export const routes: Routes = [
       {path: 'roles', title: 'roles', component: RolesPermisosComponent},
       {path: 'cliente', title: 'cliente', component: CrearClienteComponent},
       {path: 'gestor', title: 'gestor', component: CrearGestorComponent},
-      {path: 'incidencia', title: 'incidencia', component: CreateIncidenciasComponent}
+      {path: 'incidencia', title: 'incidencia', component: CreateIncidenciasComponent},
+      {path: 'list', title: 'list', component: ListClientAndUserComponent},
+      {path: 'tablero', title: 'tablero', component: TableroComponent},
+      {path: 'view-incidencia/:id', title: 'ver incidencia', component: ViewIncidenciaComponent}
     ]
   },
   {path: '**', component: LoginComponent}
