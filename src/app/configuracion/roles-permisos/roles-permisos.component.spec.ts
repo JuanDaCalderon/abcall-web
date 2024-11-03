@@ -4,6 +4,7 @@ import {RolesPermisosComponent} from './roles-permisos.component';
 import {of, throwError} from 'rxjs';
 import {Role} from '../../models/role';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+// Adjust the path as necessary
 
 describe('RolesPermisosComponent', () => {
   let component: RolesPermisosComponent;
@@ -11,7 +12,7 @@ describe('RolesPermisosComponent', () => {
   let roleServiceStub = jasmine.createSpyObj('RoleService', ['getAllRoles']);
 
   beforeEach(() => {
-    roleServiceStub = jasmine.createSpyObj('RoleService', ['getAllRoles', 'createRole', 'getRole']);
+    roleServiceStub = jasmine.createSpyObj('RoleService', ['getAllRoles', 'createRole', 'getRole', 'actualizarPermisos']);
     TestBed.configureTestingModule({
       imports: [RolesPermisosComponent, HttpClientTestingModule],
       providers: [{provide: RoleService, useFactory: roleServiceStub}]
@@ -151,6 +152,79 @@ describe('RolesPermisosComponent', () => {
       if (toastElement) {
         toastElement.remove();
       }
+    });
+
+    it('should fetch role and update permissions correctly', () => {
+      const roleServiceStub: RoleService = fixture.debugElement.injector.get(RoleService);
+      const mockRoles: Role = {
+        id: 1,
+        nombre: 'Admin',
+        permisos: [
+          {id: 1, nombre: 'permiso1'},
+          {id: 2, nombre: 'permiso2'},
+          {id: 3, nombre: 'permiso3'},
+          {id: 4, nombre: 'permiso4'},
+          {id: 5, nombre: 'permiso5'}
+        ]
+      };
+      spyOn(roleServiceStub, 'getRole').and.returnValue(of(mockRoles));
+
+      component.getRole(1);
+
+      expect(roleServiceStub.getRole).toHaveBeenCalledWith(1);
+      expect(component.role).toEqual(mockRoles);
+      expect(component.permisos).toEqual(mockRoles.permisos);
+      expect(component.isVisible).toBeTrue();
+      expect(component.permiso1).toBeTrue();
+      expect(component.permiso2).toBeTrue();
+      expect(component.permiso3).toBeTrue();
+      expect(component.permiso4).toBeTrue();
+      expect(component.permiso5).toBeTrue();
+    });
+
+    it('should toggle permiso1 correctly', () => {
+      component.permiso1 = false;
+      component.cambiarEstadoPermiso('permiso1');
+      expect(component.permiso1).toBeTrue();
+
+      component.cambiarEstadoPermiso('permiso1');
+      expect(component.permiso1).toBeFalse();
+    });
+
+    it('should toggle permiso2 correctly', () => {
+      component.permiso2 = false;
+      component.cambiarEstadoPermiso('permiso2');
+      expect(component.permiso2).toBeTrue();
+
+      component.cambiarEstadoPermiso('permiso2');
+      expect(component.permiso2).toBeFalse();
+    });
+
+    it('should toggle permiso3 correctly', () => {
+      component.permiso3 = false;
+      component.cambiarEstadoPermiso('permiso3');
+      expect(component.permiso3).toBeTrue();
+
+      component.cambiarEstadoPermiso('permiso3');
+      expect(component.permiso3).toBeFalse();
+    });
+
+    it('should toggle permiso4 correctly', () => {
+      component.permiso4 = false;
+      component.cambiarEstadoPermiso('permiso4');
+      expect(component.permiso4).toBeTrue();
+
+      component.cambiarEstadoPermiso('permiso4');
+      expect(component.permiso4).toBeFalse();
+    });
+
+    it('should toggle permiso5 correctly', () => {
+      component.permiso5 = false;
+      component.cambiarEstadoPermiso('permiso5');
+      expect(component.permiso5).toBeTrue();
+
+      component.cambiarEstadoPermiso('permiso5');
+      expect(component.permiso5).toBeFalse();
     });
   });
 });
