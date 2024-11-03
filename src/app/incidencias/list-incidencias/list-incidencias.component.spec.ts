@@ -35,6 +35,49 @@ describe('ListIncidenciasComponent', () => {
 
     fixture = TestBed.createComponent(ListIncidenciasComponent);
     component = fixture.componentInstance;
+
+    const mockGestores: Usuario[] = [
+      {
+        id: '3',
+        email: 'gestorjunior@gmail.com',
+        username: 'gestorjunior',
+        telefono: '6666666666',
+        password: '123456789',
+        nombres: 'gestorjunior',
+        apellidos: 'gestorjunior',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'junior',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      },
+      {
+        id: '4',
+        email: 'gestormid@gmail.com',
+        username: 'gestormid',
+        telefono: '77777777',
+        password: '123456789',
+        nombres: 'gestormid',
+        apellidos: 'gestormid',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'mid',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      },
+      {
+        id: '5',
+        email: 'gestorsenior@gmail.com',
+        username: 'gestorsenior',
+        telefono: '999999',
+        password: '123456789',
+        nombres: 'juan',
+        apellidos: 'senior',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'senior',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      }
+    ];
+
     const mockIncidencias: Incidente[] = [
       {
         id: 1,
@@ -81,7 +124,8 @@ describe('ListIncidenciasComponent', () => {
         estado: 'Open',
         comentarios: 'Test comments',
         canal: 'web',
-        tipo: 'icidencia'
+        tipo: 'icidencia',
+        gestor: mockGestores[0]
       },
       {
         id: 2,
@@ -128,7 +172,8 @@ describe('ListIncidenciasComponent', () => {
         estado: 'Open',
         comentarios: 'Test comments',
         canal: 'web',
-        tipo: 'icidencia'
+        tipo: 'icidencia',
+        gestor: mockGestores[0]
       }
     ];
     const mockUsers: Usuario[] = [
@@ -187,6 +232,47 @@ describe('ListIncidenciasComponent', () => {
 
   it('should load incidencias on init', () => {
     const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
+    const mockGestores: Usuario[] = [
+      {
+        id: '3',
+        email: 'gestorjunior@gmail.com',
+        username: 'gestorjunior',
+        telefono: '6666666666',
+        password: '123456789',
+        nombres: 'gestorjunior',
+        apellidos: 'gestorjunior',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'junior',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      },
+      {
+        id: '4',
+        email: 'gestormid@gmail.com',
+        username: 'gestormid',
+        telefono: '77777777',
+        password: '123456789',
+        nombres: 'gestormid',
+        apellidos: 'gestormid',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'mid',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      },
+      {
+        id: '5',
+        email: 'gestorsenior@gmail.com',
+        username: 'gestorsenior',
+        telefono: '999999',
+        password: '123456789',
+        nombres: 'juan',
+        apellidos: 'senior',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'senior',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      }
+    ];
     const mockIncidencias: Incidente[] = [
       {
         id: 1,
@@ -233,7 +319,8 @@ describe('ListIncidenciasComponent', () => {
         estado: 'Open',
         comentarios: 'Test comments',
         canal: 'web',
-        tipo: 'icidencia'
+        tipo: 'icidencia',
+        gestor: mockGestores[0]
       },
       {
         id: 2,
@@ -280,7 +367,8 @@ describe('ListIncidenciasComponent', () => {
         estado: 'Open',
         comentarios: 'Test comments',
         canal: 'web',
-        tipo: 'icidencia'
+        tipo: 'icidencia',
+        gestor: mockGestores[0]
       }
     ];
     spyOn(incidenciaServiceStub, 'getIncidencias').and.returnValues(of(mockIncidencias));
@@ -290,6 +378,47 @@ describe('ListIncidenciasComponent', () => {
 
   it('should load incidencias on init by usuario', () => {
     const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
+    const mockGestores: Usuario[] = [
+      {
+        id: '3',
+        email: 'gestorjunior@gmail.com',
+        username: 'gestorjunior',
+        telefono: '6666666666',
+        password: '123456789',
+        nombres: 'gestorjunior',
+        apellidos: 'gestorjunior',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'junior',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      },
+      {
+        id: '4',
+        email: 'gestormid@gmail.com',
+        username: 'gestormid',
+        telefono: '77777777',
+        password: '123456789',
+        nombres: 'gestormid',
+        apellidos: 'gestormid',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'mid',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      },
+      {
+        id: '5',
+        email: 'gestorsenior@gmail.com',
+        username: 'gestorsenior',
+        telefono: '999999',
+        password: '123456789',
+        nombres: 'juan',
+        apellidos: 'senior',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'senior',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      }
+    ];
     const mockIncidencias: Incidente[] = [
       {
         id: 1,
@@ -336,7 +465,8 @@ describe('ListIncidenciasComponent', () => {
         estado: 'Open',
         comentarios: 'Test comments',
         canal: 'web',
-        tipo: 'icidencia'
+        tipo: 'icidencia',
+        gestor: mockGestores[0]
       },
       {
         id: 2,
@@ -383,7 +513,8 @@ describe('ListIncidenciasComponent', () => {
         estado: 'Open',
         comentarios: 'Test comments',
         canal: 'web',
-        tipo: 'icidencia'
+        tipo: 'icidencia',
+        gestor: mockGestores[0]
       }
     ];
     const mockEvent = {target: {value: 'Usuario Test'}} as unknown as Event;
@@ -394,6 +525,47 @@ describe('ListIncidenciasComponent', () => {
 
   it('should load incidencias on init by user vacio', () => {
     const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
+    const mockGestores: Usuario[] = [
+      {
+        id: '3',
+        email: 'gestorjunior@gmail.com',
+        username: 'gestorjunior',
+        telefono: '6666666666',
+        password: '123456789',
+        nombres: 'gestorjunior',
+        apellidos: 'gestorjunior',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'junior',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      },
+      {
+        id: '4',
+        email: 'gestormid@gmail.com',
+        username: 'gestormid',
+        telefono: '77777777',
+        password: '123456789',
+        nombres: 'gestormid',
+        apellidos: 'gestormid',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'mid',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      },
+      {
+        id: '5',
+        email: 'gestorsenior@gmail.com',
+        username: 'gestorsenior',
+        telefono: '999999',
+        password: '123456789',
+        nombres: 'juan',
+        apellidos: 'senior',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'senior',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      }
+    ];
     const mockIncidencias: Incidente[] = [
       {
         id: 1,
@@ -440,7 +612,8 @@ describe('ListIncidenciasComponent', () => {
         estado: 'Open',
         comentarios: 'Test comments',
         canal: 'web',
-        tipo: 'icidencia'
+        tipo: 'icidencia',
+        gestor: mockGestores[0]
       },
       {
         id: 2,
@@ -487,7 +660,8 @@ describe('ListIncidenciasComponent', () => {
         estado: 'Open',
         comentarios: 'Test comments',
         canal: 'web',
-        tipo: 'icidencia'
+        tipo: 'icidencia',
+        gestor: mockGestores[0]
       }
     ];
     const mockEvent = {target: {value: ''}} as unknown as Event;
@@ -498,6 +672,47 @@ describe('ListIncidenciasComponent', () => {
 
   it('should load incidencias on init by cliente', () => {
     const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
+    const mockGestores: Usuario[] = [
+      {
+        id: '3',
+        email: 'gestorjunior@gmail.com',
+        username: 'gestorjunior',
+        telefono: '6666666666',
+        password: '123456789',
+        nombres: 'gestorjunior',
+        apellidos: 'gestorjunior',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'junior',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      },
+      {
+        id: '4',
+        email: 'gestormid@gmail.com',
+        username: 'gestormid',
+        telefono: '77777777',
+        password: '123456789',
+        nombres: 'gestormid',
+        apellidos: 'gestormid',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'mid',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      },
+      {
+        id: '5',
+        email: 'gestorsenior@gmail.com',
+        username: 'gestorsenior',
+        telefono: '999999',
+        password: '123456789',
+        nombres: 'juan',
+        apellidos: 'senior',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'senior',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      }
+    ];
     const mockIncidencias: Incidente[] = [
       {
         id: 1,
@@ -544,7 +759,8 @@ describe('ListIncidenciasComponent', () => {
         estado: 'Open',
         comentarios: 'Test comments',
         canal: 'web',
-        tipo: 'icidencia'
+        tipo: 'icidencia',
+        gestor: mockGestores[0]
       },
       {
         id: 2,
@@ -591,7 +807,8 @@ describe('ListIncidenciasComponent', () => {
         estado: 'Open',
         comentarios: 'Test comments',
         canal: 'web',
-        tipo: 'icidencia'
+        tipo: 'icidencia',
+        gestor: mockGestores[0]
       }
     ];
     const mockEvent = {target: {value: 'Usuario Test'}} as unknown as Event;
@@ -602,6 +819,47 @@ describe('ListIncidenciasComponent', () => {
 
   it('should load incidencias on init by cliente vacio', () => {
     const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
+    const mockGestores: Usuario[] = [
+      {
+        id: '3',
+        email: 'gestorjunior@gmail.com',
+        username: 'gestorjunior',
+        telefono: '6666666666',
+        password: '123456789',
+        nombres: 'gestorjunior',
+        apellidos: 'gestorjunior',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'junior',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      },
+      {
+        id: '4',
+        email: 'gestormid@gmail.com',
+        username: 'gestormid',
+        telefono: '77777777',
+        password: '123456789',
+        nombres: 'gestormid',
+        apellidos: 'gestormid',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'mid',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      },
+      {
+        id: '5',
+        email: 'gestorsenior@gmail.com',
+        username: 'gestorsenior',
+        telefono: '999999',
+        password: '123456789',
+        nombres: 'juan',
+        apellidos: 'senior',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'senior',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      }
+    ];
     const mockIncidencias: Incidente[] = [
       {
         id: 1,
@@ -648,7 +906,8 @@ describe('ListIncidenciasComponent', () => {
         estado: 'Open',
         comentarios: 'Test comments',
         canal: 'web',
-        tipo: 'icidencia'
+        tipo: 'icidencia',
+        gestor: mockGestores[0]
       },
       {
         id: 2,
@@ -695,7 +954,8 @@ describe('ListIncidenciasComponent', () => {
         estado: 'Open',
         comentarios: 'Test comments',
         canal: 'web',
-        tipo: 'icidencia'
+        tipo: 'icidencia',
+        gestor: mockGestores[0]
       }
     ];
     const mockEvent = {target: {value: ''}} as unknown as Event;
@@ -706,6 +966,47 @@ describe('ListIncidenciasComponent', () => {
 
   it('should reload incidencias', () => {
     const incidenciaServiceStub: IncidenciasService = fixture.debugElement.injector.get(IncidenciasService);
+    const mockGestores: Usuario[] = [
+      {
+        id: '3',
+        email: 'gestorjunior@gmail.com',
+        username: 'gestorjunior',
+        telefono: '6666666666',
+        password: '123456789',
+        nombres: 'gestorjunior',
+        apellidos: 'gestorjunior',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'junior',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      },
+      {
+        id: '4',
+        email: 'gestormid@gmail.com',
+        username: 'gestormid',
+        telefono: '77777777',
+        password: '123456789',
+        nombres: 'gestormid',
+        apellidos: 'gestormid',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'mid',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      },
+      {
+        id: '5',
+        email: 'gestorsenior@gmail.com',
+        username: 'gestorsenior',
+        telefono: '999999',
+        password: '123456789',
+        nombres: 'juan',
+        apellidos: 'senior',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'senior',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      }
+    ];
     const mockIncidencias: Incidente[] = [
       {
         id: 1,
@@ -752,7 +1053,8 @@ describe('ListIncidenciasComponent', () => {
         estado: 'Open',
         comentarios: 'Test comments',
         canal: 'web',
-        tipo: 'icidencia'
+        tipo: 'icidencia',
+        gestor: mockGestores[0]
       }
     ];
     spyOn(incidenciaServiceStub, 'getIncidencias').and.returnValues(of(mockIncidencias));

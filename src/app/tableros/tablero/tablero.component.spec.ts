@@ -30,6 +30,48 @@ describe('TableroComponent', () => {
     rol: undefined
   };
 
+  const mockGestores: Usuario[] = [
+    {
+      id: '3',
+      email: 'gestorjunior@gmail.com',
+      username: 'gestorjunior',
+      telefono: '6666666666',
+      password: '123456789',
+      nombres: 'gestorjunior',
+      apellidos: 'gestorjunior',
+      direccion: 'Cll 38c No.72j - 55',
+      gestortier: 'junior',
+      token: 'token',
+      rol: {id: 3, nombre: 'gestor', permisos: []}
+    },
+    {
+      id: '4',
+      email: 'gestormid@gmail.com',
+      username: 'gestormid',
+      telefono: '77777777',
+      password: '123456789',
+      nombres: 'gestormid',
+      apellidos: 'gestormid',
+      direccion: 'Cll 38c No.72j - 55',
+      gestortier: 'mid',
+      token: 'token',
+      rol: {id: 3, nombre: 'gestor', permisos: []}
+    },
+    {
+      id: '5',
+      email: 'gestorsenior@gmail.com',
+      username: 'gestorsenior',
+      telefono: '999999',
+      password: '123456789',
+      nombres: 'juan',
+      apellidos: 'senior',
+      direccion: 'Cll 38c No.72j - 55',
+      gestortier: 'senior',
+      token: 'token',
+      rol: {id: 3, nombre: 'gestor', permisos: []}
+    }
+  ];
+
   const mockIncidentes: Incidente[] = [
     {
       canal: 'web',
@@ -44,7 +86,8 @@ describe('TableroComponent', () => {
       direccion: '',
       id: 0,
       telefono: '',
-      usuario: undefined
+      usuario: undefined,
+      gestor: mockGestores[0]
     },
     {
       canal: 'email',
@@ -59,7 +102,8 @@ describe('TableroComponent', () => {
       direccion: '',
       id: 0,
       telefono: '',
-      usuario: undefined
+      usuario: undefined,
+      gestor: mockGestores[1]
     }
   ];
 
@@ -109,7 +153,8 @@ describe('TableroComponent', () => {
         descripcion: '',
         direccion: '',
         telefono: '',
-        usuario: undefined
+        usuario: undefined,
+        gestor: mockGestores[0]
       },
       {
         id: 2,
@@ -140,7 +185,8 @@ describe('TableroComponent', () => {
         descripcion: '',
         direccion: '',
         telefono: '',
-        usuario: undefined
+        usuario: undefined,
+        gestor: mockGestores[1]
       }
     ];
     incidenciasServiceSpy.getIncidencias.and.returnValue(of(mockIncidencias));

@@ -9,7 +9,7 @@ import {Incidente} from '../models/incidentes';
 })
 export class CrearIncidenteService {
   /** API url */
-  private apiUrl = environment.urlApi + environment.portCrearIncidentes;
+  private apiUrl = environment.urlApi + environment.portCrearEditarIncidentes;
   constructor(private http: HttpClient) {}
 
   /**

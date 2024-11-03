@@ -74,7 +74,20 @@ describe('Service: CrearIncidente', () => {
       estado: 'Open',
       comentarios: 'Test comments',
       canal: 'web',
-      tipo: 'icidencia'
+      tipo: 'incidencia',
+      gestor: {
+        id: '3',
+        email: 'gestorjunior@gmail.com',
+        username: 'gestorjunior',
+        telefono: '6666666666',
+        password: '123456789',
+        nombres: 'gestorjunior',
+        apellidos: 'gestorjunior',
+        direccion: 'Cll 38c No.72j - 55',
+        gestortier: 'junior',
+        token: 'token',
+        rol: {id: 3, nombre: 'gestor', permisos: []}
+      }
     };
 
     subscriptions.push(
@@ -98,7 +111,7 @@ describe('Service: CrearIncidente', () => {
         })
     );
 
-    const req = httpMock.expectOne(`${environment.urlApi + environment.portCrearIncidentes}/incidentes`);
+    const req = httpMock.expectOne(`${environment.urlApi + environment.portCrearEditarIncidentes}/incidentes`);
     expect(req.request.method).toBe('POST');
     req.flush(mockIncidente);
   });

@@ -15,6 +15,25 @@ export class Incidente {
     public telefono: string,
     public usuario: Usuario,
     public canal: string,
+    public tipo: string,
+    public gestor: Usuario
+  ) {}
+}
+
+/* istanbul ignore next */
+export class NewUpdatedIncidencia {
+  constructor(
+    public cliente: string,
+    public usuario: string,
+    public gestor: string,
+    public correo: string,
+    public direccion: string,
+    public telefono: string,
+    public descripcion: string,
+    public prioridad: string,
+    public estado: string,
+    public comentarios: string,
+    public canal: string,
     public tipo: string
   ) {}
 }
