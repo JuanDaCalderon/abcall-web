@@ -10,6 +10,7 @@ import {Incidente} from '../../models/incidentes';
 import {RouterTestingModule} from '@angular/router/testing';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
 import {CrearClienteComponent} from '../../configuracion/crear-cliente/crear-cliente.component';
+import {IaGenerativaService} from '../../services/ia-generativa.service';
 
 describe('CreateIncidenciasComponent', () => {
   let component: CreateIncidenciasComponent;
@@ -17,6 +18,7 @@ describe('CreateIncidenciasComponent', () => {
   let incidenciasService: jasmine.SpyObj<IncidenciasService>;
   let clienteService: jasmine.SpyObj<ClienteService>;
   let toastrService: jasmine.SpyObj<ToastrService>;
+  //let iagenerativaServiceSpy: jasmine.SpyObj<IaGenerativaService>;
 
   const mockCliente: Usuario = {
     id: '1',
@@ -152,6 +154,7 @@ describe('CreateIncidenciasComponent', () => {
   beforeEach(async () => {
     const incidenciasServiceSpy = jasmine.createSpyObj('IncidenciasService', ['createIncidencia']);
     const clienteServiceSpy = jasmine.createSpyObj('ClienteService', ['getUsers']);
+    const iagenerativaspy = jasmine.createSpyObj('IaGenerativaService', ['generarRespuesta']);
     const toastrServiceSpy = jasmine.createSpyObj('ToastrService', ['success', 'error']);
 
     await TestBed.configureTestingModule({
@@ -160,12 +163,14 @@ describe('CreateIncidenciasComponent', () => {
       providers: [
         {provide: IncidenciasService, useValue: incidenciasServiceSpy},
         {provide: ClienteService, useValue: clienteServiceSpy},
+        {provide: IaGenerativaService, useValue: iagenerativaspy},
         {provide: ToastrService, useValue: toastrServiceSpy}
       ]
     }).compileComponents();
 
     incidenciasService = TestBed.inject(IncidenciasService) as jasmine.SpyObj<IncidenciasService>;
     clienteService = TestBed.inject(ClienteService) as jasmine.SpyObj<ClienteService>;
+    //iagenerativaServiceSpy = TestBed.inject(IaGenerativaService) as jasmine.SpyObj<IaGenerativaService>;
     toastrService = TestBed.inject(ToastrService) as jasmine.SpyObj<ToastrService>;
   });
 
@@ -203,11 +208,21 @@ describe('CreateIncidenciasComponent', () => {
   it('should set respuestaIA when descripcionProblema changes', () => {
     component.ngOnInit();
     component.incidentForm.get('descripcionProblema')?.setValue('Test description');
+    const iagenerativaServiceStub: IaGenerativaService = fixture.debugElement.injector.get(IaGenerativaService);
+    const testValue = 'Descripción del problema';
+    const mockResponse = {respuesta: 'Respuesta sugerida por IA'};
+    spyOn(iagenerativaServiceStub, 'generarRespuesta').and.returnValues(of(mockResponse));
+    component.incidentForm.get('descripcionProblema')?.setValue(testValue);
     component.onDescripcionProblemaChange();
-    expect(component.incidentForm.get('respuestaIA')?.value).toBe('Respuesta generdada por IA');
+    expect(iagenerativaServiceStub.generarRespuesta).toHaveBeenCalledWith(testValue);
+    expect(component.incidentForm.get('respuestaIA')?.value).toBe('Respuesta sugerida por IA');
   });
 
   it('should enable and clear respuestaIA when descripcionProblema is empty', () => {
+    component.incidentForm.get('descripcionProblema')?.setValue('');
+    const iagenerativaServiceStub: IaGenerativaService = fixture.debugElement.injector.get(IaGenerativaService);
+    const mockResponse = {respuesta: 'Respuesta sugerida por IA'};
+    spyOn(iagenerativaServiceStub, 'generarRespuesta').and.returnValues(of(mockResponse));
     component.incidentForm.get('descripcionProblema')?.setValue('');
     component.onDescripcionProblemaChange();
     expect(component.incidentForm.get('respuestaIA')?.value).toBe('');
