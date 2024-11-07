@@ -1,5 +1,5 @@
 <div class="container top align-content-center">
-  <h1 class="text-md-center">Incidencia # {{issueId}}</h1>
+  <h1 class="text-md-center">Incidencia # {{issueId}} </h1>
   <form [formGroup]="incidentForm" (ngSubmit)="onSubmit('creado')" class="row g-2">
       <div class="col-md-6 mb-3">
         <label for="cliente" class="form-label">Cliente</label>
@@ -107,10 +107,10 @@
         <div class="d-grid gap-2 col-4 mx-auto">
           <button type="button" id="guardar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit('creado')">Guardar</button>
         </div>
-        <div class="d-grid gap-2 col-4 mx-auto">
+        <div class="d-grid gap-2 col-4 mx-auto" *ngIf="showEscaladoButton">
           <button type="button" id="escalar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit('escalado')">Escalar</button>
         </div>
-        <div class="d-grid gap-2 col-4 mx-auto">
+        <div class="d-grid gap-2 col-4 mx-auto" *ngIf="showEscaladoButton">
           <button type="button" id="cerrar" class="btn btn-lg btn-secondary" [disabled]="!incidentForm.valid" (click)="onSubmit('cerrado')">Cerrar</button>
         </div>
       </div>

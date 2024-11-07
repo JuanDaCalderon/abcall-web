@@ -25,6 +25,9 @@ export class ViewIncidenciaComponent implements OnInit {
   currentGestorObj: Usuario | undefined;
   incidentForm!: FormGroup;
   issueId = '';
+  storedUsuario = JSON.parse(localStorage.getItem('usuario')!).rol.nombre;
+  showEscaladoButton = true;
+  showCerrarButton = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -56,7 +59,6 @@ export class ViewIncidenciaComponent implements OnInit {
       comentarios: [''],
       nuevoComentario: ['']
     });
-
     this.incidentForm.get('fecha')?.disable();
     this.incidentForm.get('canalIngreso')?.disable();
     this.incidentForm.get('respuestaIA')?.disable();
@@ -66,9 +68,14 @@ export class ViewIncidenciaComponent implements OnInit {
       this.issueId = id;
       this.loadIncident(id);
     });
-    this.incidentForm.get('canalIngreso')?.disable();
-    this.incidentForm.get('fecha')?.disable();
-    this.incidentForm.get('comentarios')?.disable();
+
+    if (this.storedUsuario === 'usuario') {
+      this.setFildsForUsuario();
+    } else {
+      this.incidentForm.get('canalIngreso')?.disable();
+      this.incidentForm.get('fecha')?.disable();
+      this.incidentForm.get('comentarios')?.disable();
+    }
   }
 
   onSubmit(accion: string): void {
@@ -226,7 +233,6 @@ export class ViewIncidenciaComponent implements OnInit {
 
   getCurrentGestorLevel(idCurrectGestor: string): string {
     let gestorLevel = '';
-    //this.loadUsersByRol('3');
     this.gestores.forEach((gestor) => {
       if (gestor.id === idCurrectGestor) {
         gestorLevel = gestor.gestortier;
@@ -234,5 +240,21 @@ export class ViewIncidenciaComponent implements OnInit {
     });
     console.log(gestorLevel);
     return gestorLevel;
+  }
+
+  setFildsForUsuario(): void {
+    this.incidentForm.get('cliente')?.disable();
+    this.incidentForm.get('nombreUsuario')?.disable();
+    this.incidentForm.get('correoUsuario')?.disable();
+    this.incidentForm.get('telefonoUsuario')?.disable();
+    this.incidentForm.get('direccionUsuario')?.disable();
+    this.incidentForm.get('descripcionProblema')?.disable();
+    this.incidentForm.get('tipoIncidencia')?.disable();
+    this.incidentForm.get('prioridad')?.disable();
+    this.incidentForm.get('estado')?.disable();
+    this.incidentForm.get('respuestaIA')?.disable();
+    this.incidentForm.get('comentarios')?.disable();
+    this.showEscaladoButton = false;
+    this.showCerrarButton = false;
   }
 }
