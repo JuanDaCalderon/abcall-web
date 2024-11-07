@@ -29,6 +29,9 @@
       <div class="col-md-6 mb-3">
         <label for="correoUsuario" class="form-label">Correo usuario</label>
         <input class="form-control" type="email" id="correoUsuario" formControlName="correoUsuario" placeholder="Correo usuario">
+        <div class="text-danger" *ngIf="incidentForm.get('correoUsuario')!.touched && incidentForm.get('correoUsuario')!.hasError('required')">
+          Correo electronico requerido
+        </div>
         <div class="text-danger" id="mailFormatError" *ngIf="incidentForm.get('correoUsuario')!.touched && incidentForm.get('correoUsuario')!.hasError('email')">
           Formato de correo inválido
         </div>

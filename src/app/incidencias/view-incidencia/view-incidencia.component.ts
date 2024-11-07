@@ -45,7 +45,7 @@ export class ViewIncidenciaComponent implements OnInit {
       fecha: [''],
       nombreUsuario: ['', Validators.required],
       telefonoUsuario: [''],
-      correoUsuario: ['', Validators.email],
+      correoUsuario: ['', [Validators.required, Validators.email]],
       direccionUsuario: [''],
       descripcionProblema: ['', Validators.required],
       tipoIncidencia: [''],
@@ -172,7 +172,6 @@ export class ViewIncidenciaComponent implements OnInit {
   }
 
   async updateIncident(id: string, updatedIncidencia: NewUpdatedIncidencia): Promise<void> {
-    console.log('Incidencia actualizada:', updatedIncidencia);
     this.incidenciasService.updateIncidencia(id, updatedIncidencia).subscribe((response) => {
       this.showToast('Incidencia actualizada correctamente', 'Actualización exitosa' + response, 'success');
       this.router.navigate(['home']);
