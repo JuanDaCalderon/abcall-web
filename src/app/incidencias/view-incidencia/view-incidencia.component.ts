@@ -39,7 +39,7 @@ export class ViewIncidenciaComponent implements OnInit {
     private clienteService: ClienteService,
     private authService: AuthService,
     private route: ActivatedRoute,
-    private router: Router
+    public router: Router
   ) {}
 
   ngOnInit() {
@@ -72,8 +72,9 @@ export class ViewIncidenciaComponent implements OnInit {
     this.route.params.subscribe((params) => {
       const id = params['id'];
       this.issueId = id;
-      this.loadIncident(id);
     });
+
+    this.loadIncident(this.issueId);
 
     if (this.usuario.rol.nombre === 'usuario') {
       this.setFildsForUsuario();
@@ -156,24 +157,9 @@ export class ViewIncidenciaComponent implements OnInit {
   }
 
   async loadIncident(id: string): Promise<void> {
+    console.log('Cargando incidencia con id:', id);
     this.incidenciasService.getIncidenciaById(id).subscribe((data: Incidente) => {
-      this.incidentForm.patchValue({
-        cliente: data.cliente.id,
-        fecha: data.fechacreacion,
-        nombreUsuario: data.usuario.id,
-        correoUsuario: data.correo,
-        telefonoUsuario: data.telefono,
-        direccionUsuario: data.direccion,
-        descripcionProblema: data.descripcion,
-        tipoIncidencia: data.tipo,
-        canalIngreso: data.canal,
-        prioridad: data.prioridad,
-        estado: data.estado,
-        comentarios: data.comentarios
-        //respuestaIA: 'Respuesta IA'
-      });
-      this.currentGestorId = data.gestor.id;
-      this.currentGestorObj = data.gestor;
+      this.loadInfoInForm(data);
     });
   }
 
@@ -263,5 +249,28 @@ export class ViewIncidenciaComponent implements OnInit {
     this.incidentForm.get('comentarios')?.disable();
     this.showEscaladoButton = false;
     this.showCerrarButton = false;
+  }
+
+  loadInfoInForm(data: Incidente): void {
+    this.incidentForm.patchValue({
+      cliente: data.cliente.id,
+      fecha: data.fechacreacion,
+      nombreUsuario: data.usuario.id,
+      correoUsuario: data.correo,
+      telefonoUsuario: data.telefono,
+      direccionUsuario: data.direccion,
+      descripcionProblema: data.descripcion,
+      tipoIncidencia: data.tipo,
+      canalIngreso: data.canal,
+      prioridad: data.prioridad,
+      estado: data.estado,
+      comentarios: data.comentarios
+    });
+    this.setGestorInfo(data);
+  }
+
+  setGestorInfo(data: Incidente): void {
+    this.currentGestorId = data.gestor.id;
+    this.currentGestorObj = data.gestor;
   }
 }

@@ -7,16 +7,21 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {Usuario} from '../../models/usuario';
 import {of} from 'rxjs';
 import {ClienteService} from '../../services/cliente.service';
+import {IncidenciasService} from '../../services/incidencias.service';
+import {Incidente} from '../../models/incidentes';
+import {ActivatedRoute} from '@angular/router';
+import {ReactiveFormsModule} from '@angular/forms';
 
 describe('ViewIncidenciaComponent', () => {
   let component: ViewIncidenciaComponent;
   let fixture: ComponentFixture<ViewIncidenciaComponent>;
   let authServiceSpy: jasmine.SpyObj<AuthService>;
-  let clienteService: jasmine.SpyObj<ClienteService>;
-  let toastrService: jasmine.SpyObj<ToastrService>;
+  let clienteServiceSpy: jasmine.SpyObj<ClienteService>;
+  let toastrServiceSpy: jasmine.SpyObj<ToastrService>;
+  let incidenciasServiceSpy: jasmine.SpyObj<IncidenciasService>;
 
   //Mocks
-  /*const mockClientes: Usuario[] = [
+  const mockClientes: Usuario[] = [
     {
       id: '1',
       nombres: 'User 1',
@@ -43,7 +48,7 @@ describe('ViewIncidenciaComponent', () => {
       token: 'token',
       rol: {id: 5, nombre: 'cliente', permisos: []}
     }
-  ];*/
+  ];
 
   const mockGestores: Usuario[] = [
     {
@@ -142,7 +147,7 @@ describe('ViewIncidenciaComponent', () => {
     }
   ];
 
-  /*const mockIncidente: Incidente = {
+  const mockIncidente: Incidente = {
     id: 1,
     cliente: mockClientes[0],
     fechacreacion: '2023-10-01',
@@ -157,22 +162,30 @@ describe('ViewIncidenciaComponent', () => {
     canal: 'web',
     tipo: 'incidencia',
     gestor: mockGestores[0]
-  };*/
+  };
 
   beforeEach(async () => {
     // creacion spies
     authServiceSpy = jasmine.createSpyObj('AuthService', ['getUsuario']);
-    clienteService = jasmine.createSpyObj('ClienteService', ['getUsers']);
-    toastrService = jasmine.createSpyObj('ToastrService', ['success', 'error']);
+    clienteServiceSpy = jasmine.createSpyObj('ClienteService', ['getUsers']);
+    toastrServiceSpy = jasmine.createSpyObj('ToastrService', ['success', 'error']);
+    incidenciasServiceSpy = jasmine.createSpyObj('IncidenciasService', ['getIncidenciaById', 'updateIncidencia']);
 
     //declaration, imports and providers
     await TestBed.configureTestingModule({
       declarations: [],
-      imports: [ViewIncidenciaComponent, RouterTestingModule, HttpClientTestingModule, ToastrModule.forRoot()],
+      imports: [ViewIncidenciaComponent, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, ToastrModule.forRoot()],
       providers: [
         {provide: AuthService, useValue: authServiceSpy},
-        {provide: ClienteService, useValue: clienteService},
-        {provide: ToastrService, useValue: toastrService},
+        {provide: ClienteService, useValue: clienteServiceSpy},
+        {provide: ToastrService, useValue: toastrServiceSpy},
+        {provide: IncidenciasService, useValue: incidenciasServiceSpy},
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({id: '1'})
+          }
+        },
         ViewIncidenciaComponent
       ]
     }).compileComponents();
@@ -180,6 +193,7 @@ describe('ViewIncidenciaComponent', () => {
     fixture = TestBed.createComponent(ViewIncidenciaComponent);
     component = fixture.componentInstance;
 
+    incidenciasServiceSpy.getIncidenciaById.and.returnValue(of(mockIncidente));
     localStorage.setItem('usuario', JSON.stringify({rol: {nombre: 'usuario'}}));
     const storedUsuario = localStorage.getItem('usuario');
     component.usuario = storedUsuario ? JSON.parse(storedUsuario) : null;
@@ -187,25 +201,25 @@ describe('ViewIncidenciaComponent', () => {
     fixture.detectChanges();
   });
 
-  fit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 
-  fit('should initialize the form on ngOnInit', () => {
+  it('should initialize the form on ngOnInit', () => {
     component.ngOnInit();
     expect(component.usuario.rol.nombre).toEqual('usuario');
     expect(component.incidentForm).toBeDefined();
     expect(component.incidentForm.get('cliente')).toBeTruthy();
   });
 
-  fit('should set respuestaIA when descripcionProblema changes', () => {
+  it('should set respuestaIA when descripcionProblema changes', () => {
     component.ngOnInit();
     component.incidentForm.get('descripcionProblema')?.setValue('Test description');
     component.onDescripcionProblemaChange();
     expect(component.incidentForm.get('respuestaIA')?.value).toBe('Respuesta generdada por IA');
   });
 
-  fit('should enable and clear respuestaIA when descripcionProblema is empty', () => {
+  it('should enable and clear respuestaIA when descripcionProblema is empty', () => {
     component.ngOnInit();
     component.incidentForm.get('descripcionProblema')?.setValue('');
     component.onDescripcionProblemaChange();
@@ -213,60 +227,60 @@ describe('ViewIncidenciaComponent', () => {
     expect(component.incidentForm.get('respuestaIA')?.disabled).toBeTrue();
   });
 
-  fit('should load users by role', () => {
-    clienteService.getUsers.and.returnValue(of(mockUsuarios));
+  it('should load users by role', () => {
+    clienteServiceSpy.getUsers.and.returnValue(of(mockUsuarios));
 
     component.loadUsersByRol('3');
-    expect(clienteService.getUsers).toHaveBeenCalledWith('3');
+    expect(clienteServiceSpy.getUsers).toHaveBeenCalledWith('3');
     expect(component.gestores).toEqual(mockUsuarios);
 
     component.loadUsersByRol('4');
-    expect(clienteService.getUsers).toHaveBeenCalledWith('4');
+    expect(clienteServiceSpy.getUsers).toHaveBeenCalledWith('4');
     expect(component.clientes).toEqual(mockUsuarios);
 
     component.loadUsersByRol('5');
-    expect(clienteService.getUsers).toHaveBeenCalledWith('5');
+    expect(clienteServiceSpy.getUsers).toHaveBeenCalledWith('5');
     expect(component.usuarios).toEqual(mockUsuarios);
   });
 
-  fit('should generate time', () => {
+  it('should generate time', () => {
     const time = component.generateTime();
     expect(time).toBeDefined();
   });
 
-  fit('should show success toast', () => {
+  it('should show success toast', () => {
     component.showToast('message1', 'message2', 'success');
-    expect(toastrService.success).toHaveBeenCalledWith('message1', 'message2', {
+    expect(toastrServiceSpy.success).toHaveBeenCalledWith('message1', 'message2', {
       closeButton: true,
       timeOut: 3000,
       positionClass: 'toast-bottom-center'
     });
   });
 
-  fit('should show error toast', () => {
+  it('should show error toast', () => {
     component.showToast('message1', 'message2', 'error');
-    expect(toastrService.error).toHaveBeenCalledWith('message1', 'message2', {
+    expect(toastrServiceSpy.error).toHaveBeenCalledWith('message1', 'message2', {
       closeButton: true,
       timeOut: 3000,
       positionClass: 'toast-bottom-center'
     });
   });
 
-  fit('should return new gestor when current gestor is junior', () => {
+  it('should return new gestor when current gestor is junior', () => {
     component.gestores = mockGestores;
     const newGestor = component.getNewGestor('3'); // '3' is the id of the junior gestor
     expect(newGestor[0]).toBe('4'); // '4' is the id of the mid gestor
     expect(newGestor[1]).toBe('gestormid');
   });
 
-  fit('should return new gestor when current gestor is mid', () => {
+  it('should return new gestor when current gestor is mid', () => {
     component.gestores = mockGestores;
     const newGestor = component.getNewGestor('4'); // '4' is the id of the mid gestor
     expect(newGestor[0]).toBe('5'); // '5' is the id of the senior gestor
     expect(newGestor[1]).toBe('gestorsenior');
   });
 
-  fit('should return new gestor when current gestor is senior', () => {
+  it('should return new gestor when current gestor is senior', () => {
     component.gestores = mockGestores;
     const newGestor = component.getNewGestor('5'); // '4' is the id of the mid gestor
 
@@ -274,7 +288,7 @@ describe('ViewIncidenciaComponent', () => {
     expect(newGestor[1]).toBe('gestorlead');
   });
 
-  fit('should return new gestor when current gestor is led', () => {
+  it('should return new gestor when current gestor is led', () => {
     component.gestores = mockGestores;
     const newGestor = component.getNewGestor('6'); // '6' is the id of the mid gestor
 
@@ -282,7 +296,7 @@ describe('ViewIncidenciaComponent', () => {
     expect(newGestor[1]).toBe('gestormanager');
   });
 
-  fit('should return "No hay más niveles" when current gestor is manager', () => {
+  it('should return "No hay más niveles" when current gestor is manager', () => {
     const mockManager: Usuario = {
       id: '6',
       email: 'gestormanager@gmail.com',
@@ -300,5 +314,156 @@ describe('ViewIncidenciaComponent', () => {
     const newGestor = component.getNewGestor('6'); // '6' is the id of the manager gestor
     expect(newGestor[0]).toBe('No hay más niveles');
     expect(newGestor[1]).toBe('No hay más niveles');
+  });
+
+  it('should load incident info in form', () => {
+    component.loadInfoInForm(mockIncidente);
+    expect(component.incidentForm.get('cliente')?.value).toBe(mockIncidente.cliente.id);
+    expect(component.incidentForm.get('fecha')?.value).toBe(mockIncidente.fechacreacion);
+    expect(component.incidentForm.get('nombreUsuario')?.value).toBe(mockIncidente.usuario.id);
+    expect(component.incidentForm.get('correoUsuario')?.value).toBe(mockIncidente.correo);
+    expect(component.incidentForm.get('telefonoUsuario')?.value).toBe(mockIncidente.telefono);
+    expect(component.incidentForm.get('direccionUsuario')?.value).toBe(mockIncidente.direccion);
+    expect(component.incidentForm.get('descripcionProblema')?.value).toBe(mockIncidente.descripcion);
+    expect(component.incidentForm.get('tipoIncidencia')?.value).toBe(mockIncidente.tipo);
+    expect(component.incidentForm.get('canalIngreso')?.value).toBe(mockIncidente.canal);
+    expect(component.incidentForm.get('prioridad')?.value).toBe(mockIncidente.prioridad);
+    expect(component.incidentForm.get('estado')?.value).toBe(mockIncidente.estado);
+    expect(component.incidentForm.get('comentarios')?.value).toBe(mockIncidente.comentarios);
+  });
+
+  it('should call updateIncident with correct data when onSubmit is called with "cerrado"', () => {
+    component.ngOnInit();
+    component.incidentForm.patchValue({
+      cliente: '1',
+      nombreUsuario: 'User 1',
+      correoUsuario: 'user1@example.com',
+      direccionUsuario: 'Address 1',
+      telefonoUsuario: '1234567890',
+      descripcionProblema: 'Test description',
+      prioridad: 'alta',
+      estado: 'abierto',
+      tipoIncidencia: 'tipo1',
+      nuevoComentario: 'Nuevo comentario'
+    });
+
+    component.currentGestorId = '3';
+    component.currentGestorObj = mockGestores[0];
+
+    const expectedUpdatedIncident = {
+      cliente: '1',
+      usuario: 'User 1',
+      correo: 'user1@example.com',
+      direccion: 'Address 1',
+      telefono: '1234567890',
+      descripcion: 'Test description',
+      prioridad: 'alta',
+      estado: 'cerrado',
+      canal: 'web',
+      tipo: 'tipo1',
+      comentarios: jasmine.any(String),
+      gestor: '3'
+    };
+
+    spyOn(component, 'generateTime').and.returnValue('2023-10-01 12:00:00');
+    spyOn(component, 'updateIncident');
+
+    component.onSubmit('cerrado');
+
+    expect(component.updateIncident).toHaveBeenCalledWith('1', expectedUpdatedIncident);
+  });
+
+  it('should call updateIncident with correct data when onSubmit is called with "escalado"', () => {
+    component.ngOnInit();
+    component.incidentForm.patchValue({
+      cliente: '1',
+      nombreUsuario: 'User 1',
+      correoUsuario: 'user1@example.com',
+      direccionUsuario: 'Address 1',
+      telefonoUsuario: '1234567890',
+      descripcionProblema: 'Test description',
+      prioridad: 'alta',
+      estado: 'abierto',
+      tipoIncidencia: 'tipo1',
+      nuevoComentario: 'Nuevo comentario'
+    });
+
+    component.currentGestorId = '3';
+    component.currentGestorObj = mockGestores[0];
+
+    const expectedUpdatedIncident = {
+      cliente: '1',
+      usuario: 'User 1',
+      correo: 'user1@example.com',
+      direccion: 'Address 1',
+      telefono: '1234567890',
+      descripcion: 'Test description',
+      prioridad: 'alta',
+      estado: 'abierto',
+      canal: 'web',
+      tipo: 'tipo1',
+      comentarios: jasmine.any(String),
+      gestor: '4'
+    };
+
+    spyOn(component, 'generateTime').and.returnValue('2023-10-01 12:00:00');
+    spyOn(component, 'updateIncident');
+    spyOn(component, 'getNewGestor').and.returnValue(['4', 'gestormid']);
+
+    component.onSubmit('escalado');
+
+    expect(component.updateIncident).toHaveBeenCalledWith('1', expectedUpdatedIncident);
+  });
+
+  it('should show error toast when onSubmit is called with "escalado" and error al obtener el nuevo gestor', () => {
+    component.ngOnInit();
+    component.incidentForm.patchValue({
+      cliente: '1',
+      nombreUsuario: 'User 1',
+      correoUsuario: 'user1@example.com',
+      direccionUsuario: 'Address 1',
+      telefonoUsuario: '1234567890',
+      descripcionProblema: 'Test description',
+      prioridad: 'alta',
+      estado: 'abierto',
+      tipoIncidencia: 'tipo1',
+      nuevoComentario: 'Nuevo comentario'
+    });
+
+    component.currentGestorId = '7';
+    component.currentGestorObj = mockGestores[4];
+
+    spyOn(component, 'getNewGestor').and.returnValue(['', '']);
+    spyOn(component, 'showToast');
+
+    component.onSubmit('escalado');
+
+    expect(component.showToast).toHaveBeenCalledWith('Error al obtener el nuevo gestor', 'Error', 'error');
+  });
+
+  it('should show error toast when onSubmit is called with "escalado" and no more levels', () => {
+    component.ngOnInit();
+    component.incidentForm.patchValue({
+      cliente: '1',
+      nombreUsuario: 'User 1',
+      correoUsuario: 'user1@example.com',
+      direccionUsuario: 'Address 1',
+      telefonoUsuario: '1234567890',
+      descripcionProblema: 'Test description',
+      prioridad: 'alta',
+      estado: 'abierto',
+      tipoIncidencia: 'tipo1',
+      nuevoComentario: 'Nuevo comentario'
+    });
+
+    component.currentGestorId = '7';
+    component.currentGestorObj = mockGestores[4];
+
+    spyOn(component, 'getNewGestor').and.returnValue(['No hay más niveles', 'No hay más niveles']);
+    spyOn(component, 'showToast');
+
+    component.onSubmit('escalado');
+
+    expect(component.showToast).toHaveBeenCalledWith('No hay más niveles de escalado', 'Error', 'error');
   });
 });
