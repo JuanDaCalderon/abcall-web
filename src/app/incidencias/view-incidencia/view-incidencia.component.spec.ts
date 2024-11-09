@@ -50,6 +50,35 @@ describe('ViewIncidenciaComponent', () => {
     }
   ];
 
+  /*const mockClientes: Usuario[] = [
+    {
+      id: '1',
+      nombres: 'User 1',
+      email: 'user1@example.com',
+      telefono: '1234567890',
+      direccion: 'Address 1',
+      username: 'user1',
+      password: 'password1',
+      apellidos: 'Lastname 1',
+      gestortier: '',
+      token: 'token',
+      rol: {id: 5, nombre: 'cliente', permisos: []}
+    },
+    {
+      id: '2',
+      nombres: 'User 2',
+      email: 'user2@example.com',
+      telefono: '0987654321',
+      direccion: 'Address 2',
+      username: 'user2',
+      password: 'password2',
+      apellidos: 'Lastname 2',
+      gestortier: '',
+      token: 'token',
+      rol: {id: 5, nombre: 'cliente', permisos: []}
+    }
+  ];*/
+
   const mockGestores: Usuario[] = [
     {
       id: '3',
@@ -97,7 +126,7 @@ describe('ViewIncidenciaComponent', () => {
       telefono: '999999',
       password: '123456789',
       nombres: 'juan',
-      apellidos: 'led',
+      apellidos: 'lead',
       direccion: 'Cll 38c No.72j - 55',
       gestortier: 'lead',
       token: 'token',
@@ -110,7 +139,7 @@ describe('ViewIncidenciaComponent', () => {
       telefono: '999999',
       password: '123456789',
       nombres: 'juan',
-      apellidos: 'senior',
+      apellidos: 'manager',
       direccion: 'Cll 38c No.72j - 55',
       gestortier: 'manager',
       token: 'token',
@@ -282,15 +311,15 @@ describe('ViewIncidenciaComponent', () => {
 
   it('should return new gestor when current gestor is senior', () => {
     component.gestores = mockGestores;
-    const newGestor = component.getNewGestor('5'); // '4' is the id of the mid gestor
+    const newGestor = component.getNewGestor('5'); // '5' is the id of the senior gestor
 
     expect(newGestor[0]).toBe('6'); // '7' is the id of the manager gestor
     expect(newGestor[1]).toBe('gestorlead');
   });
 
-  it('should return new gestor when current gestor is led', () => {
+  it('should return new gestor when current gestor is lead', () => {
     component.gestores = mockGestores;
-    const newGestor = component.getNewGestor('6'); // '6' is the id of the mid gestor
+    const newGestor = component.getNewGestor('6'); // '6' is the id of the lead gestor
 
     expect(newGestor[0]).toBe('7'); // '7' is the id of the manager gestor
     expect(newGestor[1]).toBe('gestormanager');
