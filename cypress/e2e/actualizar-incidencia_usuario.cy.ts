@@ -1,13 +1,18 @@
-describe('Update Incidencia', () => {
-    const mockCredencials = {
-        email:'superadmin@gmail.com',
+describe('Update Incidencia by usuario', () => {
+    const mockCredencialsGestor = {
+        email:'gestorjunior@gmail.com',
+        password:'123456789'
+    };
+
+    const mockCredencialsUsuario = {
+        email:'usuario1@gmail.com',
         password:'123456789'
     };
     
     const mockIncidente = { 
         cliente: 'cliente cliente',
         nombreUsuario: 'usuario usuario',
-        correoUsuario: 'prueba@pruebas',
+        correoUsuario: 'usuario1@pruebas',
         telefonoUsuario: '30012345678',
         direccionUsuario: 'calle 123',
         descripcionProblema: 'problema con la tarjeta',
@@ -17,34 +22,13 @@ describe('Update Incidencia', () => {
         respuestaIA: 'respuesta generdada por IA'
     };
 
-    const mockIncidenteUpdate = {
-        cliente: 'clientedos clientedos',
-        nombreUsuario: 'usuariodos usuariodos',
-        correoUsuario: 'actualizado@actualizado.com',
-        telefonoUsuario: '300987654321',
-        direccionUsuario: 'calle 123 actualizada',
-        descripcionProblema: 'Problema actualizado',
-        tipoIncidencia: 'pqrs',
-        prioridad: 'media',
-        estado: 'en proceso',
-        respuestaIA: 'respuesta generdada por IA'
-    };
-
-    beforeEach(() => {
-        cy.viewport(1000, 660);
-        cy.get('body').then($body => {
-            if ($body.find('.toast-close-button').length > 0) {
-                cy.get('.toast-close-button').click();
-            }
-        });
+    it('login as gestor', () => {
         cy.visit('/login'); 
-        cy.get('input[id="email"]').type(mockCredencials.email);
-        cy.get('input[id="password"]').type(mockCredencials.password);
+        cy.get('input[id="email"]').type(mockCredencialsGestor.email);
+        cy.get('input[id="password"]').type(mockCredencialsGestor.password);
         cy.get('button[type="submit"]').click();
+        //cy.get('.toast-success').should('be.visible').and('contain', 'Bienvenido');
 
-    });
-
-    it('should create a new incidente', () => {
         //------ Crear Incidencia
         cy.get('button[id="mostrarNavBar"]').click();
         cy.get('a[id="crearIncidencia"]').click();
@@ -70,8 +54,12 @@ describe('Update Incidencia', () => {
         cy.get('.toast-success').should('be.visible').and('contain', 'Incidente creado correctamente');
     });
 
+    it('login as user', () => {
+        cy.visit('/login'); 
+        cy.get('input[id="email"]').type(mockCredencialsUsuario.email);
+        cy.get('input[id="password"]').type(mockCredencialsUsuario.password);
+        cy.get('button[type="submit"]').click();
 
-    it('should update the incident details', () => {
         // Click en el boton the "Ver/Editar" de la ultima tarjeta creada
         cy.get('div.card').last().within(() => {
             cy.get('button[id="verEditar"]').click();
@@ -83,21 +71,13 @@ describe('Update Incidencia', () => {
         });
         
         cy.get('form').should('be.visible');
-        cy.get('select[id="cliente"]').select(mockIncidenteUpdate.cliente, {force: true});
-        cy.get('select[id="nombreUsuario"]').select(mockIncidenteUpdate.nombreUsuario, {force: true});
-        cy.get('select[id="tipoIncidencia"]').select(mockIncidenteUpdate.tipoIncidencia, {force: true});
-        cy.get('select[id="prioridad"]').select(mockIncidenteUpdate.prioridad,{force: true});
-        cy.get('select[id="estado"]').select(mockIncidenteUpdate.estado, {force: true});
+        cy.get('textarea[id="nuevoComentario"]').type('Nuevo comentario', {force: true});
 
         cy.get('button[id="guardar"]').should('be.enabled');
-        cy.get('button[id="escalar"]').should('be.enabled');
 
         cy.get('button[id="guardar"]').click();
         cy.get('.toast-success').should('be.visible').and('contain', 'Incidencia actualizada correctamente');
-    });
-    
 
-    it('should check incidente details after update', () => {
         // Click en el boton the "Ver/Editar" de la ultima tarjeta creada
         cy.get('div.card').last().within(() => {
             cy.get('button[id="verEditar"]').click();
@@ -109,10 +89,6 @@ describe('Update Incidencia', () => {
         });
 
         cy.get('form').should('be.visible');
-        cy.get('select[id="cliente"]').should('contain', mockIncidenteUpdate.cliente);
-        cy.get('select[id="nombreUsuario"]').should('contain', mockIncidenteUpdate.nombreUsuario);
-        cy.get('select[id="tipoIncidencia"]').should('contain', mockIncidenteUpdate.tipoIncidencia);
-        cy.get('select[id="prioridad"]').should('contain', mockIncidenteUpdate.prioridad,{force: true});
-        cy.get('select[id="estado"]').should('contain', mockIncidenteUpdate.estado); 
+        cy.get('textarea[id="comentarios"]').should('contain.value', 'Nuevo comentario');
     });
 });
