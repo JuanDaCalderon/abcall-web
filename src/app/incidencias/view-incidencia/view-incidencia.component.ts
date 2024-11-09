@@ -8,13 +8,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Usuario} from '../../models/usuario';
 import {ClienteService} from '../../services/cliente.service';
 import {ToastrService} from 'ngx-toastr';
+import {AuthService} from '../../services/auth.service';
+import {Role} from '../../models/role';
 
 @Component({
   selector: 'app-view-incidencia',
   templateUrl: './view-incidencia.component.html',
   styleUrls: ['./view-incidencia.component.css'],
   imports: [ReactiveFormsModule, NavbarComponent, CommonModule],
-  providers: [IncidenciasService],
+  providers: [IncidenciasService, AuthService],
   standalone: true
 })
 export class ViewIncidenciaComponent implements OnInit {
@@ -25,15 +27,17 @@ export class ViewIncidenciaComponent implements OnInit {
   currentGestorObj: Usuario | undefined;
   incidentForm!: FormGroup;
   issueId = '';
-  storedUsuario = JSON.parse(localStorage.getItem('usuario')!).rol.nombre;
+  //storedUsuario = JSON.parse(localStorage.getItem('usuario')!).rol.nombre;
   showEscaladoButton = true;
   showCerrarButton = true;
+  public usuario: Usuario = new Usuario('', '', '', '', '', '', '', '', '', '', new Role(0, '', []));
 
   constructor(
     private formBuilder: FormBuilder,
     private incidenciasService: IncidenciasService,
     private toastr: ToastrService,
     private clienteService: ClienteService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -42,6 +46,8 @@ export class ViewIncidenciaComponent implements OnInit {
     this.loadUsersByRol('4');
     this.loadUsersByRol('5');
     this.loadUsersByRol('3');
+    this.usuario = this.authService.getUsuario();
+    console.log(this.usuario.rol);
 
     this.incidentForm = this.formBuilder.group({
       cliente: ['', Validators.required],
@@ -69,13 +75,14 @@ export class ViewIncidenciaComponent implements OnInit {
       this.loadIncident(id);
     });
 
-    if (this.storedUsuario === 'usuario') {
+    if (this.usuario.rol.nombre === 'usuario') {
       this.setFildsForUsuario();
-    } else {
-      this.incidentForm.get('canalIngreso')?.disable();
-      this.incidentForm.get('fecha')?.disable();
-      this.incidentForm.get('comentarios')?.disable();
     }
+
+    this.incidentForm.get('canalIngreso')?.disable();
+    this.incidentForm.get('fecha')?.disable();
+    this.incidentForm.get('comentarios')?.disable();
+    //}
   }
 
   onSubmit(accion: string): void {
@@ -203,7 +210,7 @@ export class ViewIncidenciaComponent implements OnInit {
   getNewGestor(idCurrectGestor: string): string[] {
     const currentGestorLevel = this.getCurrentGestorLevel(idCurrectGestor);
     const newGestor = ['', ''];
-    let newLevel = 'gestorjunior';
+    let newLevel = 'junior';
     if (currentGestorLevel === 'junior') {
       newLevel = 'mid';
     } else if (currentGestorLevel === 'mid') {
