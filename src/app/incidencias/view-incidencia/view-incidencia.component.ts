@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {Incidente, NewUpdatedIncidencia} from '../../models/incidentes';
 import {CommonModule} from '@angular/common';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -10,12 +10,13 @@ import {ClienteService} from '../../services/cliente.service';
 import {ToastrService} from 'ngx-toastr';
 import {AuthService} from '../../services/auth.service';
 import {Role} from '../../models/role';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-view-incidencia',
   templateUrl: './view-incidencia.component.html',
   styleUrls: ['./view-incidencia.component.css'],
-  imports: [ReactiveFormsModule, NavbarComponent, CommonModule],
+  imports: [ReactiveFormsModule, NavbarComponent, CommonModule, TranslateModule],
   providers: [IncidenciasService, AuthService],
   standalone: true
 })
@@ -23,11 +24,13 @@ export class ViewIncidenciaComponent implements OnInit {
   clientes: Usuario[] = [];
   usuarios: Usuario[] = [];
   gestores: Usuario[] = [];
+  currentIncidencia: Incidente | undefined;
   currentGestorId = '';
   currentGestorObj: Usuario | undefined;
   incidentForm!: FormGroup;
   issueId = '';
-  //storedUsuario = JSON.parse(localStorage.getItem('usuario')!).rol.nombre;
+  language = 'es';
+  translate: TranslateService = inject(TranslateService);
   showEscaladoButton = true;
   showCerrarButton = true;
   public usuario: Usuario = new Usuario('', '', '', '', '', '', '', '', '', '', new Role(0, '', []));
@@ -43,11 +46,11 @@ export class ViewIncidenciaComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.changeLang('es');
     this.loadUsersByRol('4');
     this.loadUsersByRol('5');
     this.loadUsersByRol('3');
     this.usuario = this.authService.getUsuario();
-    console.log(this.usuario.rol);
 
     this.incidentForm = this.formBuilder.group({
       cliente: ['', Validators.required],
@@ -83,59 +86,11 @@ export class ViewIncidenciaComponent implements OnInit {
     this.incidentForm.get('canalIngreso')?.disable();
     this.incidentForm.get('fecha')?.disable();
     this.incidentForm.get('comentarios')?.disable();
-    //}
   }
 
   onSubmit(accion: string): void {
-    let gestor = this.currentGestorId;
-    let gestorUsername = this.currentGestorObj?.username;
-    let newEstado = this.incidentForm.get('estado')?.value;
-
-    if (accion === 'escalado') {
-      const newGestor = this.getNewGestor(gestor);
-      if (newGestor[0] === 'No hay más niveles') {
-        this.showToast('No hay más niveles de escalado', 'Error', 'error');
-        return;
-      } else if (newGestor[0] === '') {
-        this.showToast('Error al obtener el nuevo gestor', 'Error', 'error');
-        return;
-      } else {
-        gestor = newGestor[0];
-        gestorUsername = newGestor[1];
-      }
-    }
-
-    if (accion === 'cerrado') {
-      newEstado = 'cerrado';
-    }
-
-    const updatedIncident: NewUpdatedIncidencia = {
-      cliente: this.incidentForm.get('cliente')?.value,
-      usuario: this.incidentForm.get('nombreUsuario')?.value,
-      correo: this.incidentForm.get('correoUsuario')?.value,
-      direccion: this.incidentForm.get('direccionUsuario')?.value,
-      telefono: this.incidentForm.get('telefonoUsuario')?.value,
-      descripcion: this.incidentForm.get('descripcionProblema')?.value,
-      prioridad: this.incidentForm.get('prioridad')?.value,
-      estado: newEstado,
-      canal: 'web',
-      tipo: this.incidentForm.get('tipoIncidencia')?.value,
-      comentarios:
-        this.generateTime() +
-        '\n' +
-        'Comentario: ' +
-        this.incidentForm.get('nuevoComentario')?.value +
-        '\n' +
-        'Gestor asignado: ' +
-        gestorUsername +
-        '\n' +
-        '------------------------------------\n' +
-        this.incidentForm.get('comentarios')?.value,
-      gestor: gestor
-    };
-
-    this.showToast('Incidencia actualizada correctamente', 'Incidencia ' + this.issueId, 'success');
-    this.updateIncident(this.issueId, updatedIncident);
+    if (this.usuario.rol.nombre === 'usuario') this.updateIncidenteByUSer();
+    else this.updateIncidenteByGestor(accion);
   }
 
   onDescripcionProblemaChange(): void {
@@ -173,7 +128,7 @@ export class ViewIncidenciaComponent implements OnInit {
 
   async updateIncident(id: string, updatedIncidencia: NewUpdatedIncidencia): Promise<void> {
     this.incidenciasService.updateIncidencia(id, updatedIncidencia).subscribe((response) => {
-      this.showToast('Incidencia actualizada correctamente', 'Actualización exitosa' + response, 'success');
+      this.showToast('Numero de caso:' + response.id, 'Actualización exitosa', 'success');
       this.router.navigate(['home']);
     });
   }
@@ -251,6 +206,7 @@ export class ViewIncidenciaComponent implements OnInit {
   }
 
   loadInfoInForm(data: Incidente): void {
+    this.currentIncidencia = data;
     this.incidentForm.patchValue({
       cliente: data.cliente.id,
       fecha: data.fechacreacion,
@@ -271,5 +227,85 @@ export class ViewIncidenciaComponent implements OnInit {
   setGestorInfo(data: Incidente): void {
     this.currentGestorId = data.gestor.id;
     this.currentGestorObj = data.gestor;
+  }
+
+  public changeLang(lang: string): void {
+    this.language = lang;
+    this.translate.use(lang);
+  }
+
+  updateIncidenteByUSer(): void {
+    const updatedIncident: NewUpdatedIncidencia = {
+      cliente: this.currentIncidencia?.cliente.id,
+      usuario: this.currentIncidencia?.usuario.id,
+      correo: this.currentIncidencia?.correo,
+      direccion: this.currentIncidencia?.direccion,
+      telefono: this.currentIncidencia?.telefono,
+      descripcion: this.currentIncidencia?.descripcion,
+      prioridad: this.currentIncidencia?.prioridad,
+      estado: this.currentIncidencia?.estado,
+      canal: 'web',
+      tipo: this.currentIncidencia?.tipo,
+      comentarios:
+        this.generateTime() +
+        '\n' +
+        'Comentario: ' +
+        this.incidentForm.get('nuevoComentario')?.value +
+        '\n' +
+        '------------------------------------\n' +
+        this.incidentForm.get('comentarios')?.value,
+      gestor: this.currentIncidencia?.gestor.id
+    };
+    this.updateIncident(this.issueId, updatedIncident);
+  }
+
+  updateIncidenteByGestor(accion: string): void {
+    let gestor = this.currentGestorId;
+    let gestorUsername = this.currentGestorObj?.username;
+    let newEstado = this.incidentForm.get('estado')?.value;
+
+    if (accion === 'escalado') {
+      const newGestor = this.getNewGestor(gestor);
+      if (newGestor[0] === 'No hay más niveles') {
+        this.showToast('No hay más niveles de escalado', 'Error', 'error');
+        return;
+      } else if (newGestor[0] === '') {
+        this.showToast('Error al obtener el nuevo gestor', 'Error', 'error');
+        return;
+      } else {
+        gestor = newGestor[0];
+        gestorUsername = newGestor[1];
+      }
+    }
+
+    if (accion === 'cerrado') {
+      newEstado = 'cerrado';
+    }
+
+    const updatedIncident: NewUpdatedIncidencia = {
+      cliente: this.incidentForm.get('cliente')?.value,
+      usuario: this.incidentForm.get('nombreUsuario')?.value,
+      correo: this.incidentForm.get('correoUsuario')?.value,
+      direccion: this.incidentForm.get('direccionUsuario')?.value,
+      telefono: this.incidentForm.get('telefonoUsuario')?.value,
+      descripcion: this.incidentForm.get('descripcionProblema')?.value,
+      prioridad: this.incidentForm.get('prioridad')?.value,
+      estado: newEstado,
+      canal: 'web',
+      tipo: this.incidentForm.get('tipoIncidencia')?.value,
+      comentarios:
+        this.generateTime() +
+        '\n' +
+        'Comentario: ' +
+        this.incidentForm.get('nuevoComentario')?.value +
+        '\n' +
+        'Gestor asignado: ' +
+        gestorUsername +
+        '\n' +
+        '------------------------------------\n' +
+        this.incidentForm.get('comentarios')?.value,
+      gestor: gestor
+    };
+    this.updateIncident(this.issueId, updatedIncident);
   }
 }
