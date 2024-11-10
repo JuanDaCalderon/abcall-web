@@ -1,15 +1,42 @@
-<div class="container pt-5 mt-5">
+<div class="container pt-4 mt-5">
   <div class="row">
-    <div class="col-12 mb-5">
-      <label for="cliente" class="form-label">Cliente</label>
-      <select data-cy="cliente" class="form-select" aria-label="cliente" id="cliente" name="cliente"
-        [formControl]="cliente">
-        <option [value]="'todos'" selected>Todos los clientes</option>
-        <option *ngFor="let cliente of clientesUsers" [value]="cliente.id">{{cliente.nombres + ' ' + cliente.apellidos}}
-        </option>
-      </select>
+    <div class="col-12">
+      <div class="row">
+        <div *ngIf="filterPath === 'cliente' || filterPath === 'todos'" class="col-4 mb-4">
+          <label for="cliente" class="form-label">Cliente</label>
+          <select data-cy="cliente" class="form-select" aria-label="cliente" id="cliente" name="cliente"
+            [formControl]="cliente">
+            <option [value]="'todos'" selected>Todos los clientes</option>
+            <option [value]="'ninguno'">Incidentes sin clientes</option>
+            <option *ngFor="let cliente of clientesUsers" [value]="cliente.id">{{cliente.nombres + ' ' +
+              cliente.apellidos}}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="filterPath === 'gestor' || filterPath === 'todos'" class="col-4 mb-4">
+          <label for="gestor" class="form-label">Gestor</label>
+          <select data-cy="gestor" class="form-select" aria-label="gestor" id="gestor" name="gestor"
+            [formControl]="gestor">
+            <option [value]="'todos'" selected>Todos los gestores</option>
+            <option [value]="'ninguno'">Incidentes sin gestores</option>
+            <option *ngFor="let gestor of gestoresUsers" [value]="gestor.id">{{gestor.nombres + ' ' + gestor.apellidos}}
+            </option>
+          </select>
+        </div>
+        <div *ngIf="filterPath === 'usuario' || filterPath === 'todos'" class="col-4 mb-4">
+          <label for="usuario" class="form-label">Usuarios</label>
+          <select data-cy="usuario" class="form-select" aria-label="usuario" id="usuario" name="usuario"
+            [formControl]="usuario">
+            <option [value]="'todos'" selected>Todos los usuarios</option>
+            <option [value]="'ninguno'">Incidentes sin usuarios</option>
+            <option *ngFor="let usuario of usuariosUsers" [value]="usuario.id">{{usuario.nombres + ' ' +
+              usuario.apellidos}}
+            </option>
+          </select>
+        </div>
+      </div>
     </div>
-    <div class="col-12 col-sm-6">
+    <div class="col-12 col-sm-4">
       <div id="canalesChart">
         <apx-chart [series]="pieCanalesChartOptions.series" [chart]="pieCanalesChartOptions.chart"
           [labels]="pieCanalesChartOptions.labels" [responsive]="pieCanalesChartOptions.responsive"
@@ -17,7 +44,7 @@
         </apx-chart>
       </div>
     </div>
-    <div class="col-12 col-sm-6">
+    <div class="col-12 col-sm-4">
       <div id="tiposChart">
         <apx-chart [series]="pieTipoChartOptions.series" [chart]="pieTipoChartOptions.chart"
           [labels]="pieTipoChartOptions.labels" [responsive]="pieTipoChartOptions.responsive"
@@ -25,7 +52,7 @@
         </apx-chart>
       </div>
     </div>
-    <div class="col-12 col-sm-6">
+    <div class="col-12 col-sm-4">
       <div id="estadosChart">
         <apx-chart [series]="pieEstadoChartOptions.series" [chart]="pieEstadoChartOptions.chart"
           [labels]="pieEstadoChartOptions.labels" [responsive]="pieEstadoChartOptions.responsive"
@@ -33,7 +60,7 @@
         </apx-chart>
       </div>
     </div>
-    <div class="col-12 col-sm-6">
+    <div class="col-12 col-sm-4 mt-3">
       <div id="prioridadChart">
         <apx-chart [series]="piePrioridadChartOptions.series" [chart]="piePrioridadChartOptions.chart"
           [labels]="piePrioridadChartOptions.labels" [responsive]="piePrioridadChartOptions.responsive"
@@ -41,7 +68,7 @@
         </apx-chart>
       </div>
     </div>
-    <div class="col mt-5">
+    <div class="col-12 col-sm-8 mt-3">
       <div id="barsChart">
         <apx-chart [series]="barsIncidentsChartOptions.series" [chart]="barsIncidentsChartOptions.chart"
           [dataLabels]="barsIncidentsChartOptions.dataLabels" [plotOptions]="barsIncidentsChartOptions.plotOptions"
