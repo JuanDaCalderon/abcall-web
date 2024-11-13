@@ -1,20 +1,24 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-
 import {TableroComponent} from './tablero.component';
 import {provideHttpClient} from '@angular/common/http';
 import {provideHttpClientTesting} from '@angular/common/http/testing';
 import {IncidenciasService} from '../../services/incidencias.service';
 import {AuthService} from '../../services/auth.service';
-import {of} from 'rxjs';
+import {BehaviorSubject, of} from 'rxjs';
 import {Incidente} from '../../models/incidentes';
 import {Usuario} from '../../models/usuario';
 import {ReactiveFormsModule} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
 
 describe('TableroComponent', () => {
   let component: TableroComponent;
   let fixture: ComponentFixture<TableroComponent>;
   let incidenciasServiceSpy: jasmine.SpyObj<IncidenciasService>;
   let authServiceSpy: jasmine.SpyObj<AuthService>;
+  const filtroParam = new BehaviorSubject<string>('usuario');
+  const activatedRouteStub = {
+    params: filtroParam.asObservable()
+  };
 
   const clienteMock: Usuario = {
     id: '1',
@@ -110,14 +114,14 @@ describe('TableroComponent', () => {
   beforeEach(async () => {
     incidenciasServiceSpy = jasmine.createSpyObj('IncidenciasService', ['getIncidencias']);
     authServiceSpy = jasmine.createSpyObj('AuthService', ['getAllUsers']);
-
     TestBed.configureTestingModule({
       imports: [TableroComponent, ReactiveFormsModule],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
         {provide: IncidenciasService, useValue: incidenciasServiceSpy},
-        {provide: AuthService, useValue: authServiceSpy}
+        {provide: AuthService, useValue: authServiceSpy},
+        {provide: ActivatedRoute, useValue: activatedRouteStub}
       ]
     }).compileComponents();
 
@@ -253,9 +257,43 @@ describe('TableroComponent', () => {
     expect(component.barsIncidentsChartOptions.series).toEqual(component['getIncidentesMeses'](component['incidencias'], 'user1'));
   });
 
+  it('should update the chart options when the gestor value changes', () => {
+    component.gestor.setValue('todos');
+
+    expect(component.pieCanalesChartOptions.series).toEqual(component['getCanalesPieValues'](component['incidencias'], 'todos'));
+    expect(component.pieTipoChartOptions.series).toEqual(component['getTypesPieValues'](component['incidencias'], 'todos'));
+    expect(component.pieEstadoChartOptions.series).toEqual(component['getEstadosPieValues'](component['incidencias'], 'todos'));
+    expect(component.piePrioridadChartOptions.series).toEqual(component['getPrioridadesPieValues'](component['incidencias'], 'todos'));
+    expect(component.barsIncidentsChartOptions.series).toEqual(component['getIncidentesMeses'](component['incidencias'], 'todos'));
+  });
+
+  it('should update the chart options when the usuario value changes', () => {
+    component.usuario.setValue('todos');
+
+    expect(component.pieCanalesChartOptions.series).toEqual(component['getCanalesPieValues'](component['incidencias'], 'todos'));
+    expect(component.pieTipoChartOptions.series).toEqual(component['getTypesPieValues'](component['incidencias'], 'todos'));
+    expect(component.pieEstadoChartOptions.series).toEqual(component['getEstadosPieValues'](component['incidencias'], 'todos'));
+    expect(component.piePrioridadChartOptions.series).toEqual(component['getPrioridadesPieValues'](component['incidencias'], 'todos'));
+    expect(component.barsIncidentsChartOptions.series).toEqual(component['getIncidentesMeses'](component['incidencias'], 'todos'));
+  });
+
   it('should calculate correct pie data for canales', () => {
     const result = component['getCanalesPieValues'](mockIncidentes, 'todos');
     expect(result).toEqual([1, 1, 0]);
+  });
+
+  it('should calculate correct pie data for canales with no client', () => {
+    const thisMockIncidentes: Incidente[] = [
+      {
+        ...mockIncidentes[0]
+      },
+      {
+        ...mockIncidentes[1],
+        cliente: undefined
+      }
+    ];
+    const result = component['getCanalesPieValues'](thisMockIncidentes, 'ninguno');
+    expect(result).toEqual([0, 1, 0]);
   });
 
   it('should filter incidents by userId for getCanalesPieValues', () => {
@@ -277,9 +315,37 @@ describe('TableroComponent', () => {
     expect(result).toEqual([1, 1]);
   });
 
+  it('should calculate correct pie data for types with no client', () => {
+    const thisMockIncidentes: Incidente[] = [
+      {
+        ...mockIncidentes[0]
+      },
+      {
+        ...mockIncidentes[1],
+        cliente: undefined
+      }
+    ];
+    const result = component['getTypesPieValues'](thisMockIncidentes, 'ninguno');
+    expect(result).toEqual([0, 1]);
+  });
+
   it('should calculate correct pie data for estados', () => {
     const result = component['getEstadosPieValues'](mockIncidentes, 'todos');
     expect(result).toEqual([1, 0, 1]);
+  });
+
+  it('should calculate correct pie data for estados with no client', () => {
+    const thisMockIncidentes: Incidente[] = [
+      {
+        ...mockIncidentes[0]
+      },
+      {
+        ...mockIncidentes[1],
+        cliente: undefined
+      }
+    ];
+    const result = component['getEstadosPieValues'](thisMockIncidentes, 'ninguno');
+    expect(result).toEqual([0, 0, 1]);
   });
 
   it('should calculate correct pie data for prioridades', () => {
@@ -287,8 +353,36 @@ describe('TableroComponent', () => {
     expect(result).toEqual([0, 1, 1]);
   });
 
+  it('should calculate correct pie data for prioridades with no client', () => {
+    const thisMockIncidentes: Incidente[] = [
+      {
+        ...mockIncidentes[0]
+      },
+      {
+        ...mockIncidentes[1],
+        cliente: undefined
+      }
+    ];
+    const result = component['getPrioridadesPieValues'](thisMockIncidentes, 'ninguno');
+    expect(result).toEqual([0, 1, 0]);
+  });
+
   it('should calculate correct pie data for meses', () => {
     const result = component['getIncidentesMeses'](mockIncidentes, 'todos');
     expect(result).toEqual([{name: 'Incidentes', data: [2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}]);
+  });
+
+  it('should calculate correct pie data for meses with no clients', () => {
+    const thisMockIncidentes: Incidente[] = [
+      {
+        ...mockIncidentes[0]
+      },
+      {
+        ...mockIncidentes[1],
+        cliente: undefined
+      }
+    ];
+    const result = component['getIncidentesMeses'](thisMockIncidentes, 'ninguno');
+    expect(result).toEqual([{name: 'Incidentes', data: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}]);
   });
 });
