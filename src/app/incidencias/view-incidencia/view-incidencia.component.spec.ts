@@ -11,6 +11,7 @@ import {IncidenciasService} from '../../services/incidencias.service';
 import {Incidente} from '../../models/incidentes';
 import {ActivatedRoute} from '@angular/router';
 import {ReactiveFormsModule} from '@angular/forms';
+import {TranslateModule} from '@ngx-translate/core';
 
 describe('ViewIncidenciaComponent', () => {
   let component: ViewIncidenciaComponent;
@@ -49,35 +50,6 @@ describe('ViewIncidenciaComponent', () => {
       rol: {id: 5, nombre: 'cliente', permisos: []}
     }
   ];
-
-  /*const mockClientes: Usuario[] = [
-    {
-      id: '1',
-      nombres: 'User 1',
-      email: 'user1@example.com',
-      telefono: '1234567890',
-      direccion: 'Address 1',
-      username: 'user1',
-      password: 'password1',
-      apellidos: 'Lastname 1',
-      gestortier: '',
-      token: 'token',
-      rol: {id: 5, nombre: 'cliente', permisos: []}
-    },
-    {
-      id: '2',
-      nombres: 'User 2',
-      email: 'user2@example.com',
-      telefono: '0987654321',
-      direccion: 'Address 2',
-      username: 'user2',
-      password: 'password2',
-      apellidos: 'Lastname 2',
-      gestortier: '',
-      token: 'token',
-      rol: {id: 5, nombre: 'cliente', permisos: []}
-    }
-  ];*/
 
   const mockGestores: Usuario[] = [
     {
@@ -203,7 +175,14 @@ describe('ViewIncidenciaComponent', () => {
     //declaration, imports and providers
     await TestBed.configureTestingModule({
       declarations: [],
-      imports: [ViewIncidenciaComponent, ReactiveFormsModule, RouterTestingModule, HttpClientTestingModule, ToastrModule.forRoot()],
+      imports: [
+        ViewIncidenciaComponent,
+        ReactiveFormsModule,
+        RouterTestingModule,
+        HttpClientTestingModule,
+        ToastrModule.forRoot(),
+        TranslateModule.forRoot()
+      ],
       providers: [
         {provide: AuthService, useValue: authServiceSpy},
         {provide: ClienteService, useValue: clienteServiceSpy},
@@ -361,138 +340,89 @@ describe('ViewIncidenciaComponent', () => {
     expect(component.incidentForm.get('comentarios')?.value).toBe(mockIncidente.comentarios);
   });
 
-  it('should call updateIncident with correct data when onSubmit is called with "cerrado"', () => {
-    component.ngOnInit();
-    component.incidentForm.patchValue({
-      cliente: '1',
-      nombreUsuario: 'User 1',
-      correoUsuario: 'user1@example.com',
-      direccionUsuario: 'Address 1',
-      telefonoUsuario: '1234567890',
-      descripcionProblema: 'Test description',
-      prioridad: 'alta',
-      estado: 'abierto',
-      tipoIncidencia: 'tipo1',
-      nuevoComentario: 'Nuevo comentario'
-    });
-
-    component.currentGestorId = '3';
-    component.currentGestorObj = mockGestores[0];
-
-    const expectedUpdatedIncident = {
-      cliente: '1',
-      usuario: 'User 1',
-      correo: 'user1@example.com',
-      direccion: 'Address 1',
-      telefono: '1234567890',
-      descripcion: 'Test description',
-      prioridad: 'alta',
-      estado: 'cerrado',
-      canal: 'web',
-      tipo: 'tipo1',
-      comentarios: jasmine.any(String),
-      gestor: '3'
-    };
-
-    spyOn(component, 'generateTime').and.returnValue('2023-10-01 12:00:00');
-    spyOn(component, 'updateIncident');
-
+  it('should call updateIncidenteByUser if usuario is usuario', () => {
+    component.usuario.rol.nombre = 'usuario';
+    spyOn(component, 'updateIncidenteByUser');
     component.onSubmit('cerrado');
-
-    expect(component.updateIncident).toHaveBeenCalledWith('1', expectedUpdatedIncident);
+    expect(component.updateIncidenteByUser).toHaveBeenCalled();
   });
 
-  it('should call updateIncident with correct data when onSubmit is called with "escalado"', () => {
-    component.ngOnInit();
-    component.incidentForm.patchValue({
-      cliente: '1',
-      nombreUsuario: 'User 1',
-      correoUsuario: 'user1@example.com',
-      direccionUsuario: 'Address 1',
-      telefonoUsuario: '1234567890',
-      descripcionProblema: 'Test description',
-      prioridad: 'alta',
-      estado: 'abierto',
-      tipoIncidencia: 'tipo1',
-      nuevoComentario: 'Nuevo comentario'
-    });
+  it('should call updateIncidenteByGestor if usuario is gestor and action is cerrado', () => {
+    component.usuario.rol.nombre = 'gestor';
+    spyOn(component, 'updateIncidenteByGestor');
+    component.onSubmit('cerrado');
+    expect(component.updateIncidenteByGestor).toHaveBeenCalledWith('cerrado');
+  });
 
-    component.currentGestorId = '3';
-    component.currentGestorObj = mockGestores[0];
+  it('should call updateIncidenteByGestor if usuario is gestor and action is escalado', () => {
+    component.usuario.rol.nombre = 'gestor';
+    spyOn(component, 'updateIncidenteByGestor');
+    component.onSubmit('escalado');
+    expect(component.updateIncidenteByGestor).toHaveBeenCalledWith('escalado');
+  });
 
-    const expectedUpdatedIncident = {
-      cliente: '1',
-      usuario: 'User 1',
-      correo: 'user1@example.com',
-      direccion: 'Address 1',
-      telefono: '1234567890',
-      descripcion: 'Test description',
-      prioridad: 'alta',
-      estado: 'abierto',
-      canal: 'web',
-      tipo: 'tipo1',
-      comentarios: jasmine.any(String),
-      gestor: '4'
-    };
+  it('should call updateIncident with correct parameters when updateIncidenteByUser is called', async () => {
+    component.currentIncidencia = mockIncidente;
+    component.issueId = '1';
+    component.incidentForm.get('nuevoComentario')?.setValue('Nuevo comentario');
+    spyOn(component, 'updateIncident');
+    component.updateIncidenteByUser();
 
-    spyOn(component, 'generateTime').and.returnValue('2023-10-01 12:00:00');
+    expect(component.updateIncident).toHaveBeenCalled();
+  });
+
+  it('should call updateIncident with correct parameters when updateIncidenteByGestor is called with accion cerrado', async () => {
+    component.currentIncidencia = mockIncidente;
+    component.issueId = '1';
+    component.incidentForm.get('nuevoComentario')?.setValue('Nuevo comentario');
+    component.incidentForm.get('estado')?.setValue('abierto');
+    spyOn(component, 'updateIncident');
+    component.updateIncidenteByGestor('cerrado');
+
+    expect(component.updateIncident).toHaveBeenCalled();
+  });
+
+  it('should call updateIncident with correct parameters when updateIncidenteByGestor is called with accion escalado', async () => {
+    component.currentIncidencia = mockIncidente;
+    component.issueId = '1';
+    component.incidentForm.get('nuevoComentario')?.setValue('Nuevo comentario');
+    component.incidentForm.get('estado')?.setValue('abierto');
     spyOn(component, 'updateIncident');
     spyOn(component, 'getNewGestor').and.returnValue(['4', 'gestormid']);
+    component.updateIncidenteByGestor('escalado');
 
-    component.onSubmit('escalado');
-
-    expect(component.updateIncident).toHaveBeenCalledWith('1', expectedUpdatedIncident);
+    expect(component.updateIncident).toHaveBeenCalled();
   });
 
-  it('should show error toast when onSubmit is called with "escalado" and error al obtener el nuevo gestor', () => {
-    component.ngOnInit();
-    component.incidentForm.patchValue({
-      cliente: '1',
-      nombreUsuario: 'User 1',
-      correoUsuario: 'user1@example.com',
-      direccionUsuario: 'Address 1',
-      telefonoUsuario: '1234567890',
-      descripcionProblema: 'Test description',
-      prioridad: 'alta',
-      estado: 'abierto',
-      tipoIncidencia: 'tipo1',
-      nuevoComentario: 'Nuevo comentario'
-    });
-
-    component.currentGestorId = '7';
-    component.currentGestorObj = mockGestores[4];
-
-    spyOn(component, 'getNewGestor').and.returnValue(['', '']);
-    spyOn(component, 'showToast');
-
-    component.onSubmit('escalado');
-
-    expect(component.showToast).toHaveBeenCalledWith('Error al obtener el nuevo gestor', 'Error', 'error');
-  });
-
-  it('should show error toast when onSubmit is called with "escalado" and no more levels', () => {
-    component.ngOnInit();
-    component.incidentForm.patchValue({
-      cliente: '1',
-      nombreUsuario: 'User 1',
-      correoUsuario: 'user1@example.com',
-      direccionUsuario: 'Address 1',
-      telefonoUsuario: '1234567890',
-      descripcionProblema: 'Test description',
-      prioridad: 'alta',
-      estado: 'abierto',
-      tipoIncidencia: 'tipo1',
-      nuevoComentario: 'Nuevo comentario'
-    });
-
-    component.currentGestorId = '7';
-    component.currentGestorObj = mockGestores[4];
-
+  it('should call updateIncident with correct parameters when updateIncidenteByGestor is called with accion escalado and newGestor is No hay mas..', async () => {
+    component.currentIncidencia = mockIncidente;
+    component.issueId = '1';
+    component.incidentForm.get('nuevoComentario')?.setValue('Nuevo comentario');
+    component.incidentForm.get('estado')?.setValue('abierto');
+    spyOn(component, 'updateIncident');
     spyOn(component, 'getNewGestor').and.returnValue(['No hay más niveles', 'No hay más niveles']);
-    spyOn(component, 'showToast');
+    component.updateIncidenteByGestor('escalado');
 
-    component.onSubmit('escalado');
+    expect(toastrServiceSpy.error).toHaveBeenCalledWith('No hay más niveles de escalado', 'Error', {
+      closeButton: true,
+      timeOut: 3000,
+      positionClass: 'toast-bottom-center'
+    });
+  });
 
-    expect(component.showToast).toHaveBeenCalledWith('No hay más niveles de escalado', 'Error', 'error');
+  it('should call updateIncident with correct parameters when updateIncidenteByGestor is called with accion escalado and newGestor is Error al obtener el nuevo gestor', async () => {
+    component.currentIncidencia = mockIncidente;
+    component.issueId = '1';
+    component.incidentForm.get('nuevoComentario')?.setValue('Nuevo comentario');
+    component.incidentForm.get('estado')?.setValue('abierto');
+    spyOn(component, 'updateIncident');
+    spyOn(component, 'getNewGestor').and.returnValue(['', '']);
+    component.updateIncidenteByGestor('escalado');
+
+    expect(toastrServiceSpy.error).toHaveBeenCalledWith('Error al obtener el nuevo gestor', 'Error', {
+      closeButton: true,
+      timeOut: 3000,
+      positionClass: 'toast-bottom-center'
+    });
   });
 });

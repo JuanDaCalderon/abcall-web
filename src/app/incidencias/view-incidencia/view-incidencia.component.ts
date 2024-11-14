@@ -89,7 +89,7 @@ export class ViewIncidenciaComponent implements OnInit {
   }
 
   onSubmit(accion: string): void {
-    if (this.usuario.rol.nombre === 'usuario') this.updateIncidenteByUSer();
+    if (this.usuario.rol.nombre === 'usuario') this.updateIncidenteByUser();
     else this.updateIncidenteByGestor(accion);
   }
 
@@ -112,7 +112,6 @@ export class ViewIncidenciaComponent implements OnInit {
   }
 
   async loadIncident(id: string): Promise<void> {
-    console.log('Cargando incidencia con id:', id);
     this.incidenciasService.getIncidenciaById(id).subscribe((data: Incidente) => {
       this.loadInfoInForm(data);
     });
@@ -234,7 +233,7 @@ export class ViewIncidenciaComponent implements OnInit {
     this.translate.use(lang);
   }
 
-  updateIncidenteByUSer(): void {
+  updateIncidenteByUser(): void {
     const updatedIncident: NewUpdatedIncidencia = {
       cliente: this.currentIncidencia?.cliente.id,
       usuario: this.currentIncidencia?.usuario.id,
