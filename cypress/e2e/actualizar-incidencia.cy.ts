@@ -10,7 +10,7 @@ describe('Update Incidencia', () => {
         correoUsuario: 'prueba@pruebas',
         telefonoUsuario: '30012345678',
         direccionUsuario: 'calle 123',
-        descripcionProblema: 'problema con la tarjeta',
+        descripcionProblema: 'mi pc no conecta a internet',
         tipoIncidencia: 'incidencia',
         prioridad: 'alta',
         estado: 'cerrado',
@@ -23,12 +23,14 @@ describe('Update Incidencia', () => {
         correoUsuario: 'actualizado@actualizado.com',
         telefonoUsuario: '300987654321',
         direccionUsuario: 'calle 123 actualizada',
-        descripcionProblema: 'Problema actualizado',
+        descripcionProblema: 'mi pc no conecta a internet',
         tipoIncidencia: 'pqrs',
         prioridad: 'media',
         estado: 'en proceso',
         respuestaIA: 'respuesta generdada por IA'
     };
+
+    const mockRespuestaIA = 'Por favor, intenta lo siguiente para resolver el problema de conexión: 1) Revisa que tu dispositivo esté conectado a internet; 2) Reinicia tu router o punto de acceso; 3) Verifica que no haya restricciones de red en tu firewall o antivirus. Si el problema persiste, contáctanos para mayor asistencia.';
 
     beforeEach(() => {
         cy.viewport(1000, 660);
@@ -62,7 +64,7 @@ describe('Update Incidencia', () => {
         cy.get('select[id="prioridad"]').select(mockIncidente.prioridad,{force: true});
         cy.get('select[id="estado"]').select(mockIncidente.estado, {force: true});
 
-        cy.get('textarea[id="respuestaIA"]').should('have.value', 'Respuesta generdada por IA');
+        cy.get('textarea[id="respuestaIA"]').should('have.value', mockRespuestaIA);
         cy.get('button[id="guardar"]').should('be.enabled');
         cy.get('button[id="escalar"]').should('be.enabled');
 
@@ -93,7 +95,7 @@ describe('Update Incidencia', () => {
         cy.get('button[id="escalar"]').should('be.enabled');
 
         cy.get('button[id="guardar"]').click();
-        cy.get('.toast-success').should('be.visible').and('contain', 'Incidencia actualizada correctamente');
+        cy.get('.toast-success').should('be.visible').and('contain', 'Actualización exitosa');
     });
     
 
