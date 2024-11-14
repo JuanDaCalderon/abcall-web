@@ -7,13 +7,14 @@ import {NavbarComponent} from '../../components/navbar/navbar.component';
 import {ToastrService} from 'ngx-toastr';
 import {ClienteService} from '../../services/cliente.service';
 import {Usuario} from '../../models/usuario';
+import {IaGenerativaService} from '../../services/ia-generativa.service';
 
 @Component({
   selector: 'app-create-incidencias',
   templateUrl: './create-incidencias.component.html',
   styleUrl: './create-incidencias.component.scss',
   imports: [ReactiveFormsModule, NavbarComponent, CommonModule],
-  providers: [IncidenciasService, Router],
+  providers: [IncidenciasService, Router, IaGenerativaService],
   standalone: true
 })
 export class CreateIncidenciasComponent implements OnInit {
@@ -25,6 +26,7 @@ export class CreateIncidenciasComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private crearIncidenteService: IncidenciasService,
+    private iagenerativaService: IaGenerativaService,
     private toastr: ToastrService,
     private clienteService: ClienteService
   ) {}
@@ -94,11 +96,15 @@ export class CreateIncidenciasComponent implements OnInit {
 
   onDescripcionProblemaChange(): void {
     const value = this.incidentForm.get('descripcionProblema')?.value;
-    if (value && value.trim != '') {
-      this.incidentForm.get('respuestaIA')?.setValue('Respuesta generdada por IA');
-    } else {
-      this.incidentForm.get('respuestaIA')?.setValue('');
-    }
+    let respuestaSugerida = '';
+    this.iagenerativaService.generarRespuesta(value).subscribe((response) => {
+      respuestaSugerida = response['respuesta'];
+      if (value && value.trim != '') {
+        this.incidentForm.get('respuestaIA')?.setValue(respuestaSugerida);
+      } else {
+        this.incidentForm.get('respuestaIA')?.setValue('');
+      }
+    });
   }
 
   afterReset(): void {
