@@ -91,33 +91,39 @@
           </li>
           <li class="nav-item"
             *ngIf="usuario &&  usuario.rol.nombre === 'superadministrador' || usuario.rol.nombre === 'administrador' ">
-            <a class="nav-link" routerLink="tablero/todos" ariaCurrentWhenActive="page">
+            <a class="nav-link" routerLink="tablero/todos" routerLinkActive="active"  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-square-poll-vertical"></i></span>
               Tablero de incidentes</a>
           </li>
           <li class="nav-item"
             *ngIf="usuario && usuario.rol.nombre === 'gestor' || usuario.rol.nombre === 'superadministrador' || usuario.rol.nombre === 'administrador' ">
-            <a class="nav-link" routerLink="tablero/usuario" ariaCurrentWhenActive="page">
+            <a class="nav-link" routerLink="tablero/usuario" routerLinkActive="active"  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-square-poll-vertical"></i></span>
               Tablero incidentes por usuario</a>
           </li>
           <li class="nav-item"
             *ngIf="usuario && usuario.rol.nombre === 'cliente' || usuario.rol.nombre === 'superadministrador' || usuario.rol.nombre === 'administrador' ">
-            <a class="nav-link" routerLink="tablero/gestor" ariaCurrentWhenActive="page">
+            <a class="nav-link" routerLink="tablero/gestor" routerLinkActive="active"  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-square-poll-vertical"></i></span>
               Tablero incidentes por gestor</a>
           </li>
           <li class="nav-item"
             *ngIf="usuario && usuario.rol.nombre === 'gestor' || usuario.rol.nombre === 'superadministrador' || usuario.rol.nombre === 'administrador' ">
-            <a class="nav-link" routerLink="tablero/cliente" ariaCurrentWhenActive="page">
+            <a class="nav-link" routerLink="tablero/cliente" routerLinkActive="active"  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-square-poll-vertical"></i></span>
               Tablero incidentes por cliente</a>
           </li>
           <li class="nav-item"
             *ngIf="usuario && usuario.rol.nombre === 'gestor' || usuario.rol.nombre === 'cliente' || usuario.rol.nombre === 'usuario' ">
-            <a class="nav-link" routerLink="mi_tablero" ariaCurrentWhenActive="page">
+            <a class="nav-link" routerLink="mi_tablero" routerLinkActive="active"  ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-square-poll-vertical"></i></span>
               Mi tablero de incidentes</a>
+          </li>
+          <li class="nav-item"
+            *ngIf="usuario && usuario.rol.nombre === 'superadministrador' || usuario.rol.nombre === 'cliente' || usuario.rol.nombre === 'administrador' ">
+            <a class="nav-link" routerLink="predictivo" routerLinkActive="active"  ariaCurrentWhenActive="page">
+              <span><i class="fa-solid fa-square-poll-vertical"></i></span>
+              Tableros de Analitica predictiva </a>
           </li>
           <li>
             <hr class="divider">
