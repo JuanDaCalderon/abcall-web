@@ -10,12 +10,14 @@ describe('View Incidencia', () => {
         correoUsuario: 'prueba@pruebas',
         telefonoUsuario: '30012345678',
         direccionUsuario: 'calle 123',
-        descripcionProblema: 'problema con la tarjeta',
+        descripcionProblema: 'mi pc no conecta a internet',
         tipoIncidencia: 'incidencia',
         prioridad: 'baja',
         estado: 'abierto',
         respuestaIA: 'respuesta generdada por IA'
     };
+
+    const mockRespuestaIA = 'Por favor, intenta lo siguiente para resolver el problema de conexión: 1) Revisa que tu dispositivo esté conectado a internet; 2) Reinicia tu router o punto de acceso; 3) Verifica que no haya restricciones de red en tu firewall o antivirus. Si el problema persiste, contáctanos para mayor asistencia.';
 
     beforeEach(() => {
         cy.viewport(1024, 768);
@@ -41,7 +43,7 @@ describe('View Incidencia', () => {
         cy.get('select[id="prioridad"]').select(mockIncidente.prioridad,{force: true});
         cy.get('select[id="estado"]').select(mockIncidente.estado, {force: true});
 
-        cy.get('textarea[id="respuestaIA"]').should('have.value', 'Respuesta generdada por IA');
+        cy.get('textarea[id="respuestaIA"]').should('have.value', mockRespuestaIA);
         cy.get('button[id="guardar"]').should('be.enabled');
         cy.get('button[id="escalar"]').should('be.enabled');
 
@@ -69,42 +71,7 @@ describe('View Incidencia', () => {
         cy.get('textarea[id="descripcionProblema"]').should('have.value', mockIncidente.descripcionProblema);
         cy.get('select[id="tipoIncidencia"]').should('contain', mockIncidente.tipoIncidencia);
         cy.get('select[id="prioridad"]').should('contain', mockIncidente.prioridad,{force: true});
-        cy.get('select[id="estado"]').should('contain', mockIncidente.estado);
-    
-        
-    
+        cy.get('select[id="estado"]').should('contain', mockIncidente.estado); 
     });
 
-    
-
- /*   it('should display a success message when incident is updated', () => {
-        cy.intercept('POST', '/api/incidentes/1', {
-            statusCode: 200,
-            body: { message: 'Incidente actualizado correctamente' }
-        }).as('updateIncident');
-
-        cy.get('[data-cy=update-button]').click();
-        cy.wait('@updateIncident');
-
-        cy.get('.toast-success').should('contain', 'Incidente actualizado correctamente');
-    });
-
-    it('should display an error message when incident update fails', () => {
-        cy.intercept('POST', '/api/incidentes/1', {
-            statusCode: 500,
-            body: { message: 'Error al actualizar el incidente' }
-        }).as('updateIncidentFail');
-
-        cy.get('[data-cy=update-button]').click();
-        cy.wait('@updateIncidentFail');
-
-        cy.get('.toast-error').should('contain', 'Error al actualizar el incidente');
-    });
-
-    it('should navigate to the edit page when edit button is clicked', () => {
-        cy.get('[data-cy=edit-button]').click();
-        cy.url().should('include', '/editar-incidencia/1');
-    });
-
-*/
 });

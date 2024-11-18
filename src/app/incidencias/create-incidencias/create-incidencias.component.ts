@@ -37,7 +37,7 @@ export class CreateIncidenciasComponent implements OnInit {
       fecha: [''],
       nombreUsuario: ['', Validators.required],
       telefonoUsuario: [''],
-      correoUsuario: ['', Validators.email],
+      correoUsuario: ['', [Validators.required, Validators.email]],
       direccionUsuario: [''],
       descripcionProblema: ['', Validators.required],
       tipoIncidencia: ['incidencia'],
