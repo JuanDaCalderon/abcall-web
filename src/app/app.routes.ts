@@ -11,6 +11,7 @@ import {ListClientAndUserComponent} from './incidencias/list-client-and-user/lis
 import {ViewIncidenciaComponent} from './incidencias/view-incidencia/view-incidencia.component';
 import {TableroComponent} from './tableros/tablero/tablero.component';
 import {MiTableroComponent} from './tableros/mi-tablero/mi-tablero.component';
+import {TableroPredictivoComponent} from './tableros/tableroPredictivo/tableroPredictivo.component';
 
 export const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -27,6 +28,7 @@ export const routes: Routes = [
       {path: 'list', title: 'list', component: ListClientAndUserComponent},
       {path: 'mi_tablero', title: 'mi tablero', component: MiTableroComponent},
       {path: 'tablero/:filtro', title: 'tablero', component: TableroComponent},
+      {path: 'predictivo', title: 'Tablero analitica predictiva', component: TableroPredictivoComponent},
       {path: 'view-incidencia/:id', title: 'ver incidencia', component: ViewIncidenciaComponent}
     ]
   },
