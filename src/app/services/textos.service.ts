@@ -19,4 +19,8 @@ export class TextosService {
   putTextos(textos: Textos): Observable<Textos> {
     return this._http.put<Textos>(this.apiUrlTextos + '/texto', textos);
   }
+
+  postTextos(textos: Textos): Observable<Textos> {
+    return this._http.post<Textos>(this.apiUrlTextos + '/texto', textos);
+  }
 }

@@ -16,6 +16,7 @@ export class PersonalizarTextosComponent implements OnInit {
   textosForm: FormGroup;
   clientes = [];
   textos: Textos;
+  verifTexto = false;
 
   constructor(
     private fb: FormBuilder,
@@ -41,11 +42,16 @@ export class PersonalizarTextosComponent implements OnInit {
   }
 
   getTextos(event: Event): void {
+    this.textos = new Textos(0, '', '', '');
+    this.textosForm.get('saludo')?.setValue('');
+    this.textosForm.get('cierre')?.setValue('');
+    this.verifTexto = false;
     const clienteid = (event.target as HTMLSelectElement).value;
     this.textosService.getTextos(clienteid).subscribe((response) => {
       this.textos = response;
       this.textosForm.get('saludo')?.setValue(response.saludo);
       this.textosForm.get('cierre')?.setValue(response.cierre);
+      this.verifTexto = true;
     });
   }
 
@@ -60,6 +66,27 @@ export class PersonalizarTextosComponent implements OnInit {
       this.showToast('Textos actualizados correctamente', 'success');
       this.textosForm.reset();
     });
+  }
+
+  postTextos(): void {
+    const textos: Textos = {
+      id: this.textos.id,
+      clienteid: this.textosForm.get('cliente')?.value,
+      saludo: this.textosForm.get('saludo')?.value,
+      cierre: this.textosForm.get('cierre')?.value
+    };
+    this.textosService.postTextos(textos).subscribe(() => {
+      this.showToast('Textos actualizados correctamente', 'success');
+      this.textosForm.reset();
+    });
+  }
+
+  validarTextos(): void {
+    if (this.verifTexto == true) {
+      this.putTextos();
+    } else {
+      this.postTextos();
+    }
   }
 
   showToast(message1: string, type: 'success' | 'error') {
