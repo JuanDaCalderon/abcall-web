@@ -12,6 +12,7 @@ import {ViewIncidenciaComponent} from './incidencias/view-incidencia/view-incide
 import {TableroComponent} from './tableros/tablero/tablero.component';
 import {MiTableroComponent} from './tableros/mi-tablero/mi-tablero.component';
 import {TableroPredictivoComponent} from './tableros/tableroPredictivo/tableroPredictivo.component';
+import {PersonalizarTextosComponent} from './configuracion/personalizar-textos/personalizar-textos.component';
 
 export const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -29,7 +30,8 @@ export const routes: Routes = [
       {path: 'mi_tablero', title: 'mi tablero', component: MiTableroComponent},
       {path: 'tablero/:filtro', title: 'tablero', component: TableroComponent},
       {path: 'predictivo', title: 'Tablero analitica predictiva', component: TableroPredictivoComponent},
-      {path: 'view-incidencia/:id', title: 'ver incidencia', component: ViewIncidenciaComponent}
+      {path: 'view-incidencia/:id', title: 'ver incidencia', component: ViewIncidenciaComponent},
+      {path: 'personalizar-textos', title: 'personalizar textos', component: PersonalizarTextosComponent}
     ]
   },
   {path: '**', component: LoginComponent}
