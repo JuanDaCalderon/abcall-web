@@ -93,4 +93,28 @@ describe('Update Incidencia by usuario', () => {
         cy.get('form').should('be.visible');
         cy.get('textarea[id="comentarios"]').should('contain.value', 'Nuevo comentario');
     });
+
+
+    it('check internationlization', () => {
+        cy.visit('/login'); 
+        cy.get('input[id="email"]').type(mockCredencialsUsuario.email);
+        cy.get('input[id="password"]').type(mockCredencialsUsuario.password);
+        cy.get('button[type="submit"]').click();
+
+        // Click en el boton the "Ver/Editar" de la ultima tarjeta creada
+        cy.get('div.card').last().within(() => {
+            cy.get('button[id="verEditar"]').click();
+        });
+        cy.get('body').then($body => {
+        if ($body.find('.toast-close-button').length > 0) {
+            cy.get('.toast-close-button').click();
+        }
+        });
+
+        cy.get('form').should('be.visible');
+        cy.get('h1[id="formH1"]').should('contain', 'Issue');
+        cy .get('label[id="clienteLabel"]').should('contain', 'Customer');
+        cy.get('label[id="fechaLabel"]').should('contain', 'Creation datetime');
+
+    });
 });
