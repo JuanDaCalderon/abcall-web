@@ -15,7 +15,7 @@
         <h5 class="offcanvas-title secundario" id="offcanvasNavbarLabel">
           ABCall Manager
         </h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <button type="button" id="close" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
       <div class="offcanvas-body">
         <ul class="navbar-nav nav nav-pills justify-content-start flex-grow-1 pe-3">
@@ -82,7 +82,7 @@
           </li>
           <li class="nav-item"
             *ngIf="usuario && usuario.rol.nombre === 'gestor' || usuario.rol.nombre === 'superadministrador' ">
-            <a class="nav-link " routerLink="list" routerLinkActive="active" ariaCurrentWhenActive="page">
+            <a class="nav-link " id="listIncidenteClientUser" routerLink="list" routerLinkActive="active" ariaCurrentWhenActive="page">
               <span><i class="fa-solid fa-list-ul fa-lg"></i></span>
               Lista de incidentes asociados a un cliente y/o usuario</a>
           </li>
