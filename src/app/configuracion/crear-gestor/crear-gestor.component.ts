@@ -1,6 +1,7 @@
 import {CommonModule} from '@angular/common';
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {DEFAULT_PASSWORD} from '../../constants';
 import {GestorService} from '../../services/gestor.service';
 import {Gestores, GESTORTIERS, ROLES} from '../../models/users';
@@ -10,14 +11,16 @@ import {ToastrService} from 'ngx-toastr';
 @Component({
   selector: 'app-crear-gestor',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, TranslateModule, FormsModule, ReactiveFormsModule],
   templateUrl: './crear-gestor.component.html',
   styleUrl: './crear-gestor.component.scss'
 })
 export class CrearGestorComponent {
   public crearGestorForm: FormGroup = new FormGroup('');
+  language = 'es';
   public isLoading = false;
   public gestorTiers = GESTORTIERS;
+  translate: TranslateService = inject(TranslateService);
   constructor(
     private gestorService: GestorService,
     private formBuilder: FormBuilder,
@@ -34,6 +37,11 @@ export class CrearGestorComponent {
       rol: [ROLES.gestor],
       gestortier: [GESTORTIERS.junior, [Validators.required]]
     });
+  }
+
+  changeLang(lang: string): void {
+    this.language = lang;
+    this.translate.use(lang);
   }
 
   public onSubmit() {

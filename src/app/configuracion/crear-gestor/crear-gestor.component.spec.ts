@@ -1,5 +1,5 @@
 import {ComponentFixture, fakeAsync, TestBed, tick} from '@angular/core/testing';
-
+import {TranslateModule, TranslateLoader, TranslateFakeLoader} from '@ngx-translate/core';
 import {CrearGestorComponent} from './crear-gestor.component';
 import {provideHttpClient} from '@angular/common/http';
 import {provideHttpClientTesting} from '@angular/common/http/testing';
@@ -17,7 +17,16 @@ describe('CrearGestorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CrearGestorComponent, ToastrModule.forRoot()],
+      imports: [
+        CrearGestorComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateFakeLoader
+          }
+        }),
+        ToastrModule.forRoot()
+      ],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
@@ -70,4 +79,10 @@ describe('CrearGestorComponent', () => {
     expect(gestorServiceMock.createGestor).toHaveBeenCalled();
     expect(toastrServiceMock.success).toHaveBeenCalledTimes(1);
   }));
+
+  it('should change the language', () => {
+    component.changeLang('en');
+    fixture.detectChanges();
+    expect(component.language).toBe('en');
+  });
 });

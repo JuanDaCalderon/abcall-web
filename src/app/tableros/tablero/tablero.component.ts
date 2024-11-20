@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {NgApexchartsModule} from 'ng-apexcharts';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
@@ -11,13 +11,14 @@ import {Usuario} from '../../models/usuario';
 import {DEFAULT_FILTER, NINGUNO_FILTER} from '../../constants';
 import {ChartBarsOptions, ChartPieOptions} from '../../models/tableros';
 import {ROLES_NAME} from '../../models/users';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 
 @Component({
   standalone: true,
   selector: 'app-tablero',
   templateUrl: './tablero.component.html',
   styleUrls: ['./tablero.component.scss'],
-  imports: [CommonModule, NgApexchartsModule, ReactiveFormsModule]
+  imports: [CommonModule, NgApexchartsModule, ReactiveFormsModule, TranslateModule]
 })
 export class TableroComponent implements OnInit, OnDestroy {
   public filterPath: string = undefined;
@@ -35,6 +36,8 @@ export class TableroComponent implements OnInit, OnDestroy {
   public cliente = new FormControl(DEFAULT_FILTER);
   public gestor = new FormControl(DEFAULT_FILTER);
   public usuario = new FormControl(DEFAULT_FILTER);
+  public language = 'es';
+  private translate: TranslateService = inject(TranslateService);
   private subscriptions: Subscription[] = [];
 
   constructor(
@@ -67,7 +70,7 @@ export class TableroComponent implements OnInit, OnDestroy {
         }
       ],
       title: {
-        text: 'Incidentes por canales'
+        text: ''
       }
     };
     this.pieTipoChartOptions = {
@@ -94,7 +97,7 @@ export class TableroComponent implements OnInit, OnDestroy {
         }
       ],
       title: {
-        text: 'Incidentes por tipo'
+        text: ''
       }
     };
     this.pieEstadoChartOptions = {
@@ -121,7 +124,7 @@ export class TableroComponent implements OnInit, OnDestroy {
         }
       ],
       title: {
-        text: 'Incidentes por estado'
+        text: ''
       }
     };
     this.piePrioridadChartOptions = {
@@ -148,7 +151,7 @@ export class TableroComponent implements OnInit, OnDestroy {
         }
       ],
       title: {
-        text: 'Incidentes por prioridad'
+        text: ''
       }
     };
     this.barsIncidentsChartOptions = {
@@ -187,7 +190,7 @@ export class TableroComponent implements OnInit, OnDestroy {
         }
       },
       title: {
-        text: 'Incidentes por mes en el año'
+        text: ''
       }
     };
   }
@@ -211,6 +214,7 @@ export class TableroComponent implements OnInit, OnDestroy {
       this.gestor.valueChanges.subscribe((userId) => this.updateValuesFromFilters(userId, ROLES_NAME.gestor)),
       this.usuario.valueChanges.subscribe((userId) => this.updateValuesFromFilters(userId, ROLES_NAME.usuario))
     );
+    this.getJsonTranslations();
   }
 
   private updateValuesFromFilters(userId: string, rol: ROLES_NAME) {
@@ -326,6 +330,40 @@ export class TableroComponent implements OnInit, OnDestroy {
         {name: 'Incidentes', data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]} as IncidenteSerie
       )
     ];
+  }
+
+  private getJsonTranslations(): void {
+    this.translate
+      .getTranslation(this.language)
+      .pipe(take(1))
+      .subscribe((value) => {
+        this.pieCanalesChartOptions.title = {
+          ...this.pieCanalesChartOptions.title,
+          text: value['abc.tablero.incidentes-canales.chart.label']
+        };
+        this.pieTipoChartOptions.title = {
+          ...this.pieTipoChartOptions.title,
+          text: value['abc.tablero.incidentes-tipo.chart.label']
+        };
+        this.pieEstadoChartOptions.title = {
+          ...this.pieEstadoChartOptions.title,
+          text: value['abc.tablero.incidentes-estado.chart.label']
+        };
+        this.piePrioridadChartOptions.title = {
+          ...this.piePrioridadChartOptions.title,
+          text: value['abc.tablero.incidentes-prioridad.chart.label']
+        };
+        this.barsIncidentsChartOptions.title = {
+          ...this.barsIncidentsChartOptions.title,
+          text: value['abc.tablero.incidentes-mes-año.chart.label']
+        };
+      });
+  }
+
+  changeLang(lang: string): void {
+    this.language = lang;
+    this.translate.use(lang);
+    this.getJsonTranslations();
   }
 
   ngOnDestroy(): void {
