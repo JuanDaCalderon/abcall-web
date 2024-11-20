@@ -3,7 +3,7 @@
   <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="row g-2 needs-validation">
       <div class="col-md-6 mb-3">
         <label for="nombres" class="form-label">Nombres</label>
-        <input type="text" class="form-control" id="nombres" name="nombres" formControlName="nombres" placeholder="Pepito" pattern="^[a-zA-Z ]*$">
+        <input type="text" class="form-control"  id="nombres" name="nombres" formControlName="nombres" placeholder="Pepito" pattern="^[a-zA-Z ]*$">
         <div *ngIf="clientForm.get('nombres')?.invalid && clientForm.get('nombres')?.touched" class="text-danger">
           El nombre del cliente es requerido.
         </div>
@@ -49,7 +49,7 @@
         </div>
       </div>
     <div class="d-grid gap-2 col-6 mx-auto align-content-center ">
-      <button class="btn btn-purple btn-lg"  type="submit" [disabled]="clientForm.invalid">Guardar</button>
+      <button class="btn btn-purple btn-lg" id="guardar"  type="submit" [disabled]="clientForm.invalid">Guardar</button>
     </div>
   </form>
   <div id="liveToast" class="toast align-items-center position-fixed bottom-0 end-0 text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
