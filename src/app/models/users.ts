@@ -6,6 +6,14 @@ export enum ROLES {
   usuario = 5
 }
 
+export enum ROLES_NAME {
+  superadministrador = 'superadministrador',
+  administrador = 'administrador',
+  gestor = 'gestor',
+  cliente = 'cliente',
+  usuario = 'usuario'
+}
+
 export enum GESTORTIERS {
   junior = 'junior',
   mid = 'mid',

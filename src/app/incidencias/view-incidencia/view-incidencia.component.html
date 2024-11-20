@@ -1,99 +1,117 @@
 <div class="container top align-content-center">
-  <h1 class="text-md-center">Incidencia # {{issueId}}</h1>
+  
+  <div class = "flag" *ngIf="language === 'es' && usuario.rol.nombre ==='usuario'">
+    <img src="./assets/img/en.jpg" id="languageButton" class="icon-flag" alt="Icono bandera Reino Unido" 
+     (click)="changeLang('en')"
+     (keydown.enter)="changeLang('en')" 
+     tabindex="0">
+   </div>
+   <div class = "flag" *ngIf="language === 'en' && usuario.rol.nombre ==='usuario'">
+     <img src="./assets/img/es.jpg" class="icon-flag" alt="Icono bandera Colombia"
+     (click)="changeLang('es')"
+     (keydown.enter)="changeLang('en')" 
+     tabindex="0">
+   </div>
+
+
+  <h1 class="text-md-center">{{'abc.get.issues.issue' | translate}} # {{issueId}} </h1>
   <form [formGroup]="incidentForm" (ngSubmit)="onSubmit('creado')" class="row g-2">
       <div class="col-md-6 mb-3">
-        <label for="cliente" class="form-label">Cliente</label>
+        <label for="cliente" class="form-label">{{'abc.get.issues.customer' | translate}}</label>
         <select id="cliente" formControlName="cliente" class="form-select" >
           <option *ngFor="let cliente of clientes" [value]="cliente.id">{{cliente.nombres}} {{cliente.apellidos}}</option>
         </select>
         <div class="text-danger" *ngIf="incidentForm.get('cliente')!.touched && incidentForm.get('cliente')!.hasError('required')">
-          Cliente requerido
+          {{'abc.view.issues.error.required.customer' | translate}}
         </div>
       </div>
 
       <div class="col-md-6 mb-3">
-        <label for="fecha" class="form-label">Fecha y hora de creacion</label>
+        <label for="fecha" class="form-label">{{'abc.view.issues.datetime' | translate}}</label>
         <input class="form-control" type="text" id="fecha" formControlName="fecha">
       </div>
 
       <div class="col-md-6 mb-3">
-        <label for="nombreUsuario" class="form-label">Nombre usuario</label>
-        <select id="nombreUsuario" formControlName="nombreUsuario" placeholder="Nombre usuario" class="form-select">
+        <label for="nombreUsuario" class="form-label">{{'abc.view.issue.user.name' | translate }}</label>
+        <select id="nombreUsuario" formControlName="nombreUsuario" class="form-select">
           <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{usuario.nombres}} {{usuario.apellidos}}</option>
         </select>
         <div class="text-danger" id ="usuarioRequiredError" *ngIf="incidentForm.get('nombreUsuario')!.touched && incidentForm.get('nombreUsuario')!.hasError('required')">
-            Nombre usuario requerido
+          {{'abc.view.issue.error.required.user' | translate }}
         </div>
     </div>
 
       <div class="col-md-6 mb-3">
-        <label for="correoUsuario" class="form-label">Correo usuario</label>
-        <input class="form-control" type="email" id="correoUsuario" formControlName="correoUsuario" placeholder="Correo usuario">
+        <label for="correoUsuario" class="form-label">{{'abc.view.issue.user.email' | translate }}</label>
+        <input class="form-control" type="email" id="correoUsuario" formControlName="correoUsuario" placeholder="{{'abc.view.issue.error.required.mail' | translate }}">
+        <div class="text-danger" *ngIf="incidentForm.get('correoUsuario')!.touched && incidentForm.get('correoUsuario')!.hasError('required')">
+          {{'abc.view.issue.error.required.mail' | translate }}
+        </div>
         <div class="text-danger" id="mailFormatError" *ngIf="incidentForm.get('correoUsuario')!.touched && incidentForm.get('correoUsuario')!.hasError('email')">
-          Formato de correo inválido
+          {{'abc.view.issue.error.format.mail' | translate }}
         </div>
       </div>
 
       <div class="col-md-6 mb-3">
-        <label for="telefonoUsuario" class="form-label">Teléfono usuario</label>
-        <input class="form-control" type="tel" id="telefonoUsuario" formControlName="telefonoUsuario" placeholder="Teléfono usuario">
+        <label for="telefonoUsuario" class="form-label">{{'abc.view.issue.user.phone' | translate }}</label>
+        <input class="form-control" type="tel" id="telefonoUsuario" formControlName="telefonoUsuario" placeholder="{{'abc.view.issue.user.phone.placeholder' | translate }}">
       </div>
 
       <div class="col-md-6 mb-3">
-        <label for="direccionUsuario" class="form-label">Dirección usuario</label>
-        <input class="form-control" type="text" id="direccionUsuario" formControlName="direccionUsuario" placeholder="Dirección usuario">
+        <label for="direccionUsuario" class="form-label">{{'abc.view.issue.user.address' | translate }}</label>
+        <input class="form-control" type="text" id="direccionUsuario" formControlName="direccionUsuario" placeholder="{{'abc.view.issue.user.address' | translate }}">
       </div>
 
       <!-- Campo que debe ocupar toda la fila -->
       <div class="col-md-12 mb-3">
-        <label for="descripcionProblema" class="form-label">Descripción del problema</label>
-        <textarea class="form-control" id="descripcionProblema" formControlName="descripcionProblema" rows="4" placeholder="Descripción del problema" (input)="onDescripcionProblemaChange()"></textarea>
+        <label for="descripcionProblema" class="form-label">{{'abc.view.issue.description' | translate }}</label>
+        <textarea class="form-control" id="descripcionProblema" formControlName="descripcionProblema" rows="4" placeholder="{{'abc.view.issue.description.placeholder' | translate }}" (input)="onDescripcionProblemaChange()"></textarea>
         <div class="text-danger" id="descripcionRequiredError" *ngIf="incidentForm.get('descripcionProblema')!.touched && incidentForm.get('descripcionProblema')!.hasError('required')">
-            Descripción del problema requerido
+          {{"abc.view.issue.description.error.required" | translate }}
         </div>
     </div>
 
       <div class="col-md-6 mb-3">
-        <label for="tipoIncidencia" class="form-label">Tipo de incidencia</label>
+        <label for="tipoIncidencia" class="form-label">{{'abc.view.issue.type' | translate }}</label>
         <select id="tipoIncidencia" formControlName="tipoIncidencia" class="form-select">
-          <option>incidencia</option>
+          <option>{{'abc.view.issue.type.issue' | translate }}</option>
           <option>pqrs</option>
         </select>
       </div>
 
       <div class="col-md-6 mb-3">
-        <label for="canalIngreso" class="form-label">Canal de ingreso</label>
+        <label for="canalIngreso" class="form-label">{{'abc.view.issue.entry' | translate }}</label>
         <select id="canalIngreso" formControlName="canalIngreso" class="form-select">
           <option>web</option>
         </select>
       </div>
 
       <div class="col-md-6 mb-3">
-        <label for="prioridad" class="form-label">Prioridad</label>
+        <label for="prioridad" class="form-label">{{'abc.view.issue.priority' | translate }}</label>
         <select id="prioridad" formControlName="prioridad" class="form-select">
-          <option>baja</option>
-          <option>media</option>
-          <option>alta</option>
+          <option>{{'abc.view.issue.low' | translate }}</option>
+          <option>{{'abc.view.issue.medium' | translate }}</option>
+          <option>{{'abc.view.issue.high' | translate }}</option>
         </select>
       </div>
 
       <div class="col-md-6 mb-3">
-        <label for="estado" class="form-label">Estado</label>
+        <label for="estado" class="form-label">{{'abc.view.issue.status' | translate }}</label>
         <select id="estado" formControlName="estado" class="form-select">
-          <option>abierto</option>
-          <option>en proceso</option>
-          <option>a espera de respuesta usuario</option>
-          <option>cerrado</option>
+          <option>{{'abc.view.issue.open' | translate }}</option>
+          <option>{{'abc.view.issue.progress' | translate }}</option>
+          <option>{{'abc.view.issue.awaiting' | translate }}</option>
+          <option>{{'abc.view.issue.closed' | translate }}</option>
         </select>
       </div>
 
       <div class="col-md-6 mb-3">
-        <label for="comentarios" class="form-label">Comentarios</label>
+        <label for="comentarios" class="form-label">{{'abc.view.issue.comment' | translate }}</label>
         <textarea class="form-control" id="comentarios" formControlName="comentarios"></textarea>
       </div>
 
       <div class="col-md-6 mb-3">
-        <label for="nuevoComentario" class="form-label">Nuevo comentario</label>
+        <label for="nuevoComentario" class="form-label">{{'abc.view.issue.new.comment' | translate }}</label>
         <textarea class="form-control" id="nuevoComentario" formControlName="nuevoComentario"></textarea>
       </div>
 
@@ -105,13 +123,13 @@
 
       <div class="row">
         <div class="d-grid gap-2 col-4 mx-auto">
-          <button type="button" id="guardar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit('creado')">Guardar</button>
+          <button type="button" id="guardar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit('creado')">{{'abc.view.issue.save' | translate }}</button>
         </div>
-        <div class="d-grid gap-2 col-4 mx-auto">
-          <button type="button" id="escalar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit('escalado')">Escalar</button>
+        <div class="d-grid gap-2 col-4 mx-auto" *ngIf="showEscaladoButton">
+          <button type="button" id="escalar" class="btn btn-lg btn-purple" [disabled]="!incidentForm.valid" (click)="onSubmit('escalado')">{{'abc.view.issue.escalate' | translate }}</button>
         </div>
-        <div class="d-grid gap-2 col-4 mx-auto">
-          <button type="button" id="cerrar" class="btn btn-lg btn-secondary" [disabled]="!incidentForm.valid" (click)="onSubmit('cerrado')">Cerrar</button>
+        <div class="d-grid gap-2 col-4 mx-auto" *ngIf="showEscaladoButton">
+          <button type="button" id="cerrar" class="btn btn-lg btn-secondary" [disabled]="!incidentForm.valid" (click)="onSubmit('cerrado')">{{'abc.view.issue.close' | translate }}</button>
         </div>
       </div>
   </form>

@@ -1,0 +1,49 @@
+<div class="container pt-5 mt-5">
+  <div class="row">
+    <div class="col-12 mb-3">
+      <h2>Tablero de {{usuario?.nombres + ' ' + usuario?.apellidos}}</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 col-sm-4">
+      <div id="canalesChart">
+        <apx-chart [series]="pieCanalesChartOptions.series" [chart]="pieCanalesChartOptions.chart"
+          [labels]="pieCanalesChartOptions.labels" [responsive]="pieCanalesChartOptions.responsive"
+          [title]="pieCanalesChartOptions.title">
+        </apx-chart>
+      </div>
+    </div>
+    <div class="col-12 col-sm-4">
+      <div id="tiposChart">
+        <apx-chart [series]="pieTipoChartOptions.series" [chart]="pieTipoChartOptions.chart"
+          [labels]="pieTipoChartOptions.labels" [responsive]="pieTipoChartOptions.responsive"
+          [title]="pieTipoChartOptions.title">
+        </apx-chart>
+      </div>
+    </div>
+    <div class="col-12 col-sm-4">
+      <div id="estadosChart">
+        <apx-chart [series]="pieEstadoChartOptions.series" [chart]="pieEstadoChartOptions.chart"
+          [labels]="pieEstadoChartOptions.labels" [responsive]="pieEstadoChartOptions.responsive"
+          [title]="pieEstadoChartOptions.title">
+        </apx-chart>
+      </div>
+    </div>
+    <div class="col-12 col-sm-4 mt-3">
+      <div id="prioridadChart">
+        <apx-chart [series]="piePrioridadChartOptions.series" [chart]="piePrioridadChartOptions.chart"
+          [labels]="piePrioridadChartOptions.labels" [responsive]="piePrioridadChartOptions.responsive"
+          [title]="piePrioridadChartOptions.title">
+        </apx-chart>
+      </div>
+    </div>
+    <div class="col-12 col-sm-8 mt-3">
+      <div id="barsChart">
+        <apx-chart [series]="barsIncidentsChartOptions.series" [chart]="barsIncidentsChartOptions.chart"
+          [dataLabels]="barsIncidentsChartOptions.dataLabels" [plotOptions]="barsIncidentsChartOptions.plotOptions"
+          [yaxis]="barsIncidentsChartOptions.yaxis" [xaxis]="barsIncidentsChartOptions.xaxis"
+          [title]="barsIncidentsChartOptions.title"></apx-chart>
+      </div>
+    </div>
+  </div>
+</div>
