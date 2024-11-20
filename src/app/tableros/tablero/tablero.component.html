@@ -1,9 +1,19 @@
 <div class="container pt-4 mt-5">
   <div class="row">
+    <div class="flag col mb-3" *ngIf="language === 'es'">
+      <img src="./assets/img/en.jpg" id="languageButton" class="icon-flag" alt="Icono bandera Reino Unido"
+        (click)="changeLang('en')" (keydown.enter)="changeLang('en')" tabindex="0">
+    </div>
+    <div class="flag col mb-3" *ngIf="language === 'en'">
+      <img src="./assets/img/es.jpg" class="icon-flag" alt="Icono bandera Colombia" (click)="changeLang('es')"
+        (keydown.enter)="changeLang('es')" tabindex="0">
+    </div>
+  </div>
+  <div class="row">
     <div class="col-12">
       <div class="row">
         <div *ngIf="filterPath === 'cliente' || filterPath === 'todos'" class="col-4 mb-4">
-          <label for="cliente" class="form-label">Cliente</label>
+          <label for="cliente" class="form-label">{{ 'abc.tablero.cliente.label' | translate}}</label>
           <select data-cy="cliente" class="form-select" aria-label="cliente" id="cliente" name="cliente"
             [formControl]="cliente">
             <option [value]="'todos'" selected>Todos los clientes</option>
@@ -14,7 +24,7 @@
           </select>
         </div>
         <div *ngIf="filterPath === 'gestor' || filterPath === 'todos'" class="col-4 mb-4">
-          <label for="gestor" class="form-label">Gestor</label>
+          <label for="gestor" class="form-label">{{ 'abc.tablero.gestor.label' | translate}}</label>
           <select data-cy="gestor" class="form-select" aria-label="gestor" id="gestor" name="gestor"
             [formControl]="gestor">
             <option [value]="'todos'" selected>Todos los gestores</option>
@@ -24,7 +34,7 @@
           </select>
         </div>
         <div *ngIf="filterPath === 'usuario' || filterPath === 'todos'" class="col-4 mb-4">
-          <label for="usuario" class="form-label">Usuarios</label>
+          <label for="usuario" class="form-label">{{ 'abc.tablero.usuarios.label' | translate}}</label>
           <select data-cy="usuario" class="form-select" aria-label="usuario" id="usuario" name="usuario"
             [formControl]="usuario">
             <option [value]="'todos'" selected>Todos los usuarios</option>
