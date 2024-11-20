@@ -5,5 +5,6 @@ export const environment = {
   portUsuario: '8003',
   portConsulIncidencias: '8001',
   portCrearEditarIncidentes: '8000',
-  portIaGenerativa: '8005'
+  portIaGenerativa: '8005',
+  portTextos: '8006'
 };

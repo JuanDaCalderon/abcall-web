@@ -1,0 +1,35 @@
+<div class="container top align-content-center">
+    <div class="row">
+      <div class="col">
+        <h1>Personalizar texto saludo y cierre</h1>
+      </div>
+    </div>
+  
+    <div class="container top align-content-center">
+      <form [formGroup]="textosForm" class="row g-2">
+        <div>
+          <label for="cliente" class="form-label">Cliente</label>
+          <select id="cliente" formControlName="cliente" class="form-select" (change)="getTextos($event)">
+            <option *ngFor="let cliente of clientes" [value]="cliente.id">{{ cliente.nombres }} {{cliente.apellidos}}</option>
+          </select>
+          <div class="text-danger" *ngIf="textosForm.get('cliente')!.touched && textosForm.get('cliente')!.hasError('required')">
+            Cliente requerido
+          </div>
+        </div>
+  
+        <div class="container top align-content-center">
+          <label for="saludo" class="form-label">Saludo</label>
+          <input id="saludo" formControlName="saludo" class="form-control" />
+        </div>
+  
+        <div class="container top align-content-center">
+          <label for="cierre" class="form-label">Cierre</label>
+          <input id="cierre" formControlName="cierre" class="form-control" />
+        </div>
+  
+        <div class="container top align-content-center">
+          <button class="btn btn-purple" type="submit" (click)="validarTextos()">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
