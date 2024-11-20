@@ -20,7 +20,8 @@ describe('PersonalizarTextosComponent', () => {
     });
     const textosServiceSpy = jasmine.createSpyObj('TextosService', {
       getTextos: of([]),
-      putTextos: of({})
+      putTextos: of({}),
+      postTextos: of({})
     });
     const toastrServiceSpy = jasmine.createSpyObj('ToastrService', ['success', 'error']);
 
@@ -84,6 +85,22 @@ describe('PersonalizarTextosComponent', () => {
     expect(component.textosForm.reset).toHaveBeenCalled();
   });
 
+  it('should call postTextos, show success message, and reset form', () => {
+    const mockTextos = {id: 1, saludo: 'Hola', cierre: 'Adiós', clienteid: '123'};
+    textosService.postTextos.and.returnValue(of(mockTextos));
+    spyOn(component, 'showToast');
+
+    component.textos = {id: 1, saludo: 'Hola', cierre: 'Adiós', clienteid: '123'};
+
+    component.textosForm.setValue({cliente: '123', saludo: 'Hola', cierre: 'Adiós'});
+    spyOn(component.textosForm, 'reset');
+    component.postTextos();
+
+    expect(textosService.postTextos).toHaveBeenCalledWith({id: 1, clienteid: '123', saludo: 'Hola', cierre: 'Adiós'});
+    expect(component.showToast).toHaveBeenCalledWith('Textos actualizados correctamente', 'success');
+    expect(component.textosForm.reset).toHaveBeenCalled();
+  });
+
   it('should show success message', () => {
     const message = 'Operation successful';
     const type = 'success';
@@ -110,5 +127,27 @@ describe('PersonalizarTextosComponent', () => {
     component.showToast(message, type);
 
     expect(toastrService.error).toHaveBeenCalledWith(message, 'Error', configToast);
+  });
+
+  it('should call putTextos when verifTexto is true', () => {
+    spyOn(component, 'putTextos');
+    spyOn(component, 'postTextos');
+
+    component.verifTexto = true;
+    component.validarTextos();
+
+    expect(component.putTextos).toHaveBeenCalled();
+    expect(component.postTextos).not.toHaveBeenCalled();
+  });
+
+  it('should call postTextos when verifTexto is false', () => {
+    spyOn(component, 'putTextos');
+    spyOn(component, 'postTextos');
+
+    component.verifTexto = false;
+    component.validarTextos();
+
+    expect(component.postTextos).toHaveBeenCalled();
+    expect(component.putTextos).not.toHaveBeenCalled();
   });
 });
