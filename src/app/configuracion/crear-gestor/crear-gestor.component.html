@@ -13,7 +13,7 @@
     <form [formGroup]="crearGestorForm" (ngSubmit)="onSubmit()" class="row g-2 needs-validation">
         <div class="col-md-6 mb-3">
             <label for="email" class="form-label">{{'abc.crear-gestor.correo.label' | translate}}</label>
-            <input data-cy="email-input" type="email" class="form-control" id="email" name="email"
+            <input data-cy="email-input" type="email" class="form-control" id="email" name="email" maxlength="70"
                 formControlName="email" placeholder="name@example.com">
             <div *ngIf="crearGestorForm.get('email')?.invalid && crearGestorForm.get('email')?.touched"
                 class="text-danger">
@@ -26,7 +26,7 @@
         </div>
         <div class="col-md-6 mb-3">
             <label for="username" class="form-label">{{'abc.crear-gestor.username.label' | translate}}</label>
-            <input data-cy="username-input" type="text" class="form-control" id="username" name="username"
+            <input data-cy="username-input" type="text" class="form-control" id="username" name="username" maxlength="70"
                 formControlName="username" placeholder="PepitoMotoRatones">
             <div *ngIf="crearGestorForm.get('username')?.invalid && crearGestorForm.get('username')?.touched"
                 class="text-danger">
@@ -35,7 +35,7 @@
         </div>
         <div class="col-md-6 mb-3">
             <label for="telefono" class="form-label">{{'abc.crear-gestor.telefono.label' | translate}}</label>
-            <input data-cy="telefono-input" type="text" class="form-control" id="telefono" name="telefono"
+            <input data-cy="telefono-input" type="text" class="form-control" id="telefono" name="telefono" maxlength="10"
                 formControlName="telefono" placeholder="22222">
             <div *ngIf="crearGestorForm.get('telefono')?.invalid && crearGestorForm.get('telefono')?.touched"
                 class="text-danger">
@@ -48,12 +48,12 @@
         </div>
         <div class="col-md-6 mb-3">
             <label for="password" class="form-label">{{'abc.crear-gestor.password.label' | translate}}</label>
-            <input data-cy="password-input" type="password" class="form-control" id="password" name="password"
+            <input data-cy="password-input" type="password" class="form-control" id="password" name="password" maxlength="50"
                 formControlName="password" placeholder="*******">
         </div>
         <div class="col-md-6 mb-3">
             <label for="nombres" class="form-label">{{'abc.crear-gestor.nombres.label' | translate}}</label>
-            <input data-cy="nombres-input" type="text" class="form-control" id="nombres" name="nombres"
+            <input data-cy="nombres-input" type="text" class="form-control" id="nombres" name="nombres" maxlength="70"
                 formControlName="nombres" placeholder="pepito">
             <div *ngIf="crearGestorForm.get('nombres')?.invalid && crearGestorForm.get('nombres')?.touched"
                 class="text-danger">
@@ -62,7 +62,7 @@
         </div>
         <div class="col-md-6 mb-3">
             <label for="apellidos" class="form-label">{{'abc.crear-gestor.apellidos.label' | translate}}</label>
-            <input data-cy="apellidos-input" type="text" class="form-control" id="apellidos" name="apellidos"
+            <input data-cy="apellidos-input" type="text" class="form-control" id="apellidos" name="apellidos" maxlength="70"
                 formControlName="apellidos" placeholder="perez">
             <div *ngIf="crearGestorForm.get('apellidos')?.invalid && crearGestorForm.get('apellidos')?.touched"
                 class="text-danger">
@@ -71,7 +71,7 @@
         </div>
         <div class="col-md-6 mb-3">
             <label for="direccion" class="form-label">{{'abc.crear-gestor.direccion.label' | translate}}</label>
-            <input data-cy="direccion-input" type="text" class="form-control" id="direccion" name="direccion"
+            <input data-cy="direccion-input" type="text" class="form-control" id="direccion" name="direccion" maxlength="200"
                 formControlName="direccion" placeholder="Calle XX #XX - XX">
         </div>
         <div class="col-md-6 mb-3">
