@@ -7,8 +7,8 @@ describe('E2E incidencias', () => {
         username: faker.internet.userName().toLowerCase(),
         password: '123456789',
         telefono: faker.phone.phoneNumber('##########'),
-        nombres: faker.name.firstName().toLowerCase(),
-        apellidos: faker.name.lastName().toLowerCase(),
+        nombres: faker.name.firstName().replace("'", '').toLowerCase(),
+        apellidos: faker.name.lastName().replace("'", '').toLowerCase(),
         direccion: faker.address.streetAddress().toLowerCase(),
         rol: 1
     }
@@ -18,8 +18,8 @@ describe('E2E incidencias', () => {
         username: faker.internet.userName().toLowerCase(),
         password: '123456789',
         telefono: faker.phone.phoneNumber("##########"),
-        nombre: faker.name.firstName().toLowerCase(),
-        apellidos: faker.name.lastName().toLowerCase(),
+        nombres: faker.name.firstName().replace("'", '').toLowerCase(),
+        apellidos: faker.name.lastName().replace("'", '').toLowerCase(),
         direccion: faker.address.streetAddress().toLowerCase(),
         gestor: 'junior'    
     };
@@ -29,18 +29,21 @@ describe('E2E incidencias', () => {
         username: faker.internet.userName().toLowerCase(),
         password: '123456789',
         telefono: faker.phone.phoneNumber('##########'), 
-        nombre: faker.name.firstName().toLowerCase(),
-        apellidos: faker.name.lastName().toLowerCase(),
+        nombres: faker.name.firstName().replace("'", '').toLowerCase(),
+        apellidos: faker.name.lastName().replace("'", '').toLowerCase(),
         direccion: faker.address.streetAddress().toLowerCase(),
         gestor: 'mid'    
     };
 
     const mockCliente = {   
-        nombres: faker.name.firstName().toLowerCase(),
-        apellidos: faker.name.lastName().toLowerCase(),
         email: faker.internet.email().toLowerCase(),
-        telefono: faker.phone.phoneNumber('##########'), 
-        direccion: faker.address.streetAddress().toLowerCase()
+        username: faker.internet.userName().toLowerCase(),
+        password: '123456789',
+        telefono: faker.phone.phoneNumber('#########'),
+        nombres: faker.name.firstName().replace("'", '').toLowerCase(),
+        apellidos: faker.name.lastName().replace("'", '').toLowerCase(),
+        direccion: faker.address.streetAddress().toLowerCase(),
+        rol: 4
     }
 
     const mockUsuario = {
@@ -48,8 +51,8 @@ describe('E2E incidencias', () => {
         username: faker.internet.userName().toLowerCase(),
         password: '123456789',
         telefono: faker.phone.phoneNumber('##########'),
-        nombres: faker.name.firstName().toLowerCase(),
-        apellidos: faker.name.lastName().toLowerCase(),
+        nombres: faker.name.firstName().replace(/[^a-zA-Z]/g, '').toLowerCase(),
+        apellidos: faker.name.lastName().replace(/[^a-zA-Z]/g, '').toLowerCase(),
         direccion: faker.address.streetAddress().toLowerCase(),
         rol: 5
     }
@@ -94,6 +97,12 @@ describe('E2E incidencias', () => {
 
     const mockRespuestaIA = 'Por favor, intenta lo siguiente para resolver el problema de conexión: 1) Revisa que tu dispositivo esté conectado a internet; 2) Reinicia tu router o punto de acceso; 3) Verifica que no haya restricciones de red en tu firewall o antivirus. Si el problema persiste, contáctanos para mayor asistencia.';
 
+    let incidenteId = 0;
+
+    beforeEach(() => {        
+        cy.visit('/login'); // Adjust the URL according to your routing configuration
+    });
+
     it('Crear superusuario', () => {
         cy.request({
             method: 'POST',
@@ -115,7 +124,6 @@ describe('E2E incidencias', () => {
     });
 
     it('Crear gestor junior con superadmin', () => {
-        cy.visit('/login'); 
         cy.get('input[id="email"]').type(mockSuperUsuario.email);
         cy.get('input[id="password"]').type(mockSuperUsuario.password);
         cy.get('button[type="submit"]').click();
@@ -126,25 +134,25 @@ describe('E2E incidencias', () => {
         cy.get('a[id="crearGestor"]').click();
         
         cy.get('form').should('be.visible');
+        cy.wait(1000);
 
         cy.get('input[id="email"]').type(mockGestorJunior.email, {force: true});
         cy.get('input[id="username"]').type(mockGestorJunior.username, {force: true});
         cy.get('input[id="password"]').clear({force: true});
         cy.get('input[id="password"]').type(mockGestorJunior.password, {force: true});
         cy.get('input[id="telefono"]').type(mockGestorJunior.telefono, {force: true});
-        cy.get('input[id="nombres"]').type(mockGestorJunior.nombre, {force: true});
+        cy.get('input[id="nombres"]').type(mockGestorJunior.nombres, {force: true});
         cy.get('input[id="apellidos"]').type(mockGestorJunior.apellidos, {force: true});
         cy.get('input[id="direccion"]').type(mockGestorJunior.direccion, {force: true});
         cy.get('select[id="gestortier"]').select(mockGestorJunior.gestor, {force: true});
 
         cy.get('button[data-cy="submit-button"]').should('be.enabled');
         cy.get('button[data-cy="submit-button"]').click();
+        cy.wait(200);
         cy.get('.toast-success').should('be.visible').and('contain', 'gestor creado satisfactoriamente');
     });
 
     it('Crear gestor mid con superadmin', () => {
-        
-        cy.visit('/login'); 
         cy.get('input[id="email"]').type(mockSuperUsuario.email);
         cy.get('input[id="password"]').type(mockSuperUsuario.password);
         cy.get('button[type="submit"]').click();
@@ -155,24 +163,25 @@ describe('E2E incidencias', () => {
         cy.get('a[id="crearGestor"]').click();
         
         cy.get('form').should('be.visible');
+        cy.wait(1000);
 
         cy.get('input[id="email"]').type(mockGestorMid.email, {force: true});
         cy.get('input[id="username"]').type(mockGestorMid.username, {force: true});
         cy.get('input[id="password"]').clear({force: true});
         cy.get('input[id="password"]').type(mockGestorMid.password, {force: true});
         cy.get('input[id="telefono"]').type(mockGestorMid.telefono, {force: true});
-        cy.get('input[id="nombres"]').type(mockGestorMid.nombre, {force: true});
+        cy.get('input[id="nombres"]').type(mockGestorMid.nombres, {force: true});
         cy.get('input[id="apellidos"]').type(mockGestorMid.apellidos, {force: true});
         cy.get('input[id="direccion"]').type(mockGestorMid.direccion, {force: true});
         cy.get('select[id="gestortier"]').select(mockGestorMid.gestor, {force: true});
 
         cy.get('button[data-cy="submit-button"]').should('be.enabled');
         cy.get('button[data-cy="submit-button"]').click();
+        cy.wait(200);
         cy.get('.toast-success').should('be.visible').and('contain', 'gestor creado satisfactoriamente');    
     });
 
-    it('Crea cliente con superadmin', () => {        
-        cy.visit('/login'); 
+    /*it('Crear cliente con superadmin', () => {        
         cy.get('input[id="email"]').type(mockSuperUsuario.email);
         cy.get('input[id="password"]').type(mockSuperUsuario.password);
         cy.get('button[type="submit"]').click();
@@ -183,6 +192,7 @@ describe('E2E incidencias', () => {
         cy.get('a[id="crearCliente"]').click();
 
         cy.get('form').should('be.visible');
+        cy.wait(1000);
 
         cy.get('input[id="nombres"]').type(mockCliente.nombres, {force: true});
         cy.get('input[id="apellidos"]').type(mockCliente.apellidos, {force: true});
@@ -192,10 +202,31 @@ describe('E2E incidencias', () => {
 
         cy.get('button[type="submit"]').should('be.enabled');
         cy.get('button[type="submit"]').click();
+        cy.wait(1000);
 
-    }); 
+    }); */
 
-    it('crear usuario()', () => {
+    it('Crea cliente con superadmin', () => {
+        cy.request({
+            method: 'POST',
+            url: 'http://localhost:8003/usuario/register',
+            body: {
+                email: mockCliente.email,
+                username: mockCliente.username,
+                password: mockCliente.password,
+                telefono: mockCliente.telefono,
+                nombres: mockCliente.nombres,
+                apellidos: mockCliente.apellidos,
+                direccion: mockCliente.direccion,
+                rol: mockCliente.rol
+            }
+        }).then((response) => {
+            expect(response.status).to.eq(201);
+            expect(response.body).to.have.property('id');
+        });
+    });
+
+    it('Crear usuario', () => {
         cy.request({
             method: 'POST',
             url: 'http://localhost:8003/usuario/register',
@@ -216,8 +247,6 @@ describe('E2E incidencias', () => {
     });
 
     it('Crear un incidente como gestor junior', () => {
-
-        cy.visit('/login'); 
         cy.get('input[id="email"]').type(mockGestorJunior.email);
         cy.get('input[id="password"]').clear({force: true});
         cy.get('input[id="password"]').type(mockGestorJunior.password);
@@ -226,6 +255,7 @@ describe('E2E incidencias', () => {
         cy.get('a[id="crearIncidencia"]').click();
 
         cy.get('form').should('be.visible');
+        cy.wait(1000);
         cy.get('select[id="cliente"]').select(mockIncidente.cliente, {force: true});
         cy.get('select[id="nombreUsuario"]').select(mockIncidente.nombreUsuario, {force: true});
         cy.get('input[id="correoUsuario"]').type(mockIncidente.correoUsuario, {force: true});
@@ -241,12 +271,21 @@ describe('E2E incidencias', () => {
         cy.get('button[id="escalar"]').should('be.enabled');
 
         cy.get('button[id="guardar"]').click();
+        cy.wait(200);
         cy.get('.toast-success').should('be.visible').and('contain', 'Incidente creado correctamente');
+        cy.get('.toast-success').invoke('text').then((toastText) => {
+            const toastMessage = toastText;
+            expect(toastMessage).to.contain('');
+            const numbers = toastMessage.match(/\d+/g);
+            cy.log('******* id '+ numbers);
+            expect(numbers).to.not.be.null;
+            if (numbers) {
+                incidenteId = parseInt(numbers[0], 10);
+            }
+        });
     });
 
     it('Actualizar y escalar la incidencia', () => {
-        
-        cy.visit('/login'); 
         cy.get('input[id="email"]').type(mockGestorJunior.email);
         cy.get('input[id="password"]').clear({force: true});
         cy.get('input[id="password"]').type(mockGestorJunior.password);
@@ -263,6 +302,7 @@ describe('E2E incidencias', () => {
         });
         
         cy.get('form').should('be.visible');
+        cy.wait(1000);
         cy.get('select[id="cliente"]').select(mockIncidenteUpdate.cliente, {force: true});
         cy.get('select[id="nombreUsuario"]').select(mockIncidenteUpdate.nombreUsuario, {force: true});
         cy.get('select[id="tipoIncidencia"]').select(mockIncidenteUpdate.tipoIncidencia, {force: true});
@@ -274,12 +314,11 @@ describe('E2E incidencias', () => {
         cy.get('button[id="escalar"]').should('be.enabled');
 
         cy.get('button[id="escalar"]').click();
+        cy.wait(200);
         cy.get('.toast-success').should('be.visible').and('contain', 'Actualización exitosa');
     });
 
     it('Actualizar la incidencia por el gestor mid', () => {
-        
-        cy.visit('/login'); 
         cy.get('input[id="email"]').type(mockGestorMid.email);
         cy.get('input[id="password"]').clear({force: true});
         cy.get('input[id="password"]').type(mockGestorMid.password);
@@ -296,6 +335,7 @@ describe('E2E incidencias', () => {
         });
         
         cy.get('form').should('be.visible');
+        cy.wait(1000);
         cy.get('select[id="cliente"]').select(mockIncidenteUpdate.cliente, {force: true});
         cy.get('select[id="nombreUsuario"]').select(mockIncidenteUpdate.nombreUsuario, {force: true});
         cy.get('select[id="tipoIncidencia"]').select(mockIncidenteUpdate2.tipoIncidencia, {force: true});
@@ -307,6 +347,7 @@ describe('E2E incidencias', () => {
         cy.get('button[id="escalar"]').should('be.enabled');
 
         cy.get('button[id="guardar"]').click();
+        cy.wait(200);
         cy.get('.toast-success').should('be.visible').and('contain', 'Actualización exitosa');
 
 
@@ -322,6 +363,7 @@ describe('E2E incidencias', () => {
         });
 
         cy.get('form').should('be.visible');
+        cy.wait(1000);
         cy.get('select[id="cliente"]').should('contain', mockIncidenteUpdate2.cliente);
         cy.get('select[id="nombreUsuario"]').should('contain', mockIncidenteUpdate2.nombreUsuario);
         cy.get('select[id="tipoIncidencia"]').should('contain', mockIncidenteUpdate2.tipoIncidencia);
@@ -330,7 +372,6 @@ describe('E2E incidencias', () => {
     });
 
     it('crear un comentario por un usuario', () => {
-        cy.visit('/login'); 
         cy.get('input[id="email"]').type(mockUsuario.email);
         cy.get('input[id="password"]').clear({force: true});
         cy.get('input[id="password"]').type(mockUsuario.password);
@@ -346,8 +387,8 @@ describe('E2E incidencias', () => {
         }
 
         cy.get('form').should('be.visible');
+        cy.wait(1000);
 
-        cy.get('form').should('be.visible');
         cy.get('img[id="languageButton"]').click();
 
         //cy.get('h1="[id="formTitle"]').should('contain', 'Issue details');
@@ -361,6 +402,7 @@ describe('E2E incidencias', () => {
         cy.get('button[id="guardar"]').should('be.enabled');
 
         cy.get('button[id="guardar"]').click();
+        cy.wait(200);
         cy.get('.toast-success').should('be.visible').and('contain', 'Actualización exitosa');
 
         // Click en el boton the "Ver/Editar" de la ultima tarjeta creada
@@ -373,7 +415,10 @@ describe('E2E incidencias', () => {
         }
         });
 
+        cy
+
         cy.get('form').should('be.visible');
+        cy.wait(1000);
         cy.get('textarea[id="comentarios"]').should('contain.value', 'Nuevo comentario');
         
         });
