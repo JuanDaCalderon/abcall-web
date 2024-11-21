@@ -1,6 +1,6 @@
-import {faker} from '@faker-js/faker';
+import { faker } from '@faker-js/faker';
 
-describe('Update Incidencia by usuario', () => {
+describe('E2E incidencias', () => { 
     
     const mockSuperUsuario = {
         email: faker.internet.email().toLowerCase(),
@@ -92,8 +92,7 @@ describe('Update Incidencia by usuario', () => {
         comentario: faker.lorem.sentence().toLowerCase()
     };
 
-  const mockRespuestaIA =
-    'Por favor, intenta lo siguiente para resolver el problema de conexión: 1) Revisa que tu dispositivo esté conectado a internet; 2) Reinicia tu router o punto de acceso; 3) Verifica que no haya restricciones de red en tu firewall o antivirus. Si el problema persiste, contáctanos para mayor asistencia.';
+    const mockRespuestaIA = 'Por favor, intenta lo siguiente para resolver el problema de conexión: 1) Revisa que tu dispositivo esté conectado a internet; 2) Reinicia tu router o punto de acceso; 3) Verifica que no haya restricciones de red en tu firewall o antivirus. Si el problema persiste, contáctanos para mayor asistencia.';
 
     it('Crear superusuario', () => {
         cy.request({
@@ -143,6 +142,35 @@ describe('Update Incidencia by usuario', () => {
         cy.get('.toast-success').should('be.visible').and('contain', 'gestor creado satisfactoriamente');
     });
 
+    it('Crear gestor mid con superadmin', () => {
+        
+        cy.visit('/login'); 
+        cy.get('input[id="email"]').type(mockSuperUsuario.email);
+        cy.get('input[id="password"]').type(mockSuperUsuario.password);
+        cy.get('button[type="submit"]').click();
+    
+        cy.get('button[id="mostrarNavBar"]').should('be.visible');
+
+        cy.get('button[id="mostrarNavBar"]').click();
+        cy.get('a[id="crearGestor"]').click();
+        
+        cy.get('form').should('be.visible');
+
+        cy.get('input[id="email"]').type(mockGestorMid.email, {force: true});
+        cy.get('input[id="username"]').type(mockGestorMid.username, {force: true});
+        cy.get('input[id="password"]').clear({force: true});
+        cy.get('input[id="password"]').type(mockGestorMid.password, {force: true});
+        cy.get('input[id="telefono"]').type(mockGestorMid.telefono, {force: true});
+        cy.get('input[id="nombres"]').type(mockGestorMid.nombre, {force: true});
+        cy.get('input[id="apellidos"]').type(mockGestorMid.apellidos, {force: true});
+        cy.get('input[id="direccion"]').type(mockGestorMid.direccion, {force: true});
+        cy.get('select[id="gestortier"]').select(mockGestorMid.gestor, {force: true});
+
+        cy.get('button[data-cy="submit-button"]').should('be.enabled');
+        cy.get('button[data-cy="submit-button"]').click();
+        cy.get('.toast-success').should('be.visible').and('contain', 'gestor creado satisfactoriamente');    
+    });
+
     it('Crea cliente con superadmin', () => {        
         cy.visit('/login'); 
         cy.get('input[id="email"]').type(mockSuperUsuario.email);
@@ -164,6 +192,7 @@ describe('Update Incidencia by usuario', () => {
 
         cy.get('button[type="submit"]').should('be.enabled');
         cy.get('button[type="submit"]').click();
+
     }); 
 
     it('crear usuario()', () => {
@@ -196,24 +225,109 @@ describe('Update Incidencia by usuario', () => {
         cy.get('button[id="mostrarNavBar"]').click();
         cy.get('a[id="crearIncidencia"]').click();
 
-    cy.get('form').should('be.visible');
-    cy.get('select[id="cliente"]').select(mockIncidente.cliente, {force: true});
-    cy.get('select[id="nombreUsuario"]').select(mockIncidente.nombreUsuario, {force: true});
-    cy.get('input[id="correoUsuario"]').type(mockIncidente.correoUsuario, {force: true});
-    cy.get('input[id="telefonoUsuario"]').type(mockIncidente.telefonoUsuario, {force: true});
-    cy.get('input[id="direccionUsuario"]').type(mockIncidente.direccionUsuario, {force: true});
-    cy.get('textarea[id="descripcionProblema"]').type(mockIncidente.descripcionProblema, {force: true});
-    cy.get('select[id="tipoIncidencia"]').select(mockIncidente.tipoIncidencia, {force: true});
-    cy.get('select[id="prioridad"]').select(mockIncidente.prioridad, {force: true});
-    cy.get('select[id="estado"]').select(mockIncidente.estado, {force: true});
+        cy.get('form').should('be.visible');
+        cy.get('select[id="cliente"]').select(mockIncidente.cliente, {force: true});
+        cy.get('select[id="nombreUsuario"]').select(mockIncidente.nombreUsuario, {force: true});
+        cy.get('input[id="correoUsuario"]').type(mockIncidente.correoUsuario, {force: true});
+        cy.get('input[id="telefonoUsuario"]').type(mockIncidente.telefonoUsuario, {force: true});
+        cy.get('input[id="direccionUsuario"]').type(mockIncidente.direccionUsuario, {force: true});
+        cy.get('textarea[id="descripcionProblema"]').type(mockIncidente.descripcionProblema, {force: true});
+        cy.get('select[id="tipoIncidencia"]').select(mockIncidente.tipoIncidencia, {force: true});
+        cy.get('select[id="prioridad"]').select(mockIncidente.prioridad,{force: true});
+        cy.get('select[id="estado"]').select(mockIncidente.estado, {force: true});
 
-    cy.get('textarea[id="respuestaIA"]').should('have.value', mockRespuestaIA);
-    cy.get('button[id="guardar"]').should('be.enabled');
-    cy.get('button[id="escalar"]').should('be.enabled');
+        cy.get('textarea[id="respuestaIA"]').should('have.value', mockRespuestaIA);
+        cy.get('button[id="guardar"]').should('be.enabled');
+        cy.get('button[id="escalar"]').should('be.enabled');
 
-    cy.get('button[id="guardar"]').click();
-    cy.get('.toast-success').should('be.visible').and('contain', 'Incidente creado correctamente');
-  });
+        cy.get('button[id="guardar"]').click();
+        cy.get('.toast-success').should('be.visible').and('contain', 'Incidente creado correctamente');
+    });
+
+    it('Actualizar y escalar la incidencia', () => {
+        
+        cy.visit('/login'); 
+        cy.get('input[id="email"]').type(mockGestorJunior.email);
+        cy.get('input[id="password"]').clear({force: true});
+        cy.get('input[id="password"]').type(mockGestorJunior.password);
+        cy.get('button[type="submit"]').click();
+        
+        // Click en el boton the "Ver/Editar" de la ultima tarjeta creada
+        cy.get('div.card').last().within(() => {
+            cy.get('button[id="verEditar"]').click();
+        });
+        cy.get('body').then($body => {
+        if ($body.find('.toast-close-button').length > 0) {
+            cy.get('.toast-close-button').click();
+        }
+        });
+        
+        cy.get('form').should('be.visible');
+        cy.get('select[id="cliente"]').select(mockIncidenteUpdate.cliente, {force: true});
+        cy.get('select[id="nombreUsuario"]').select(mockIncidenteUpdate.nombreUsuario, {force: true});
+        cy.get('select[id="tipoIncidencia"]').select(mockIncidenteUpdate.tipoIncidencia, {force: true});
+        cy.get('select[id="prioridad"]').select(mockIncidenteUpdate.prioridad,{force: true});
+        cy.get('select[id="estado"]').select(mockIncidenteUpdate.estado, {force: true});
+        cy.get('textarea[id="nuevoComentario"]').type(mockIncidenteUpdate.comentario, {force: true});
+        
+        cy.get('button[id="guardar"]').should('be.enabled');
+        cy.get('button[id="escalar"]').should('be.enabled');
+
+        cy.get('button[id="escalar"]').click();
+        cy.get('.toast-success').should('be.visible').and('contain', 'Actualización exitosa');
+    });
+
+    it('Actualizar la incidencia por el gestor mid', () => {
+        
+        cy.visit('/login'); 
+        cy.get('input[id="email"]').type(mockGestorMid.email);
+        cy.get('input[id="password"]').clear({force: true});
+        cy.get('input[id="password"]').type(mockGestorMid.password);
+        cy.get('button[type="submit"]').click();
+        
+        // Click en el boton the "Ver/Editar" de la ultima tarjeta creada
+        cy.get('div.card').last().within(() => {
+            cy.get('button[id="verEditar"]').click();
+        });
+        cy.get('body').then($body => {
+        if ($body.find('.toast-close-button').length > 0) {
+            cy.get('.toast-close-button').click();
+        }
+        });
+        
+        cy.get('form').should('be.visible');
+        cy.get('select[id="cliente"]').select(mockIncidenteUpdate.cliente, {force: true});
+        cy.get('select[id="nombreUsuario"]').select(mockIncidenteUpdate.nombreUsuario, {force: true});
+        cy.get('select[id="tipoIncidencia"]').select(mockIncidenteUpdate2.tipoIncidencia, {force: true});
+        cy.get('select[id="prioridad"]').select(mockIncidenteUpdate2.prioridad,{force: true});
+        cy.get('select[id="estado"]').select(mockIncidenteUpdate2.estado, {force: true});
+        cy.get('textarea[id="nuevoComentario"]').type(mockIncidenteUpdate2.comentario, {force: true});
+        
+        cy.get('button[id="guardar"]').should('be.enabled');
+        cy.get('button[id="escalar"]').should('be.enabled');
+
+        cy.get('button[id="guardar"]').click();
+        cy.get('.toast-success').should('be.visible').and('contain', 'Actualización exitosa');
+
+
+        /*------ verificar los cambios ----------*/
+
+        cy.get('div.card').last().within(() => {
+            cy.get('button[id="verEditar"]').click();
+        });
+        cy.get('body').then($body => {
+        if ($body.find('.toast-close-button').length > 0) {
+            cy.get('.toast-close-button').click();
+        }
+        });
+
+        cy.get('form').should('be.visible');
+        cy.get('select[id="cliente"]').should('contain', mockIncidenteUpdate2.cliente);
+        cy.get('select[id="nombreUsuario"]').should('contain', mockIncidenteUpdate2.nombreUsuario);
+        cy.get('select[id="tipoIncidencia"]').should('contain', mockIncidenteUpdate2.tipoIncidencia);
+        cy.get('select[id="prioridad"]').should('contain', mockIncidenteUpdate2.prioridad,{force: true});
+        cy.get('select[id="estado"]').should('contain', mockIncidenteUpdate2.estado); 
+    });
 
     it('crear un comentario por un usuario', () => {
         cy.visit('/login'); 
@@ -244,22 +358,20 @@ describe('Update Incidencia by usuario', () => {
         
         cy.get('textarea[id="nuevoComentario"]').type('Nuevo comentario', {force: true});
 
-    cy.get('button[id="guardar"]').should('be.enabled');
+        cy.get('button[id="guardar"]').should('be.enabled');
 
-    cy.get('button[id="guardar"]').click();
-    cy.get('.toast-success').should('be.visible').and('contain', 'Actualización exitosa');
+        cy.get('button[id="guardar"]').click();
+        cy.get('.toast-success').should('be.visible').and('contain', 'Actualización exitosa');
 
-    // Click en el boton the "Ver/Editar" de la ultima tarjeta creada
-    cy.get('div.card')
-      .last()
-      .within(() => {
-        cy.get('button[id="verEditar"]').click();
-      });
-    cy.get('body').then(($body) => {
-      if ($body.find('.toast-close-button').length > 0) {
-        cy.get('.toast-close-button').click();
-      }
-    });
+        // Click en el boton the "Ver/Editar" de la ultima tarjeta creada
+        cy.get('div.card').last().within(() => {
+            cy.get('button[id="verEditar"]').click();
+        });
+        cy.get('body').then($body => {
+        if ($body.find('.toast-close-button').length > 0) {
+            cy.get('.toast-close-button').click();
+        }
+        });
 
         cy.get('form').should('be.visible');
         cy.get('textarea[id="comentarios"]').should('contain.value', 'Nuevo comentario');

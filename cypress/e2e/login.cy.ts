@@ -25,7 +25,6 @@ describe('LoginComponent E2E Tests', () => {
         cy.get('input[id="password"]').type('password123');
         cy.get('button[type="submit"]').click();
 
-       //cy.wait('@loginRequest');
         cy.get('div[id="authFlagError"]').should('contain', 'Datos de usuario incorrectos');
     });
 
@@ -66,7 +65,6 @@ describe('LoginComponent E2E Tests', () => {
         cy.get('input[id="password"]').type('password123');
         cy.get('button[type="submit"]').click();
 
-       //cy.wait('@loginRequest');
         cy.get('div[id="authFlagError"]').should('contain', 'Incorrect user data');
     });
 
