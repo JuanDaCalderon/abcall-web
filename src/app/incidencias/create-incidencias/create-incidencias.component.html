@@ -29,7 +29,7 @@
 
         <div class="col-md-6 mb-3">
           <label for="correoUsuario" class="form-label">Correo usuario</label>
-          <input class="form-control" type="email" id="correoUsuario" formControlName="correoUsuario" placeholder="Correo usuario">
+          <input class="form-control" type="email" id="correoUsuario" formControlName="correoUsuario" placeholder="Correo usuario" maxlength="70">
           <div class="text-danger" *ngIf="incidentForm.get('correoUsuario')!.touched && incidentForm.get('correoUsuario')!.hasError('required')">
             Correo electronico requerido
           </div>
@@ -40,12 +40,12 @@
 
         <div class="col-md-6 mb-3">
           <label for="telefonoUsuario" class="form-label">Teléfono usuario</label>
-          <input class="form-control" type="tel" id="telefonoUsuario" formControlName="telefonoUsuario" placeholder="Teléfono usuario">
+          <input class="form-control" type="tel" id="telefonoUsuario" formControlName="telefonoUsuario" maxlength="10" placeholder="Teléfono usuario">
         </div>
 
         <div class="col-md-6 mb-3">
           <label for="direccionUsuario" class="form-label">Dirección usuario</label>
-          <input class="form-control" type="text" id="direccionUsuario" formControlName="direccionUsuario" placeholder="Dirección usuario">
+          <input class="form-control" type="text" id="direccionUsuario" formControlName="direccionUsuario" maxlength="200" placeholder="Dirección usuario">
         </div>
 
         <!-- Campo que debe ocupar toda la fila -->
