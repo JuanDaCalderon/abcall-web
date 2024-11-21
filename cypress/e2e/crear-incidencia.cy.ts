@@ -45,7 +45,8 @@ describe('CrearIncidenciasComponent E2E Tests', () => {
         respuestaIA: 'respuesta generdada por IA'
     };
 
-    const mockRespuestaIA = 'Por favor, intenta lo siguiente para resolver el problema de conexión: 1) Revisa que tu dispositivo esté conectado a internet; 2) Reinicia tu router o punto de acceso; 3) Verifica que no haya restricciones de red en tu firewall o antivirus. Si el problema persiste, contáctanos para mayor asistencia.';
+  const mockRespuestaIA =
+    'Por favor, intenta lo siguiente para resolver el problema de conexión: 1) Revisa que tu dispositivo esté conectado a internet; 2) Reinicia tu router o punto de acceso; 3) Verifica que no haya restricciones de red en tu firewall o antivirus. Si el problema persiste, contáctanos para mayor asistencia.';
 
     it('create superadmin', () => {
         cy.request({
@@ -179,13 +180,13 @@ describe('CrearIncidenciasComponent E2E Tests', () => {
         cy.get('select[id="prioridad"]').select(mockIncidente.prioridad,{force: true});
         cy.get('select[id="estado"]').select(mockIncidente.estado, {force: true});
 
-        cy.get('textarea[id="respuestaIA"]').should('have.value', mockRespuestaIA);
-        cy.get('button[id="guardar"]').should('be.enabled');
-        cy.get('button[id="escalar"]').should('be.enabled');
+    cy.get('textarea[id="respuestaIA"]').should('have.value', mockRespuestaIA);
+    cy.get('button[id="guardar"]').should('be.enabled');
+    cy.get('button[id="escalar"]').should('be.enabled');
 
-        cy.get('button[id="guardar"]').click();
-        cy.get('.toast-success').should('be.visible').and('contain', 'Incidente creado correctamente');
-    });
+    cy.get('button[id="guardar"]').click();
+    cy.get('.toast-success').should('be.visible').and('contain', 'Incidente creado correctamente');
+  });
 
 
 
@@ -210,12 +211,12 @@ describe('CrearIncidenciasComponent E2E Tests', () => {
         cy.get('select[id="prioridad"]').select(mockIncidente.prioridad,{force: true});
         cy.get('select[id="estado"]').select(mockIncidente.estado, {force: true});
 
-        cy.get('textarea[id="respuestaIA"]').should('have.value', mockRespuestaIA);
-        cy.get('button[id="guardar"]').should('be.enabled');
-        cy.get('button[id="escalar"]').should('be.enabled');
+    cy.get('textarea[id="respuestaIA"]').should('have.value', mockRespuestaIA);
+    cy.get('button[id="guardar"]').should('be.enabled');
+    cy.get('button[id="escalar"]').should('be.enabled');
 
-        cy.get('button[id="escalar"]').click();
-        cy.get('.toast-success').should('be.visible').and('contain', 'Incidente escalado correctamente');
-    });
+    cy.get('button[id="escalar"]').click();
+    cy.get('.toast-success').should('be.visible').and('contain', 'Incidente escalado correctamente');
+  });
 
 });

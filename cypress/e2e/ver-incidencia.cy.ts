@@ -45,7 +45,8 @@ describe('View Incidencia', () => {
         respuestaIA: 'respuesta generdada por IA'
     };
 
-    const mockRespuestaIA = 'Por favor, intenta lo siguiente para resolver el problema de conexión: 1) Revisa que tu dispositivo esté conectado a internet; 2) Reinicia tu router o punto de acceso; 3) Verifica que no haya restricciones de red en tu firewall o antivirus. Si el problema persiste, contáctanos para mayor asistencia.';
+  const mockRespuestaIA =
+    'Por favor, intenta lo siguiente para resolver el problema de conexión: 1) Revisa que tu dispositivo esté conectado a internet; 2) Reinicia tu router o punto de acceso; 3) Verifica que no haya restricciones de red en tu firewall o antivirus. Si el problema persiste, contáctanos para mayor asistencia.';
 
     it('create superadmin', () => {
         cy.request({
@@ -121,20 +122,20 @@ describe('View Incidencia', () => {
         cy.get('button[id="mostrarNavBar"]').click();
         cy.get('a[id="crearIncidencia"]').click();
 
-        cy.get('form').should('be.visible');
-        cy.get('select[id="cliente"]').select(mockIncidente.cliente, {force: true});
-        cy.get('select[id="nombreUsuario"]').select(mockIncidente.nombreUsuario, {force: true});
-        cy.get('input[id="correoUsuario"]').type(mockIncidente.correoUsuario, {force: true});
-        cy.get('input[id="telefonoUsuario"]').type(mockIncidente.telefonoUsuario, {force: true});
-        cy.get('input[id="direccionUsuario"]').type(mockIncidente.direccionUsuario, {force: true});
-        cy.get('textarea[id="descripcionProblema"]').type(mockIncidente.descripcionProblema, {force: true});
-        cy.get('select[id="tipoIncidencia"]').select(mockIncidente.tipoIncidencia, {force: true});
-        cy.get('select[id="prioridad"]').select(mockIncidente.prioridad,{force: true});
-        cy.get('select[id="estado"]').select(mockIncidente.estado, {force: true});
+    cy.get('form').should('be.visible');
+    cy.get('select[id="cliente"]').select(mockIncidente.cliente, {force: true});
+    cy.get('select[id="nombreUsuario"]').select(mockIncidente.nombreUsuario, {force: true});
+    cy.get('input[id="correoUsuario"]').type(mockIncidente.correoUsuario, {force: true});
+    cy.get('input[id="telefonoUsuario"]').type(mockIncidente.telefonoUsuario, {force: true});
+    cy.get('input[id="direccionUsuario"]').type(mockIncidente.direccionUsuario, {force: true});
+    cy.get('textarea[id="descripcionProblema"]').type(mockIncidente.descripcionProblema, {force: true});
+    cy.get('select[id="tipoIncidencia"]').select(mockIncidente.tipoIncidencia, {force: true});
+    cy.get('select[id="prioridad"]').select(mockIncidente.prioridad, {force: true});
+    cy.get('select[id="estado"]').select(mockIncidente.estado, {force: true});
 
-        cy.get('textarea[id="respuestaIA"]').should('have.value', mockRespuestaIA);
-        cy.get('button[id="guardar"]').should('be.enabled');
-        cy.get('button[id="escalar"]').should('be.enabled');
+    cy.get('textarea[id="respuestaIA"]').should('have.value', mockRespuestaIA);
+    cy.get('button[id="guardar"]').should('be.enabled');
+    cy.get('button[id="escalar"]').should('be.enabled');
 
         cy.get('button[id="guardar"]').click();
         cy.get('.toast-success').should('be.visible').and('contain', 'Incidente creado correctamente');
