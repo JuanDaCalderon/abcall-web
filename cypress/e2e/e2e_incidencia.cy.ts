@@ -1,13 +1,7 @@
-import { resolveForwardRef } from '@angular/core';
 import { faker } from '@faker-js/faker';
 
-describe('Update Incidencia by usuario', () => {
+describe('E2E incidencias', () => { 
     
-    const mockSuperadminCredencials = {
-        email:'superadmin@gmail.com',
-        password:'123456789'
-    };
-
     const mockSuperUsuario = {
         email: faker.internet.email().toLowerCase(),
         username: faker.internet.userName().toLowerCase(),
@@ -70,7 +64,6 @@ describe('Update Incidencia by usuario', () => {
         tipoIncidencia: 'incidencia',
         prioridad: 'alta',
         estado: 'abierto',
-        //respuestaIA: 'respuesta generdada por IA'
     };
 
     const mockIncidenteUpdate = {
