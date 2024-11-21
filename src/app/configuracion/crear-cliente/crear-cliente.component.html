@@ -3,7 +3,7 @@
   <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="row g-2 needs-validation">
       <div class="col-md-6 mb-3">
         <label for="nombres" class="form-label">Nombres</label>
-        <input type="text" class="form-control"  id="nombres" name="nombres" formControlName="nombres" placeholder="Pepito" pattern="^[a-zA-Z ]*$">
+        <input type="text" class="form-control"  id="nombres" name="nombres" formControlName="nombres" placeholder="Pepito" pattern="^[a-zA-Z ]*$" maxlength="70">
         <div *ngIf="clientForm.get('nombres')?.invalid && clientForm.get('nombres')?.touched" class="text-danger">
           El nombre del cliente es requerido.
         </div>
@@ -13,7 +13,7 @@
       </div>
       <div class="col-md-6 mb-3">
         <label for="nombre" class="form-label">Apellidos</label>
-        <input type="text" class="form-control" id="apellidos" name="apellidos" formControlName="apellidos" placeholder="perez" pattern="^[a-zA-Z ]*$">
+        <input type="text" class="form-control" id="apellidos" name="apellidos" formControlName="apellidos" placeholder="perez" pattern="^[a-zA-Z ]*$" maxlength="70">
         <div *ngIf="clientForm.controls['apellidos'].errors?.['pattern']" class="text-danger">
           Solo se permiten letras
         </div>
@@ -23,14 +23,14 @@
       </div>
       <div class="col-md-6 mb-3">
         <label for="email" class="form-label">Correo</label>
-        <input type="email" class="form-control" id="email" name="email" formControlName="email" placeholder="name@example.com">
+        <input type="email" class="form-control" id="email" name="email" formControlName="email" placeholder="name@example.com" maxlength="70">
         <div *ngIf="clientForm.get('email')?.invalid && clientForm.get('email')?.touched" class="text-danger">
           El email del cliente es requerido.
         </div>
       </div>
       <div class="col-md-6 mb-3">
         <label for="telefono" class="form-label">Telefono</label>
-        <input type="text" class="form-control" id="telefono" name="telefono" formControlName="telefono" placeholder="22222" minlength="8" pattern="^[0-9]*$">
+        <input type="text" class="form-control" id="telefono" name="telefono" formControlName="telefono" placeholder="22222" minlength="8" maxlength="10" pattern="^[0-9]*$">
         <div *ngIf="clientForm.get('telefono')?.invalid && clientForm.get('telefono')?.touched" class="text-danger">
           El telefono del cliente es requerido.
         </div>
@@ -43,7 +43,7 @@
       </div>
       <div class="col-md-12 mb-3">
         <label for="direccion" class="form-label">Direccion</label>
-        <input type="text" class="form-control" id="direccion" name="direccion" formControlName="direccion" placeholder="call 2 #55-88">
+        <input type="text" class="form-control" id="direccion" name="direccion" formControlName="direccion" maxlength="200" placeholder="call 2 #55-88">
         <div *ngIf="clientForm.get('direccion')?.invalid && clientForm.get('direccion')?.touched" class="text-danger">
           El direccion del cliente es requerido.
         </div>
