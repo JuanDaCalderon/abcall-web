@@ -114,30 +114,6 @@ describe('Update Incidencia por un usuario', () => {
         cy.get('.toast-success').should('be.visible').and('contain', 'gestor creado satisfactoriamente');
     });
 
-    /*it('Crear cliente con superadmin', () => {        
-        cy.get('input[id="email"]').type(mockSuperUsuario.email);
-        cy.get('input[id="password"]').type(mockSuperUsuario.password);
-        cy.get('button[type="submit"]').click();
-    
-        cy.get('button[id="mostrarNavBar"]').should('be.visible');
-
-        cy.get('button[id="mostrarNavBar"]').click();
-        cy.get('a[id="crearCliente"]').click();
-
-        cy.get('form').should('be.visible');
-
-        cy.wait(1000);
-        cy.get('input[id="nombres"]').type(mockCliente.nombres, {force: true});
-        cy.get('input[id="apellidos"]').type(mockCliente.apellidos, {force: true});
-        cy.get('input[id="email"]').type(mockCliente.email, {force: true});
-        cy.get('input[id="telefono"]').type(mockCliente.telefono, {force: true});
-        cy.get('input[id="direccion"]').type(mockCliente.direccion, {force: true});
-
-        cy.get('button[type="submit"]').should('be.enabled');
-        cy.get('button[type="submit"]').click();
-        cy.wait(1000);
-    }); */
-
     it('Crea cliente con superadmin', () => {
         cy.request({
             method: 'POST',
