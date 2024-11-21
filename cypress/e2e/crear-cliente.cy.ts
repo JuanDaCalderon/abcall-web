@@ -1,6 +1,6 @@
 describe('Crear cliente', () => {
   beforeEach(() => {
-    cy.visit('/');
+    cy.visit('/login');
     cy.get('form').should('be.visible');
     const emailInput = cy.get('[data-cy="email-input"]');
     const passwordInput = cy.get('[data-cy="password-input"]');
