@@ -14,7 +14,7 @@
       <div class="row">
         <div *ngIf="filterPath === 'cliente' || filterPath === 'todos'" class="col-4 mb-4">
           <label for="cliente" class="form-label">{{ 'abc.tablero.cliente.label' | translate}}</label>
-          <select data-cy="cliente" class="form-select" aria-label="cliente" id="cliente" name="cliente"
+          <select data-cy="tablero-cliente" class="form-select" aria-label="cliente" id="cliente" name="cliente"
             [formControl]="cliente">
             <option [value]="'todos'" selected>Todos los clientes</option>
             <option [value]="'ninguno'">Incidentes sin clientes</option>
@@ -25,7 +25,7 @@
         </div>
         <div *ngIf="filterPath === 'gestor' || filterPath === 'todos'" class="col-4 mb-4">
           <label for="gestor" class="form-label">{{ 'abc.tablero.gestor.label' | translate}}</label>
-          <select data-cy="gestor" class="form-select" aria-label="gestor" id="gestor" name="gestor"
+          <select data-cy="tablero-gestor" class="form-select" aria-label="gestor" id="gestor" name="gestor"
             [formControl]="gestor">
             <option [value]="'todos'" selected>Todos los gestores</option>
             <option [value]="'ninguno'">Incidentes sin gestores</option>
@@ -35,7 +35,7 @@
         </div>
         <div *ngIf="filterPath === 'usuario' || filterPath === 'todos'" class="col-4 mb-4">
           <label for="usuario" class="form-label">{{ 'abc.tablero.usuarios.label' | translate}}</label>
-          <select data-cy="usuario" class="form-select" aria-label="usuario" id="usuario" name="usuario"
+          <select data-cy="tablero-usuario" class="form-select" aria-label="usuario" id="usuario" name="usuario"
             [formControl]="usuario">
             <option [value]="'todos'" selected>Todos los usuarios</option>
             <option [value]="'ninguno'">Incidentes sin usuarios</option>
