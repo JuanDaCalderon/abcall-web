@@ -118,7 +118,8 @@ export class ViewIncidenciaComponent implements OnInit {
   }
 
   async loadUsersByRol(rol: string): Promise<void> {
-    this.clienteService.getUsers(rol).subscribe((usuarios) => {
+    this.clienteService.getUsers(rol).subscribe(async (usuarios) => {
+      await new Promise((resolve) => setTimeout(resolve, 200));
       if (rol === '3') this.gestores = usuarios;
       else if (rol === '4') this.clientes = usuarios;
       else if (rol === '5') this.usuarios = usuarios;
@@ -146,7 +147,7 @@ export class ViewIncidenciaComponent implements OnInit {
     }
   }
 
-  getNewGestor(idCurrectGestor: string): string[] {
+  async getNewGestor(idCurrectGestor: string): Promise<string[]> {
     const currentGestorLevel = this.getCurrentGestorLevel(idCurrectGestor);
     const newGestor = ['', ''];
     let newLevel = 'junior';
@@ -164,6 +165,7 @@ export class ViewIncidenciaComponent implements OnInit {
 
     if (newLevel !== 'No hay más niveles') {
       this.loadUsersByRol('3');
+      await new Promise((resolve) => setTimeout(resolve, 200));
       this.gestores.forEach((gestor) => {
         if (gestor.gestortier === newLevel) {
           newGestor[0] = gestor.id;

@@ -36,7 +36,7 @@ describe('View Incidencia', () => {
         cliente: mockCliente.nombres + ' ' + mockCliente.apellidos,
         nombreUsuario: mockUsuario.nombres + ' ' + mockUsuario.apellidos,
         correoUsuario: 'prueba@pruebas',
-        telefonoUsuario: '30012345678',
+        telefonoUsuario: '3001234567',
         direccionUsuario: 'calle 123',
         descripcionProblema: 'mi pc no conecta a internet',
         tipoIncidencia: 'incidencia',
