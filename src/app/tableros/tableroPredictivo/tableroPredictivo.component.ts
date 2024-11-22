@@ -47,15 +47,18 @@ export class TableroPredictivoComponent {
     fill: ApexFill;
   };
   constructor() {
+    const generateRandomData = (length: number, min: number, max: number): number[] =>
+      Array.from({length}, () => Math.floor(Math.random() * (max - min + 1)) + min);
+
     this.chartOptions = {
       series: [
         {
           name: '2024',
-          data: [45, 52, 38, 45, 19, 23, 25, 26, 30, 33, 15, 55] // datos históricos
+          data: generateRandomData(12, 10, 60) // datos históricos
         },
         {
           name: 'Predicción 2025',
-          data: [31, 40, 28, 51, 42, 109, 100, 101, 102, 103, 104, 99] // datos de predicción
+          data: generateRandomData(12, 50, 120) // datos de predicción
         }
       ],
       chart: {
@@ -105,11 +108,11 @@ export class TableroPredictivoComponent {
       series: [
         {
           name: '2024',
-          data: [5, 12, 15, 23, 12, 13, 25, 26, 10, 23, 15, 30] // datos históricos
+          data: generateRandomData(12, 5, 30) // datos históricos
         },
         {
           name: 'Predicción 2025',
-          data: [11, 20, 18, 21, 22, 59, 62, 70, 71, 69, 68, 88] // datos de predicción
+          data: generateRandomData(12, 20, 100) // datos de predicción
         }
       ],
       chart: {
