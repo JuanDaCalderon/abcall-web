@@ -2,6 +2,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {TableroComponent} from './tablero.component';
 import {provideHttpClient} from '@angular/common/http';
 import {provideHttpClientTesting} from '@angular/common/http/testing';
+import {TranslateModule, TranslateLoader, TranslateFakeLoader} from '@ngx-translate/core';
 import {IncidenciasService} from '../../services/incidencias.service';
 import {AuthService} from '../../services/auth.service';
 import {BehaviorSubject, of} from 'rxjs';
@@ -115,7 +116,16 @@ describe('TableroComponent', () => {
     incidenciasServiceSpy = jasmine.createSpyObj('IncidenciasService', ['getIncidencias']);
     authServiceSpy = jasmine.createSpyObj('AuthService', ['getAllUsers']);
     TestBed.configureTestingModule({
-      imports: [TableroComponent, ReactiveFormsModule],
+      imports: [
+        TableroComponent,
+        TranslateModule.forRoot({
+          loader: {
+            provide: TranslateLoader,
+            useClass: TranslateFakeLoader
+          }
+        }),
+        ReactiveFormsModule
+      ],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
@@ -384,5 +394,11 @@ describe('TableroComponent', () => {
     ];
     const result = component['getIncidentesMeses'](thisMockIncidentes, 'ninguno');
     expect(result).toEqual([{name: 'Incidentes', data: [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]}]);
+  });
+
+  it('should change the language', () => {
+    component.changeLang('en');
+    fixture.detectChanges();
+    expect(component.language).toBe('en');
   });
 });

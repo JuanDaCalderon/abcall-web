@@ -54,6 +54,23 @@
     "abc.view.issue.close": "Cerrar",
     "abc.crear-incidencia.crear.success.message": "Incidencia creada correctamente",
     "abc.crear-incidencia.escalar.success.message": "Incidencia escalada correctamente",
-    "hello": "Hola"
-    
+    "abc.crear-gestor.title": "Crear un nuevo gestor",
+    "abc.crear-gestor.correo.label": "Correo",
+    "abc.crear-gestor.username.label": "Nombre de usuario",
+    "abc.crear-gestor.telefono.label": "Teléfono",
+    "abc.crear-gestor.password.label": "Contraseña",
+    "abc.crear-gestor.nombres.label": "Nombres",
+    "abc.crear-gestor.apellidos.label": "Apellidos",
+    "abc.crear-gestor.direccion.label": "Direccion",
+    "abc.crear-gestor.tier.label": "Tier del gestor",
+    "abc.crear-gestor.crear.btn": "Crear gestor",
+    "hello": "Hola",
+    "abc.tablero.cliente.label": "Cliente",
+    "abc.tablero.gestor.label": "Gestor",
+    "abc.tablero.usuarios.label": "Usuarios",
+    "abc.tablero.incidentes-canales.chart.label": "Incidentes por canales",
+    "abc.tablero.incidentes-tipo.chart.label": "Incidentes por tipo",
+    "abc.tablero.incidentes-estado.chart.label": "Incidentes por estado",
+    "abc.tablero.incidentes-prioridad.chart.label": "Incidentes por prioridad",
+    "abc.tablero.incidentes-mes-año.chart.label": "Incidentes por mes en el año"
 }

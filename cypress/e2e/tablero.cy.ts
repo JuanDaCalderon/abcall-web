@@ -292,7 +292,6 @@ describe('Crear Gestor', () => {
         }
       ]
     }).as('incidentesMock');
-
     cy.intercept('POST', 'http://localhost:8003/usuario/register', {
       statusCode: 201, // Código de estado HTTP
       body: {
@@ -351,28 +350,27 @@ describe('Crear Gestor', () => {
       );
     });
     cy.get('button[id="mostrarNavBar"]').click();
-    cy.get('[data-cy="crear-gestor-nav"]').click();
+    cy.get('[data-cy="tablero-incidentes"]').click();
+    cy.wait(1000);
   });
 
-  it('Prueba crear gestor', () => {
-    const emailInput = cy.get('[data-cy="email-input"]');
-    const userNameInput = cy.get('[data-cy="username-input"]');
-    const telefonoInput = cy.get('[data-cy="telefono-input"]');
-    const passwordInput = cy.get('[data-cy="password-input"]');
-    const nombresInput = cy.get('[data-cy="nombres-input"]');
-    const apellidosInput = cy.get('[data-cy="apellidos-input"]');
-    const direccionInput = cy.get('[data-cy="direccion-input"]');
-    const gestortierInput = cy.get('[data-cy="gestortier-input"]');
-    const submitButton = cy.get('[data-cy="submit-button"]');
-    emailInput.type('pepito@gmail.com', {force: true});
-    userNameInput.type('pepito', {force: true});
-    telefonoInput.type('345234234', {force: true});
-    passwordInput.type('dfgdfgfdg', {force: true});
-    nombresInput.type('pepito david', {force: true});
-    apellidosInput.type('mariano martinez', {force: true});
-    direccionInput.type('Calle 56 # 78 - 2', {force: true});
-    gestortierInput.select('senior', {force: true});
-    submitButton.click();
-    cy.get('.toast-success').should('be.visible').and('contain', 'gestor creado satisfactoriamente');
+  it('Prueba tablero de incidentes', () => {
+    const clienteSelector = cy.get('[data-cy="tablero-cliente"]');
+    const gestorSelector = cy.get('[data-cy="tablero-gestor"]');
+    const usuarioSelector = cy.get('[data-cy="tablero-usuario"]');
+    clienteSelector.select('cliente cliente', {force: true});
+    cy.wait(1000);
+    clienteSelector.select('Todos los clientes', {force: true});
+    cy.get('[seriesName="web"]').should('be.visible');
+    gestorSelector.select('gestor gestor', {force: true});
+    cy.wait(1000);
+    gestorSelector.select('Incidentes sin gestores', {force: true});
+    cy.get('[seriesName="pqrs"]').should('be.visible');
+    cy.wait(1000);
+    usuarioSelector.select('usuario usuario', {force: true});
+    cy.wait(1000);
+    usuarioSelector.select('Todos los usuarios', {force: true});
+    cy.get('[seriesName="abierto"]').should('be.visible');
+    cy.wait(1000);
   });
 });

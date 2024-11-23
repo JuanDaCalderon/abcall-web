@@ -1,10 +1,20 @@
 <div class="container top align-content-center">
-    <h2 class="text-md-left">Crear un nuevo gestor</h2>
+    <div class="row">
+        <div class="flag col mb-3" *ngIf="language === 'es'">
+            <img src="./assets/img/en.jpg" id="languageButton" class="icon-flag" alt="Icono bandera Reino Unido"
+                (click)="changeLang('en')" (keydown.enter)="changeLang('en')" tabindex="0">
+        </div>
+        <div class="flag col mb-3" *ngIf="language === 'en'">
+            <img src="./assets/img/es.jpg" class="icon-flag" alt="Icono bandera Colombia" (click)="changeLang('es')"
+                (keydown.enter)="changeLang('es')" tabindex="0">
+        </div>
+    </div>
+    <h2 class="text-md-left">{{ 'abc.crear-gestor.title' | translate}}</h2>
     <form [formGroup]="crearGestorForm" (ngSubmit)="onSubmit()" class="row g-2 needs-validation">
         <div class="col-md-6 mb-3">
-            <label for="email" class="form-label">Correo</label>
-            <input data-cy="email-input" type="email" class="form-control" id="email" name="email" formControlName="email"
-                placeholder="name@example.com">
+            <label for="email" class="form-label">{{'abc.crear-gestor.correo.label' | translate}}</label>
+            <input data-cy="email-input" type="email" class="form-control" id="email" name="email" maxlength="70"
+                formControlName="email" placeholder="name@example.com">
             <div *ngIf="crearGestorForm.get('email')?.invalid && crearGestorForm.get('email')?.touched"
                 class="text-danger">
                 El email del gestor es requerido.
@@ -15,18 +25,18 @@
             </div>
         </div>
         <div class="col-md-6 mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input data-cy="username-input" type="text" class="form-control" id="username" name="username" formControlName="username"
-                placeholder="PepitoMotoRatones">
+            <label for="username" class="form-label">{{'abc.crear-gestor.username.label' | translate}}</label>
+            <input data-cy="username-input" type="text" class="form-control" id="username" name="username" maxlength="70"
+                formControlName="username" placeholder="PepitoMotoRatones">
             <div *ngIf="crearGestorForm.get('username')?.invalid && crearGestorForm.get('username')?.touched"
                 class="text-danger">
                 El username del gestor es requerido.
             </div>
         </div>
         <div class="col-md-6 mb-3">
-            <label for="telefono" class="form-label">Telefono</label>
-            <input data-cy="telefono-input" type="text" class="form-control" id="telefono" name="telefono" formControlName="telefono"
-                placeholder="22222">
+            <label for="telefono" class="form-label">{{'abc.crear-gestor.telefono.label' | translate}}</label>
+            <input data-cy="telefono-input" type="text" class="form-control" id="telefono" name="telefono" maxlength="10"
+                formControlName="telefono" placeholder="22222">
             <div *ngIf="crearGestorForm.get('telefono')?.invalid && crearGestorForm.get('telefono')?.touched"
                 class="text-danger">
                 El telefono del gestor es requerido.
@@ -37,37 +47,37 @@
             </div>
         </div>
         <div class="col-md-6 mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input data-cy="password-input" type="password" class="form-control" id="password" name="password" formControlName="password"
-                placeholder="*******">
+            <label for="password" class="form-label">{{'abc.crear-gestor.password.label' | translate}}</label>
+            <input data-cy="password-input" type="password" class="form-control" id="password" name="password" maxlength="50"
+                formControlName="password" placeholder="*******">
         </div>
         <div class="col-md-6 mb-3">
-            <label for="nombres" class="form-label">Nombres</label>
-            <input data-cy="nombres-input" type="text" class="form-control" id="nombres" name="nombres" formControlName="nombres"
-                placeholder="pepito">
+            <label for="nombres" class="form-label">{{'abc.crear-gestor.nombres.label' | translate}}</label>
+            <input data-cy="nombres-input" type="text" class="form-control" id="nombres" name="nombres" maxlength="70"
+                formControlName="nombres" placeholder="pepito">
             <div *ngIf="crearGestorForm.get('nombres')?.invalid && crearGestorForm.get('nombres')?.touched"
                 class="text-danger">
                 El nombre del gestor es requerido.
             </div>
         </div>
         <div class="col-md-6 mb-3">
-            <label for="apellidos" class="form-label">Apellidos</label>
-            <input data-cy="apellidos-input" type="text" class="form-control" id="apellidos" name="apellidos" formControlName="apellidos"
-                placeholder="perez">
+            <label for="apellidos" class="form-label">{{'abc.crear-gestor.apellidos.label' | translate}}</label>
+            <input data-cy="apellidos-input" type="text" class="form-control" id="apellidos" name="apellidos" maxlength="70"
+                formControlName="apellidos" placeholder="perez">
             <div *ngIf="crearGestorForm.get('apellidos')?.invalid && crearGestorForm.get('apellidos')?.touched"
                 class="text-danger">
                 El apellido del gestor es requerido.
             </div>
         </div>
         <div class="col-md-6 mb-3">
-            <label for="direccion" class="form-label">Direccion</label>
-            <input data-cy="direccion-input" type="text" class="form-control" id="direccion" name="direccion" formControlName="direccion"
-                placeholder="Calle XX #XX - XX">
+            <label for="direccion" class="form-label">{{'abc.crear-gestor.direccion.label' | translate}}</label>
+            <input data-cy="direccion-input" type="text" class="form-control" id="direccion" name="direccion" maxlength="200"
+                formControlName="direccion" placeholder="Calle XX #XX - XX">
         </div>
         <div class="col-md-6 mb-3">
-            <label for="gestortier" class="form-label">Tier del gestor</label>
-            <select data-cy="gestortier-input" class="form-select" aria-label="Tier del gestor" id="gestortier" name="gestortier"
-                formControlName="gestortier">
+            <label for="gestortier" class="form-label">{{'abc.crear-gestor.tier.label' | translate}}</label>
+            <select data-cy="gestortier-input" class="form-select" aria-label="Tier del gestor" id="gestortier"
+                name="gestortier" formControlName="gestortier">
                 <option [value]="gestorTiers.junior" selected>{{gestorTiers.junior}}</option>
                 <option [value]="gestorTiers.mid">{{gestorTiers.mid}}</option>
                 <option [value]="gestorTiers.senior">{{gestorTiers.senior}}</option>
@@ -78,8 +88,8 @@
         <div class="col-12">
             <div class="row">
                 <div class="col-6">
-                    <button data-cy="submit-button" class="btn btn-purple btn-lg w-50" type="submit" [disabled]="crearGestorForm.invalid">Crear
-                        Gestor</button>
+                    <button data-cy="submit-button" class="btn btn-purple btn-lg w-50" type="submit"
+                        [disabled]="crearGestorForm.invalid">{{'abc.crear-gestor.crear.btn' | translate}}</button>
                 </div>
             </div>
 

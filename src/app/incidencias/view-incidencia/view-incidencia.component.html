@@ -1,23 +1,23 @@
 <div class="container top align-content-center">
-  
+
   <div class = "flag" *ngIf="language === 'es' && usuario.rol.nombre ==='usuario'">
-    <img src="./assets/img/en.jpg" id="languageButton" class="icon-flag" alt="Icono bandera Reino Unido" 
+    <img src="./assets/img/en.jpg" id="languageButton" class="icon-flag" alt="Icono bandera Reino Unido"
      (click)="changeLang('en')"
-     (keydown.enter)="changeLang('en')" 
+     (keydown.enter)="changeLang('en')"
      tabindex="0">
    </div>
    <div class = "flag" *ngIf="language === 'en' && usuario.rol.nombre ==='usuario'">
-     <img src="./assets/img/es.jpg" class="icon-flag" alt="Icono bandera Colombia"
+     <img src="./assets/img/es.jpg" id="languageButton" class="icon-flag" alt="Icono bandera Colombia"
      (click)="changeLang('es')"
-     (keydown.enter)="changeLang('en')" 
+     (keydown.enter)="changeLang('en')"
      tabindex="0">
    </div>
 
 
-  <h1 class="text-md-center">{{'abc.get.issues.issue' | translate}} # {{issueId}} </h1>
+  <h1 id='formTitle' class="text-md-center">{{'abc.get.issues.issue' | translate}} # {{issueId}} </h1>
   <form [formGroup]="incidentForm" (ngSubmit)="onSubmit('creado')" class="row g-2">
       <div class="col-md-6 mb-3">
-        <label for="cliente" class="form-label">{{'abc.get.issues.customer' | translate}}</label>
+        <label id="clienteLabel" for="cliente" class="form-label">{{'abc.get.issues.customer' | translate}}</label>
         <select id="cliente" formControlName="cliente" class="form-select" >
           <option *ngFor="let cliente of clientes" [value]="cliente.id">{{cliente.nombres}} {{cliente.apellidos}}</option>
         </select>
@@ -27,12 +27,12 @@
       </div>
 
       <div class="col-md-6 mb-3">
-        <label for="fecha" class="form-label">{{'abc.view.issues.datetime' | translate}}</label>
+        <label id="fechaLabel" for="fecha" class="form-label">{{'abc.view.issues.datetime' | translate}}</label>
         <input class="form-control" type="text" id="fecha" formControlName="fecha">
       </div>
 
       <div class="col-md-6 mb-3">
-        <label for="nombreUsuario" class="form-label">{{'abc.view.issue.user.name' | translate }}</label>
+        <label id="nombreUsuarioLabel" for="nombreUsuario" class="form-label">{{'abc.view.issue.user.name' | translate }}</label>
         <select id="nombreUsuario" formControlName="nombreUsuario" class="form-select">
           <option *ngFor="let usuario of usuarios" [value]="usuario.id">{{usuario.nombres}} {{usuario.apellidos}}</option>
         </select>
@@ -42,7 +42,7 @@
     </div>
 
       <div class="col-md-6 mb-3">
-        <label for="correoUsuario" class="form-label">{{'abc.view.issue.user.email' | translate }}</label>
+        <label id="mailLabel" for="correoUsuario" class="form-label">{{'abc.view.issue.user.email' | translate }}</label>
         <input class="form-control" type="email" id="correoUsuario" formControlName="correoUsuario" placeholder="{{'abc.view.issue.error.required.mail' | translate }}">
         <div class="text-danger" *ngIf="incidentForm.get('correoUsuario')!.touched && incidentForm.get('correoUsuario')!.hasError('required')">
           {{'abc.view.issue.error.required.mail' | translate }}
@@ -54,12 +54,12 @@
 
       <div class="col-md-6 mb-3">
         <label for="telefonoUsuario" class="form-label">{{'abc.view.issue.user.phone' | translate }}</label>
-        <input class="form-control" type="tel" id="telefonoUsuario" formControlName="telefonoUsuario" placeholder="{{'abc.view.issue.user.phone.placeholder' | translate }}">
+        <input class="form-control" type="tel" id="telefonoUsuario" formControlName="telefonoUsuario" maxlength="10" placeholder="{{'abc.view.issue.user.phone.placeholder' | translate }}">
       </div>
 
       <div class="col-md-6 mb-3">
         <label for="direccionUsuario" class="form-label">{{'abc.view.issue.user.address' | translate }}</label>
-        <input class="form-control" type="text" id="direccionUsuario" formControlName="direccionUsuario" placeholder="{{'abc.view.issue.user.address' | translate }}">
+        <input class="form-control" type="text" id="direccionUsuario" maxlength="70" formControlName="direccionUsuario" placeholder="{{'abc.view.issue.user.address' | translate }}">
       </div>
 
       <!-- Campo que debe ocupar toda la fila -->
@@ -134,4 +134,3 @@
       </div>
   </form>
 </div>
-
